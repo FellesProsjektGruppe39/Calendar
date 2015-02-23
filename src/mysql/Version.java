@@ -8,25 +8,31 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.mysql.jdbc.PreparedStatement;
+
 public class Version {
 
     public static void main(String[] args) {
 
         Connection con = null;
-        Statement st = null;
+        PreparedStatement st = null;
         ResultSet rs = null;
 
-        String url = "jdbc:mysql://mysql.stud.ntnu.no/";
+        String url = "jdbc:mysql://mysql.stud.ntnu.no/braged_FellesProsjekt";
         String user = "braged_demo";
         String password = "brage";
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            st = con.createStatement();
-            rs = st.executeQuery("SELECT VERSION()");
+            st = (PreparedStatement) con.prepareStatement("SELECT * FROM bruker");
+            rs = st.executeQuery();
 
-            if (rs.next()) {
-                System.out.println(rs.getString(1));
+            while (rs.next()) {
+            	
+            	System.out.print(rs.getInt(1));
+            	System.out.print(": ");
+            	System.out.println(rs.getString(2)); 
+            
             }
 
         } catch (SQLException ex) {
@@ -50,5 +56,7 @@ public class Version {
                 lgr.log(Level.WARNING, ex.getMessage(), ex);
             }
         }
+        
     }
+    
 }
