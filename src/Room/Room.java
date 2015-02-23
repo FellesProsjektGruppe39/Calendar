@@ -5,11 +5,11 @@ public class Room {
 	private int Roomnumber;
 	
 	private int getRoomnumber(){
-		return Roomnumber;
+		return this.Roomnumber;
 	}
 	
 	private void setRoomnumber(int roomnum){
-		Roomnumber = roomnum;
+		this.Roomnumber = roomnum;
 	}
 
 }
