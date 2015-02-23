@@ -6,10 +6,10 @@ public class User {
 	
 	
 	public String getName() {
-		return Name;
+		return this.Name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.Name = name;
 	}
 	
 	public static void main(String[] args) {
