@@ -27,7 +27,11 @@ public class sqlRetrieve {
             con = DriverManager.getConnection(url, user, password);
             st = (PreparedStatement) con.prepareStatement(query);
             rs = st.executeQuery();
-
+i = 0
+            while (rs.next()) {
+            	
+            	if (rs.get)
+            }
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(sqlRetrieve.class.getName());
