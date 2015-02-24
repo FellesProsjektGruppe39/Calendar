@@ -16,7 +16,7 @@ public class sqlRetrieve {
     ResultSet rs = null;
     String [][]table;
 
-    public sqlRetrieve(String query, char tabell) {
+    public sqlRetrieve(String query) {
 
         Connection con = null;
         PreparedStatement st = null;
@@ -38,11 +38,14 @@ public class sqlRetrieve {
             table = new String[rows][columns];
             int i = 0;
             while (rs.next()) {
-            	for (int j = 0; j < columns; j++) {
-            		 table[i][j] = rs.getString((columns+1));
+            	for (int j = 0; j < (columns-1); j++) {
+            		 table[i][j] = rs.getString((j+1));
+            		 
             	}
             	i++;
             }
+            
+           
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(sqlRetrieve.class.getName());

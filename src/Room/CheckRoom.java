@@ -6,15 +6,10 @@ import mysql.sqlRetrieve;
 
 public class CheckRoom {
 	
-
-	
-public static void main(String[] args) throws SQLException {
-	
-	sqlRetrieve test = new sqlRetrieve("SELECT * FROM bruker");
-	
-	while (test.getQuery().next()) {
-		System.out.println(test.getQuery().getInt(1));
+	public static void main(String[] args) {
+		sqlRetrieve test = new sqlRetrieve("SELECT * FROM rom WHERE romnavn = 'D116';");
+		
+		System.out.println(test.getQuery()[0][2]);
 	}
-}
-
+	
 }
