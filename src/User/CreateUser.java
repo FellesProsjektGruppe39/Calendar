@@ -12,21 +12,28 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class CreateUser {
 	
-	static int AnsattNr;
+	static int brukerid;
 	static String fornavn;
 	static String etternavn;
 	static int TlfNr;
 	static String stilling;
+	static String passord;
+	static int admin;
+	static String brukernavn;
 	
-	CreateUser(int AnsattNr, String fornavn, String etternavn, int TlfNr, String stilling){
-		this.AnsattNr = AnsattNr;
+	CreateUser(int brukerid, String fornavn, String etternavn, int TlfNr, String brukeravn, String passord, String stilling, int admin){
+		this.brukerid = brukerid;
 		this.fornavn = fornavn;
 		this.etternavn = etternavn;
 		this.TlfNr = TlfNr;
 		this.stilling = stilling;
+		this.admin = admin;
+		this.passord = passord;
+		this.brukernavn = brukernavn;
+		
 	}
 
-    public static void main(String[] args) {
+    public void SetUser() {
 
         Connection con = null;
         Statement st = null;
@@ -41,7 +48,8 @@ public class CreateUser {
         try {
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            st.execute("INSERT INTO bruker (Ansattnr,fornavn,etternavn,tlfnr,stilling) VALUES ('" + AnsattNr + "','" + fornavn + "','" + etternavn + "','" + TlfNr + "','" + stilling + "'");
+            st.execute("INSERT INTO bruker (brukerid,fornavn,etternavn,tlfnr, brukernavn, passord, stilling, admin) VALUES ('" + brukerid + "','" + fornavn + "','" + etternavn + "','" 
+            + TlfNr + "','" + brukernavn + "','" + passord + "','"  + stilling + "','" + admin + "')");
             ste = (PreparedStatement) con.prepareStatement("SELECT * FROM bruker");
             rs = ste.executeQuery();
 

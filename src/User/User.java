@@ -13,9 +13,10 @@ public class User {
 	}
 	
 	public static void main(String[] args) {
-		User user = new User();
-		user.setName("Andre");
-		System.out.println(user.getName());
+		
+		CreateUser Per = new CreateUser(6, "Per", "Persson", 78978978, "PerP", "perp", "Daglig leder", 0);
+		System.out.println(Per);
+		Per.SetUser();
 	}
 
 }
