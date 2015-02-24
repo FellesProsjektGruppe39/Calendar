@@ -11,12 +11,13 @@ import java.util.logging.Logger;
 import com.mysql.jdbc.PreparedStatement;
 
 public class sqlGet {
+	
+    ResultSet rs = null;
 
-    public sqlGet() {
+    public sqlGet(String query) {
 
         Connection con = null;
         PreparedStatement st = null;
-        ResultSet rs = null;
 
         String url = "jdbc:mysql://mysql.stud.ntnu.no/braged_FellesProsjekt";
         String user = "braged_demo";
@@ -24,16 +25,9 @@ public class sqlGet {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            st = (PreparedStatement) con.prepareStatement("SELECT * FROM bruker");
+            st = (PreparedStatement) con.prepareStatement(query);
             rs = st.executeQuery();
 
-            while (rs.next()) {
-            	
-            	System.out.print(rs.getInt(1));
-            	System.out.print(": ");
-            	System.out.println(rs.getString(2)); 
-            
-            }
 
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(Version.class.getName());
@@ -57,6 +51,10 @@ public class sqlGet {
             }
         }
         
+    }
+    
+    public ResultSet getQuery() {
+    	return this.rs;
     }
     
 }
