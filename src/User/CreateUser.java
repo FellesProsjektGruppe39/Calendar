@@ -11,6 +11,20 @@ import java.util.logging.Logger;
 import com.mysql.jdbc.PreparedStatement;
 
 public class CreateUser {
+	
+	static int AnsattNr;
+	static String fornavn;
+	static String etternavn;
+	static int TlfNr;
+	static String stilling;
+	
+	CreateUser(int AnsattNr, String fornavn, String etternavn, int TlfNr, String stilling){
+		this.AnsattNr = AnsattNr;
+		this.fornavn = fornavn;
+		this.etternavn = etternavn;
+		this.TlfNr = TlfNr;
+		this.stilling = stilling;
+	}
 
     public static void main(String[] args) {
 
@@ -27,7 +41,7 @@ public class CreateUser {
         try {
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            st.execute("INSERT INTO bruker (Ansattnr,fornavn,etternavn,tlfnr,stilling) VALUES (2,'David','Lange',94890543,'konsulent')");
+            st.execute("INSERT INTO bruker (Ansattnr,fornavn,etternavn,tlfnr,stilling) VALUES ('" + AnsattNr + "','" + fornavn + "','" + etternavn + "','" + TlfNr + "','" + stilling + "'");
             ste = (PreparedStatement) con.prepareStatement("SELECT * FROM bruker");
             rs = ste.executeQuery();
 
