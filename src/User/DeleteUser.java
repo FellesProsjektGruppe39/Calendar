@@ -18,7 +18,7 @@ public class DeleteUser {
 		this.AnsattNummer = AnsattNummer;
 	}
 
-    public static void main(String[] args) {
+ public void delete(){
     	
 
         Connection con = null;
@@ -34,7 +34,7 @@ public class DeleteUser {
         try {
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            st.execute("DELETE FROM bruker WHERE ansattnr =" + AnsattNummer);
+            st.execute("DELETE FROM bruker WHERE brukerid =" + AnsattNummer);
             ste = (PreparedStatement) con.prepareStatement("SELECT * FROM bruker");
             rs = ste.executeQuery();
 
