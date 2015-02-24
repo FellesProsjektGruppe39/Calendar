@@ -16,7 +16,7 @@ public class User {
 	
 	public static void main(String[] args) {
 		
-		CreateUser Per = new CreateUser(100, "Pake", "Persson", 78978978, "NRK", "perp", "Daglig leder", 0);
+		CreateUser User = new CreateUser(101, "Dake", "Persson", 78978978, "NRK", "perp", "Daglig leder", 0);
 		
 	}
 
