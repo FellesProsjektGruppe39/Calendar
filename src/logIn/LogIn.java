@@ -1,26 +1,54 @@
 package logIn;
 
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+import mysql.sqlRetrieve;
+
 public class LogIn {
 	
 	private String username;
 	private String password;
+	private String CorrectPassword;
 	
-	
-	public String getUsername() {
-		return username;
+	public LogIn()  {
+		toString2();
+		System.out.println(password);
+		
+		sqlRetrieve passord = new sqlRetrieve(("SELECT * FROM bruker WHERE brukernavn =" + "\"" + username +"\""));		
+		CorrectPassword = (passord.getQuery()[0][5]);
+		
+		System.out.println(CorrectPassword);
+		
+		if (CorrectPassword.equals((password))){
+			System.out.println(toString1());
+			
+		}else
+			System.out.println("Du feilet");
+		
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	
+	
+	private String toString1() {
+		return "Gratulerer du har naa logget inn!";
+		
 	}
-	public String getPassword() {
-		return password;
+
+
+	public void toString2() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter your Username: ");
+		username = scanner.nextLine();
+		System.out.println("Enter your Password: ");
+		this.password = scanner.nextLine();
+		return;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	
+	public static void main(String[] args) throws SQLException {
+		LogIn li = new LogIn();
+
+		
 	}
-	
-	
-	
-	
 		
 }
