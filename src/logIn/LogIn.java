@@ -18,7 +18,9 @@ public class LogIn {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	
+	
 	
 		
 }
