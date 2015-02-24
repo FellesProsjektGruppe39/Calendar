@@ -20,7 +20,7 @@ public class EditUser {
 			sqlExecute create = new sqlExecute();
 			create.execute("UPDATE bruker SET tlfnr =" + "\"" + tlfnr + "\"" + "WHERE `brukerid` =" + brukerid);
 		}else
-			System.out.println("Du maa ha het telefonnummer som har paa 8 tall!!");
+			System.out.println("Du maa ha et telefonnummer som paa 8 tall!!");
 	}
 	
 	public void EditBrukernavn(String brukernavn, int brukerid){
