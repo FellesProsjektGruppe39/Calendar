@@ -16,8 +16,8 @@ public class LogIn {
 		toString2();
 		System.out.println(password);
 		
-		sqlRetrieve passord = new sqlRetrieve(("SELECT * FROM bruker WHERE brukernavn =" + "\"" + username +"\""));		
-		CorrectPassword = (passord.getQuery()[0][5]);
+		sqlRetrieve passord = new sqlRetrieve(("SELECT passord FROM bruker WHERE brukernavn =" + "\"" + username +"\""));		
+		CorrectPassword = (passord.getQuery()[0][0]);
 		
 		System.out.println(CorrectPassword);
 		
