@@ -23,12 +23,16 @@ public class CreateUser {
 	static int admin;
 	static String brukernavn;
 	
-	CreateUser(int brukerid, String fornavn, String etternavn, int TlfNr, String brukernavn, String passord, String stilling, int admin){
+	CreateUser(int brukerid, String fornavn, String etternavn, int TlfNr,
+			String brukernavn, String passord, String stilling, int admin){
 		
 		sqlExecute create = new sqlExecute();
 		
-		create.execute("INSERT INTO bruker (brukerid,fornavn,etternavn,tlfnr, brukernavn, passord, stilling, admin) VALUES ('" + brukerid + "','" + fornavn + "','" + etternavn + "','" 
-	            + TlfNr + "','" + brukernavn + "','" + passord + "','"  + stilling + "','" + admin + "')");
+		create.execute("INSERT INTO bruker (brukerid,fornavn,etternavn,tlfnr,"
+				+ " brukernavn, passord, stilling, admin) VALUES ('" + brukerid +
+				"','" + fornavn + "','" + etternavn + "','" 
+	            + TlfNr + "','" + brukernavn + "','" + passord + "','"  + stilling +
+	            "','" + admin + "')");
 		
 	}
     

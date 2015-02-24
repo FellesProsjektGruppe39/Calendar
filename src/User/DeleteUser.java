@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import mysql.sqlExecute;
+
 import com.mysql.jdbc.PreparedStatement;
 
 public class DeleteUser {
@@ -15,10 +17,12 @@ public class DeleteUser {
 	static int AnsattNummer;
 	
 	DeleteUser(int AnsattNummer){
-		this.AnsattNummer = AnsattNummer;
+			sqlExecute create = new sqlExecute();
+			create.execute("DELETE FROM bruker WHERE brukerid =" + AnsattNummer);
 	}
+}
 
- public void delete(){
+ /*public void delete(){
     	
 
         Connection con = null;
@@ -70,3 +74,4 @@ public class DeleteUser {
         
     }
 }
+*/
