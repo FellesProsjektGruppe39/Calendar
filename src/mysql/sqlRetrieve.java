@@ -3,6 +3,7 @@ package mysql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -13,11 +14,13 @@ import com.mysql.jdbc.PreparedStatement;
 public class sqlRetrieve {
 	
     ResultSet rs = null;
+    String [][]table;
 
-    public sqlRetrieve(String query) {
+    public sqlRetrieve(String query, char tabell) {
 
         Connection con = null;
         PreparedStatement st = null;
+        
 
         String url = "jdbc:mysql://mysql.stud.ntnu.no/braged_FellesProsjekt";
         String user = "braged_demo";
@@ -27,10 +30,18 @@ public class sqlRetrieve {
             con = DriverManager.getConnection(url, user, password);
             st = (PreparedStatement) con.prepareStatement(query);
             rs = st.executeQuery();
-i = 0
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columns = rsmd.getColumnCount();
+            rs.last();
+            int rows = rs.getRow();
+            rs.beforeFirst();
+            table = new String[rows][columns];
+            int i = 0;
             while (rs.next()) {
-            	
-            	if (rs.get)
+            	for (int j = 0; j < columns; j++) {
+            		 table[i][j] = rs.getString((columns+1));
+            	}
+            	i++;
             }
 
         } catch (SQLException ex) {
@@ -57,8 +68,8 @@ i = 0
         
     }
     
-    public ResultSet getQuery() {
-    	return this.rs;
+    public String[][] getQuery() {
+    	return this.table;
     }
     
 }
