@@ -12,4 +12,9 @@ public class Room {
 		this.Roomnumber = roomnum;
 	}
 
+	public static void main(String[] args) {
+		//CreateRoom Rom123 = new CreateRoom("Galtvort", 10, "Gloeshaugen", "Et VELDIG stort rom");
+		//Rom123.SetRoom();
+	}
+	
 }
