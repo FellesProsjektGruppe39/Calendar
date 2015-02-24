@@ -14,12 +14,10 @@ public class LogIn {
 	
 	public LogIn()  {
 		toString2();
-		System.out.println(password);
 		
 		sqlRetrieve passord = new sqlRetrieve(("SELECT passord FROM bruker WHERE brukernavn =" + "\"" + username +"\""));		
 		CorrectPassword = (passord.getQuery()[0][0]);
 		
-		System.out.println(CorrectPassword);
 		
 		if (CorrectPassword.equals((password))){
 			System.out.println(toString1());
@@ -42,6 +40,7 @@ public class LogIn {
 		username = scanner.nextLine();
 		System.out.println("Enter your Password: ");
 		this.password = scanner.nextLine();
+		scanner.close();
 		return;
 	}
 	
