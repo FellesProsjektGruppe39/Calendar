@@ -21,7 +21,7 @@ public class CreateUser {
 	static int admin;
 	static String brukernavn;
 	
-	CreateUser(int brukerid, String fornavn, String etternavn, int TlfNr, String brukeravn, String passord, String stilling, int admin){
+	CreateUser(int brukerid, String fornavn, String etternavn, int TlfNr, String brukernavn, String passord, String stilling, int admin){
 		this.brukerid = brukerid;
 		this.fornavn = fornavn;
 		this.etternavn = etternavn;
