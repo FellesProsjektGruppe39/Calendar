@@ -1,9 +1,7 @@
 package Room;
 
-import mysql.sqlConnect;
+import mysql.sqlRetrieve;
 
 public class CheckRoom {
-	sqlConnect con = new sqlConnect();
 	
-	con.connection();
 }
