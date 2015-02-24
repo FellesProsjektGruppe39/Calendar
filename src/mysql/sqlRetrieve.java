@@ -38,9 +38,8 @@ public class sqlRetrieve {
             table = new String[rows][columns];
             int i = 0;
             while (rs.next()) {
-            	for (int j = 0; j < (columns-1); j++) {
+            	for (int j = 0; j < (columns); j++) {
             		 table[i][j] = rs.getString((j+1));
-            		 
             	}
             	i++;
             }
