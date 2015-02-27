@@ -11,7 +11,7 @@ public class CheckCalendar {
 				" AND mote_has_bruker.mote_moteid=mote.moteid AND mote_has_rom.mote_moteid=mote.moteid ");
 		
 		
-		System.out.println("Date      - Start     - End      - Description - Room");
+		System.out.println("Date       - Start    - End      - Description - Room");
 		sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(* )FROM mote_has_bruker WHERE bruker_brukerid = " + "\"" + brukerid + "\"");
 		
 		for( int i=0; i < Integer.parseInt(moter.getQuery()[0][0]); i++){
