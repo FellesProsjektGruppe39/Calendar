@@ -1,5 +1,6 @@
 package User;
 
+import mysql.encryption;
 import mysql.sqlExecute;
 
 public class EditUser {
@@ -30,7 +31,7 @@ public class EditUser {
 	
 	public void EditPassord(String passord, int brukerid){
 		sqlExecute create = new sqlExecute();
-		create.execute("UPDATE bruker SET passord =" + "\"" + passord + "\"" + "WHERE `brukerid` =" + brukerid);
+		create.execute("UPDATE bruker SET passord =" + "\"" + encryption.md5(passord) + "\"" + "WHERE `brukerid` =" + brukerid);
 	}
 	
 	public void EditStilling(String stilling, int brukerid){

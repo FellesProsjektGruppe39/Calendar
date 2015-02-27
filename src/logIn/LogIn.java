@@ -1,9 +1,8 @@
 package logIn;
 
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Scanner;
-
+import mysql.encryption;
 import mysql.sqlRetrieve;
 
 public class LogIn {
@@ -21,7 +20,7 @@ public class LogIn {
 		CorrectPassword = (passord.getQuery()[0][0]);
 		
 		
-		if (CorrectPassword.equals((password))){
+		if (CorrectPassword.equals(encryption.md5(password))){
 			System.out.println(toString1());
 			sqlRetrieve brukerid = new sqlRetrieve(("SELECT brukerid FROM bruker WHERE brukernavn =" + "\"" + username +"\""));
 			bruker = Integer.parseInt(brukerid.getQuery()[0][0]);
@@ -44,7 +43,7 @@ public class LogIn {
 	public void toString2() {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter your Username: ");
-		username = scanner.nextLine();
+		this.username = scanner.nextLine();
 		System.out.println("Enter your Password: ");
 		this.password = scanner.nextLine();
 		scanner.close();
