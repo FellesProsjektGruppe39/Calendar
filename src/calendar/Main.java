@@ -21,7 +21,7 @@ public class Main {
 		brukerid = bruker.LogIn();
 		System.out.println(brukerid);
 		if (brukerid == -1){
-			System.out.println("Start på nytt");
+			System.out.println("Start paa nytt");
 		}
 		else{
 			printCalendar(brukerid);
