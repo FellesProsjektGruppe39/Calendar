@@ -14,7 +14,6 @@ public class User {
 	private int admin;
 	private String brukernavn;
 	sqlExecute create = new sqlExecute();
-	//sqlRetrieve check = new sqlRetrieve();
 	
 	User(String fornavn, String etternavn, int TlfNr,
 			String brukernavn, String passord, String stilling, int admin) {
@@ -33,18 +32,36 @@ public class User {
 	}
 	
 	public void CreateUser(){
-		try {
-			if(this.brukernavn==null||this.passord==null){
-				throw new IllegalArgumentException("Missing username and password");
-		}
-			
-		create.execute("INSERT INTO bruker (fornavn,etternavn,tlfnr,"
-				+ " brukernavn, passord, stilling, admin) VALUES ('" + this.fornavn + "','" + this.etternavn + "','" 
-	            + this.TlfNr + "','" + this.brukernavn + "','" + encryption.md5(this.passord) + "','"  +
-				this.stilling + "','" + this.admin + "')");
 		
+		//boolean godkjent = false;
+		
+		try {
+			
+			//while (godkjent == false) {
+			
+				if(this.brukernavn==null||this.passord==null){
+					throw new IllegalArgumentException();
+				}
+		
+				sqlRetrieve check = new sqlRetrieve("SELECT * FROM bruker WHERE brukernavn ='" + this.brukernavn + "';");
+		
+				if (check.getQuery().length == 1) {
+					throw new IllegalArgumentException();
+				}
+				
+				create.execute("INSERT INTO bruker (fornavn,etternavn,tlfnr,"
+						+ " brukernavn, passord, stilling, admin) VALUES ('" + this.fornavn + "','" + this.etternavn + "','" 
+						+ this.TlfNr + "','" + this.brukernavn + "','" + encryption.md5(this.passord) + "','"  +
+						this.stilling + "','" + this.admin + "')");
+				
+				System.out.println("Bruker " + this.brukernavn + " ble opprettet!");
+		//	} 
 		}
-		finally{}
+		catch (Exception i){
+			System.out.println("Du har skrevet inn feil input.");
+			
+		}
+		
 		
 	}
 	public void DeleteUser(){
@@ -56,8 +73,8 @@ public class User {
 	
 	public static void main(String[] args) {
 		
-		User User_1 = new User("", "");
-		//User_1.CreateUser();
+		User User_1 = new User("KimH", "b");
+		User_1.CreateUser();
 		//User_1.DeleteUser();
 	
 	}

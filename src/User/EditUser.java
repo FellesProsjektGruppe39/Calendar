@@ -6,47 +6,42 @@ import mysql.sqlExecute;
 public class EditUser {
 	
 
-	public void Editfornavn(String newfornavn, int brukerid){
+	public void Editfornavn(String newfornavn, String brukernavn){
 		sqlExecute create = new sqlExecute();
-		create.execute("UPDATE bruker SET fornavn =" + "\"" + newfornavn + "\"" + "WHERE `brukerid` =" + brukerid);
+		create.execute("UPDATE bruker SET fornavn =" + "\"" + newfornavn + "\"" + "WHERE brukernavn = '" + brukernavn + "';");
 	}
 	
-	public void Editetternavn(String newetternavn, int brukerid){
+	public void Editetternavn(String newetternavn, String brukernavn){
 		sqlExecute create = new sqlExecute();
-		create.execute("UPDATE bruker SET etternavn =" + "\"" + newetternavn + "\"" + "WHERE `brukerid` =" + brukerid);
+		create.execute("UPDATE bruker SET etternavn =" + "\"" + newetternavn + "\"" + "WHERE brukernavn = '" + brukernavn + "';");
 	}
 	
-	public void EditTlfnr(String tlfnr, int brukerid){
+	public void EditTlfnr(String tlfnr, String brukernavn){
 		if (tlfnr.length() == 8){
 			sqlExecute create = new sqlExecute();
-			create.execute("UPDATE bruker SET tlfnr =" + "\"" + tlfnr + "\"" + "WHERE `brukerid` =" + brukerid);
+			create.execute("UPDATE bruker SET tlfnr =" + "\"" + tlfnr + "\"" + "WHERE brukernavn = '" + brukernavn + "';");
 		}else
 			System.out.println("Du maa ha et telefonnummer som paa 8 tall!!");
 	}
 	
-	public void EditBrukernavn(String brukernavn, int brukerid){
+	public void EditPassord(String passord, String brukernavn){
 		sqlExecute create = new sqlExecute();
-		create.execute("UPDATE bruker SET brukernavn =" + "\"" + brukernavn + "\"" + "WHERE `brukerid` =" + brukerid);
+		create.execute("UPDATE bruker SET passord =" + "\"" + encryption.md5(passord) + "\"" + "WHERE brukernavn = '" + brukernavn + "';");
 	}
 	
-	public void EditPassord(String passord, int brukerid){
+	public void EditStilling(String stilling, String brukernavn){
 		sqlExecute create = new sqlExecute();
-		create.execute("UPDATE bruker SET passord =" + "\"" + encryption.md5(passord) + "\"" + "WHERE `brukerid` =" + brukerid);
+		create.execute("UPDATE bruker SET stilling =" + "\"" + stilling + "\"" + "WHERE brukernavn = '" + brukernavn + "';");
 	}
 	
-	public void EditStilling(String stilling, int brukerid){
+	public void EditAdmin(String admin, String brukernavn){
 		sqlExecute create = new sqlExecute();
-		create.execute("UPDATE bruker SET stilling =" + "\"" + stilling + "\"" + "WHERE `brukerid` =" + brukerid);
-	}
-	
-	public void EditAdmin(int admin, int brukerid){
-		sqlExecute create = new sqlExecute();
-		create.execute("UPDATE bruker SET admin =" + "\"" + admin + "\"" + "WHERE `brukerid` =" + brukerid);
+		create.execute("UPDATE bruker SET admin =" + "\"" + admin + "\"" + "WHERE brukernavn = '" + brukernavn + "';");
 	}
 	
 	public static void main(String[] args) {
 		EditUser user = new EditUser();
-		user.EditAdmin(1, 3);
+		//user.EditPassord("brage", "MartinRH");
 		
 	}
 }

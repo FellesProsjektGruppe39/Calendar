@@ -19,7 +19,7 @@ public class CreateMeeting {
 	
 	private void create(){
 		sqlExecute cre = new sqlExecute();
-		cre.execute("INSERT INTO møte (møteid,starttidspunkt,sluttidspunkt,beskrivelse) VALUES ('" + Meetingid +
+		cre.execute("INSERT INTO mote (moteid,starttidspunkt,sluttidspunkt,beskrivelse) VALUES ('" + Meetingid +
 				"','" + starttid + "','" + slutttid + "','" 
 	            + Beskrivelse + "')");
 	}
