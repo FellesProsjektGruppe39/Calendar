@@ -47,7 +47,7 @@ public class User {
 	}
 	public void DeleteUser(){
 			
-		//create.execute("DELETE FROM bruker WHERE brukerid =" + this.brukerid);
+		create.execute("DELETE FROM bruker WHERE brukernavn ='" + this.brukernavn + "';");
 	}
 	
 	
@@ -58,8 +58,6 @@ public class User {
 		User_1.CreateUser();
 		//User_1.DeleteUser();
 	
-		//DeleteUser UserDel=new DeleteUser(100);
-		//UserDel.delete();
 	}
 
 }
