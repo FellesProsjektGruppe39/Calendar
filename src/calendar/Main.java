@@ -11,6 +11,8 @@ public class Main {
 	public static void printCalendar(int brid){
 		sqlRetrieve bruker = new sqlRetrieve("SELECT brukernavn FROM bruker WHERE brukerid = \"" + brid + "\"");
 		System.out.println("Calendar for: " + bruker.getQuery()[0][0]);
+		CheckCalendar brukercalendar = new CheckCalendar();
+		brukercalendar.PrintDay(brid);
 	}
 	
 	public static void main(String[] args){
