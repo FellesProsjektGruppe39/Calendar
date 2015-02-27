@@ -1,4 +1,4 @@
- package User;
+package User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import mysql.encryption;
 import mysql.sqlExecute;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -22,6 +23,7 @@ public class CreateUser {
 	static String passord;
 	static int admin;
 	static String brukernavn;
+
 	
 	CreateUser(int brukerid, String fornavn, String etternavn, int TlfNr,
 			String brukernavn, String passord, String stilling, int admin){
@@ -31,7 +33,7 @@ public class CreateUser {
 		create.execute("INSERT INTO bruker (brukerid,fornavn,etternavn,tlfnr,"
 				+ " brukernavn, passord, stilling, admin) VALUES ('" + brukerid +
 				"','" + fornavn + "','" + etternavn + "','" 
-	            + TlfNr + "','" + brukernavn + "','" + passord + "','"  + stilling +
+	            + TlfNr + "','" + brukernavn + "','" + encryption.md5(passord) + "','"  + stilling +
 	            "','" + admin + "')");
 		
 	}
