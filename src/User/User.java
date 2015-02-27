@@ -2,6 +2,7 @@ package User;
 
 import mysql.sqlExecute;
 import mysql.encryption;
+import mysql.sqlRetrieve;
 
 public class User {
 	
@@ -13,6 +14,7 @@ public class User {
 	private int admin;
 	private String brukernavn;
 	sqlExecute create = new sqlExecute();
+	//sqlRetrieve check = new sqlRetrieve();
 	
 	User(String fornavn, String etternavn, int TlfNr,
 			String brukernavn, String passord, String stilling, int admin) {
@@ -54,8 +56,8 @@ public class User {
 	
 	public static void main(String[] args) {
 		
-		User User_1 = new User("kiiiiiim", "biiiiiiim");
-		User_1.CreateUser();
+		User User_1 = new User("", "");
+		//User_1.CreateUser();
 		//User_1.DeleteUser();
 	
 	}
