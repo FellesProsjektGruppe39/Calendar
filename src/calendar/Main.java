@@ -48,6 +48,12 @@ public class Main {
 				loggedin = false;
 				Godkjent = true;
 			}
+			else if (input.equalsIgnoreCase("D")){
+				
+			}
+			else if (input.equalsIgnoreCase("E")){
+				
+			}
 			else{
 				System.out.println("Not a valid function, try again.");
 			}
