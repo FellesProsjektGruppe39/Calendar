@@ -18,7 +18,13 @@ public class LogIn {
 		toString2();
 		
 		sqlRetrieve passord = new sqlRetrieve(("SELECT passord FROM bruker WHERE brukernavn =" + "\"" + username +"\""));		
-		CorrectPassword = (passord.getQuery()[0][0]);
+		
+		try{
+			CorrectPassword = (passord.getQuery()[0][0]);
+		}
+		catch (Exception ie){
+			return -1;
+		}
 		
 		
 		if (CorrectPassword.equals(encryption.md5(password))){
@@ -29,7 +35,6 @@ public class LogIn {
 			
 			
 		}else
-			System.out.println("Du feilet");
 			return -1;
 		
 	}
@@ -43,6 +48,7 @@ public class LogIn {
 
 	public void toString2() {
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("Log In:");
 		System.out.println("Enter your Username: ");
 		this.username = scanner.nextLine();
 		System.out.println("Enter your Password: ");

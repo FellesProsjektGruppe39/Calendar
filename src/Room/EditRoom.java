@@ -6,7 +6,7 @@ public class EditRoom {
 	
 	sqlExecute sql = new sqlExecute();
 	
-	private static String romNavn;
+	private String romNavn;
 	
 	EditRoom(String romNavn) {
 		this.romNavn = romNavn;
@@ -34,7 +34,7 @@ public class EditRoom {
 	}
 	
 	public static void main(String[] args) {
-		EditRoom rom = new EditRoom("Galtvort");
+		EditRoom rom = new EditRoom("VE21");
 		
 		rom.endreBeskrivelse("Morradiiiiiiii");
 		rom.endreKapasitet(10);
