@@ -1,7 +1,6 @@
 package Meeting;
 
-import java.sql.Time;
-import java.util.Date;
+import java.util.Scanner;
 
 import mysql.sqlExecute;
 
@@ -13,15 +12,23 @@ public class CreateMeeting {
 	private String room; 
 	private String date;
 	private int userID;
-	//private Time time;
 	private int moteid;
-	public CreateMeeting( String starttid, String slutttid, String Beskrivelse, String room, String date, int userID){
-		this.startTid = starttid;
-		this.sluttTid = slutttid;
-		this.Beskrivelse = Beskrivelse;
-		this.room=room;
-		this.date=date;
-		this.userID=userID;
+	
+	CreateMeeting() {
+		
+	}
+	
+	public void setMeeting(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Skriv inn start-tid for motet");
+		this.startTid = scanner.nextLine();
+		System.out.println("Skriv inn slutt-tid for motet");
+		this.sluttTid = scanner.nextLine();
+		System.out.println("Skriv inn en beskrivelse for motet");
+		this.Beskrivelse = scanner.nextLine();
+		System.out.println("Skriv inn dato for motet");
+		this.date= scanner.nextLine();
+
 		
 	}
 	
