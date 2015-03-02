@@ -7,20 +7,24 @@ public class Room {
 	sqlExecute sql = new sqlExecute();
 
 	
-	private int Roomnumber;
+	private int romNavn;
 	
 	
-	private int getRoomnumber(){
-		return this.Roomnumber;
+	public int getRomNavn(){
+		return this.romNavn;
 	}
 	
-	private void setRoomnumber(int roomnum){
-		this.Roomnumber = roomnum;
+	public void setRomNavn(int roomnum){
+		this.romNavn = roomnum;
 	}
 	
 	public void createRoom(String romnavn, int Kapasitet, String Sted, String Beskrivelse){
 		sql.execute("INSERT INTO rom (romnavn,Kapasitet,Sted,Beskrivelse) VALUES ('" + romnavn + "','" + Kapasitet + "','" + Sted + "','" 
 		           + Beskrivelse + "')");
+	}
+	
+	public void bookRoom() {
+		
 	}
 
 	public static void main(String[] args) {

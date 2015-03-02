@@ -1,27 +1,44 @@
 package Meeting;
 
-import java.util.Date;
+import java.util.Scanner;
+
 import mysql.sqlExecute;
 
 public class CreateMeeting {
 	
-	private int Meetingid;
-	private Date starttid;
-	private Date slutttid;
+	private String startTid;
+	private String sluttTid;
 	private String Beskrivelse;
+	private String room; 
+	private String date;
+	private int userID;
+	private int moteid;
 	
-	CreateMeeting(int Meetingid, Date starttid, Date slutttid, String Beskrivelse){
-		this.Meetingid = Meetingid;
-		this.starttid = starttid;
-		this.slutttid = slutttid;
-		this.Beskrivelse = Beskrivelse;
+	CreateMeeting() {
+		
 	}
 	
-	private void create(){
+	public void setMeeting(){
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Skriv inn start-tid for motet");
+		this.startTid = scanner.nextLine();
+		System.out.println("Skriv inn slutt-tid for motet");
+		this.sluttTid = scanner.nextLine();
+		System.out.println("Skriv inn en beskrivelse for motet");
+		this.Beskrivelse = scanner.nextLine();
+		System.out.println("Skriv inn dato for motet");
+		this.date= scanner.nextLine();
+
+		
+	}
+	
+	public void create(){
 		sqlExecute cre = new sqlExecute();
-		cre.execute("INSERT INTO mote (moteid,starttidspunkt,sluttidspunkt,beskrivelse) VALUES ('" + Meetingid +
-				"','" + starttid + "','" + slutttid + "','" 
-	            + Beskrivelse + "')");
+		cre.execute("INSERT INTO mote (starttidspunkt,sluttidspunkt,beskrivelse,dato,opprettet_av) "
+				+ "VALUES ('" + startTid + "','" + sluttTid + "','" 
+	            + Beskrivelse + "','"+date+"','"+userID+"')");
+		//cre.execute("INSERT INTO mote_has_rom(mote_moteid,rom_romnavn) "
+			//	+ "VALUES('"  +"','"+room+"')");
 	}
 
 }
