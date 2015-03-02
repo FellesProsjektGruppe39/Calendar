@@ -48,6 +48,7 @@ public class LogIn {
 
 	public void toString2() {
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("Log In:");
 		System.out.println("Enter your Username: ");
 		this.username = scanner.nextLine();
 		System.out.println("Enter your Password: ");
