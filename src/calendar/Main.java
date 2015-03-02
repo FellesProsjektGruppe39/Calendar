@@ -22,7 +22,7 @@ public class Main {
 			LogIn bruker = new LogIn();
 			brukerid = bruker.LogIn();
 			if (brukerid == -1){
-				System.out.println("Start paa nytt");
+				System.out.println("Feil brukernavn eller passord. Start paa nytt");
 			}
 		}
 		printCalendar(brukerid);
