@@ -17,15 +17,16 @@ public class Main {
 	
 	public static void main(String[] args){
 		
-		LogIn bruker = new LogIn();
-		brukerid = bruker.LogIn();
-		System.out.println(brukerid);
-		if (brukerid == -1){
-			System.out.println("Start paa nytt");
+		brukerid = -1;
+		while (brukerid == -1){
+			LogIn bruker = new LogIn();
+			brukerid = bruker.LogIn();
+			if (brukerid == -1){
+				System.out.println("Start paa nytt");
+			}
 		}
-		else{
-			printCalendar(brukerid);
-		}
+		printCalendar(brukerid);
+		
 		
 		
 		

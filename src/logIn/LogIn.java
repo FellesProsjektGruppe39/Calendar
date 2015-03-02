@@ -14,6 +14,7 @@ public class LogIn {
 	private String CorrectPassword;
 	
 	public int LogIn()  {
+
 		toString2();
 		
 		sqlRetrieve passord = new sqlRetrieve(("SELECT passord FROM bruker WHERE brukernavn =" + "\"" + username +"\""));		
@@ -46,7 +47,6 @@ public class LogIn {
 		this.username = scanner.nextLine();
 		System.out.println("Enter your Password: ");
 		this.password = scanner.nextLine();
-		scanner.close();
 		return;
 	}
 	
