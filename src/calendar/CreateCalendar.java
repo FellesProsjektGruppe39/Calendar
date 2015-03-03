@@ -1,5 +1,7 @@
 package calendar;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -9,13 +11,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class CreateCalendar extends Application  {
 
-	private int width = 1000, height = 600;
+	private int width = 1000, height = 600, brukerid;
+	private String username, password;
+	
 
-	@Override
+
 	public void start(Stage stage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("Calendar.fxml"));
 		Scene scene = new Scene(root);
@@ -23,31 +29,31 @@ public class CreateCalendar extends Application  {
         stage.setScene(scene);
         stage.show();
 	} 
+
+	@FXML
+	private Button ExitButton;
 	
-	 @FXML
-	    private Button ExitButton;
-	 @FXML
-	 private Button ShowID;
-	 
+	@FXML
+	private Button SelectButton;
+	
+	@FXML
+	private Label ID;
+	
 	@FXML
     void initialize() {
-		assert ExitButton != null : "fx:id=\"ExitButton\" was not injected: check your FXML file 'Calendar.fxml'.";
-		assert ShowID != null : "fx:id=\"ExitButton\" was not injected: check your FXML file 'Calendar.fxml'.";
-
-	ExitButton.setOnAction(new EventHandler<ActionEvent>() {
-    	public void handle(ActionEvent event) {
-    		Platform.exit();
-    	}
-    });
-	ShowID.setOnAction(new EventHandler<ActionEvent>() {
-		public void handle(ActionEvent arg0) {
-			System.out.println(2);
-		}
-		
-	} );
-	}
-
-	
+        assert ExitButton != null : "fx:id=\"ExitButton\" was not injected: check your FXML file 'GameFXML.fxml'.";
+        
+        SelectButton.setOnAction(new EventHandler<ActionEvent>() {
+        	public void handle(ActionEvent event) {
+        		ID.setText("Brage");
+        	}
+        });
+        ExitButton.setOnAction(new EventHandler<ActionEvent>() {
+        	public void handle(ActionEvent event) {
+        		Platform.exit();
+        	}
+        });
+    }
 	public static void main(String[] args) {
 		launch(CreateCalendar.class, args);
 		

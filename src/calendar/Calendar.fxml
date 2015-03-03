@@ -5,15 +5,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane disable="false" prefHeight="600.0" prefWidth="599.9999000000025" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="calendar.CtreateCalendar">
+<AnchorPane disable="false" prefHeight="600.0" prefWidth="599.9999000000025" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendar.CreateCalendar">
   <!-- TODO Add Nodes -->
   <children>
-    <ImageView fitHeight="599.0" fitWidth="630.6666870117188" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="false">
-     
-    </ImageView>
-    <Button fx:id="StartButton" layoutX="240.0" layoutY="113.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="119.0" text="Start" textFill="BLACK" />
-    <Button fx:id="HelpButton" layoutX="240.0" layoutY="241.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="119.0" text="How To Play" />
-    <Button fx:id="ExitButton" layoutX="240.0" layoutY="360.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="119.0" text="Exit" />
+      <Pane prefHeight="600.0" prefWidth="599.9999000000025" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+          <Button fx:id="ExitButton" layoutX="487.0" layoutY="48.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="66.0" text="Exit" />
+            <Pane prefHeight="218.0" prefWidth="234.0">
+               <children>
+                  <Label layoutX="56.0" layoutY="43.0" text="ID:" />
+                  <Label fx:id="ID" layoutX="84.0" layoutY="43.0" text="IDnr" />
+                  <Button fx:id="SelectButton" layoutX="124.0" layoutY="124.0" mnemonicParsing="false" text="Button" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
   </children>
 </AnchorPane>

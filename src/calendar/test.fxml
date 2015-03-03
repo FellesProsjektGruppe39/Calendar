@@ -5,22 +5,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane layoutX="-100.0" layoutY="-100.0" prefHeight="417.0" prefWidth="433.0">
-         <center>
-            <SplitPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <items>
-                  <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0">
-                    <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-                    </items>
-                  </SplitPane>
-               </items>
-            </SplitPane>
-         </center>
-      </BorderPane>
+      <Pane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="ExitButton" layoutX="64.0" layoutY="74.0" mnemonicParsing="false" onAction="ExitButton.setOnAction" text="EXIT" />
+            <Button layoutX="71.0" layoutY="115.0" mnemonicParsing="false" text="Button" />
+            <Button layoutX="58.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

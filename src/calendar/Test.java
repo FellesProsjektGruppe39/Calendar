@@ -112,7 +112,7 @@ public class Test extends Application{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-                System.out.println(brukerid);
+                
 	        }else 
 	        	System.out.println("Du feilet!");
 	        	label.setText("Feil brukernavn eller passord!");
