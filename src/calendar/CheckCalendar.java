@@ -14,9 +14,11 @@ public class CheckCalendar {
 		System.out.println("Date       - Start    - End      - Description - Room");
 		sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(* )FROM mote_has_bruker WHERE bruker_brukerid = " + "\"" + brukerid + "\"");
 		
+		
+		
 		for( int i=0; i < Integer.parseInt(moter.getQuery()[0][0]); i++){
 			System.out.println(info.getQuery()[i][4] +" - "+info.getQuery()[i][1]+" - "
-		+ info.getQuery()[i][2]+" - "+info.getQuery()[i][3]+" - "+info.getQuery()[i][9]);
+		+ info.getQuery()[i][2]+" - "+info.getQuery()[i][3]+" - "+info.getQuery()[i][10]);
 		}
 		//System.out.println("Test2");
 	}
