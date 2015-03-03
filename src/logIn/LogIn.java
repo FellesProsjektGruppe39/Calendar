@@ -13,9 +13,9 @@ public class LogIn {
 	private String password;
 	private String CorrectPassword;
 	
-	public int LogIn()  {
+	public int LogIn(String username, String password)  {
 
-		toString2();
+//		toString2();
 		
 		sqlRetrieve passord = new sqlRetrieve(("SELECT passord FROM bruker WHERE brukernavn =" + "\"" + username +"\""));		
 		
@@ -46,20 +46,20 @@ public class LogIn {
 	}
 
 
-	public void toString2() {
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Log In:");
-		System.out.println("Enter your Username: ");
-		this.username = scanner.nextLine();
-		System.out.println("Enter your Password: ");
-		this.password = scanner.nextLine();
-		return;
-	}
+//	public void toString2() {
+//		Scanner scanner = new Scanner(System.in);
+//		System.out.println("Log In:");
+//		System.out.println("Enter your Username: ");
+//		this.username = scanner.nextLine();
+//		System.out.println("Enter your Password: ");
+//		this.password = scanner.nextLine();
+//		return;
+//	}
 	
-	public static void main(String[] args) throws SQLException {
-		LogIn li = new LogIn();
-
-		
-	}
+//	public static void main(String[] args) throws SQLException {
+//		LogIn li = new LogIn();
+//
+//		
+//	}
 		
 }

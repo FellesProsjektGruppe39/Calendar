@@ -61,23 +61,30 @@ public class Main {
 	}
 	
 	public static void main(String[] args){
-		bruk = true;
-		while (bruk == true){
-			brukerid = -1;
-			while (brukerid == -1){
-				LogIn bruker = new LogIn();
-				brukerid = bruker.LogIn();
-				if (brukerid == -1){
-					System.out.println("Invalid username or password. Try again.");
-				}
-			}
-			loggedin = true;
-			Main bruker = new Main();
-			while (loggedin == true){
-				bruker.chooseaction();
-			}
-		}
+		Test test = new Test();
+		LogIn login = new LogIn();
+		Test.main(args);
 		
+		
+		
+		
+//		bruk = true;
+//		while (bruk == true){
+//			brukerid = -1;
+//			while (brukerid == -1){
+//				LogIn bruker = new LogIn();
+//				brukerid = bruker.LogIn(username, password);
+//				if (brukerid == -1){
+//					System.out.println("Invalid username or password. Try again.");
+//				}
+//			}
+//			loggedin = true;
+//			Main bruker = new Main();
+//			while (loggedin == true){
+//				bruker.chooseaction();
+//			}
+//		}
+//		
 		
 		
 		
