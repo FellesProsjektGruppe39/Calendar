@@ -16,12 +16,11 @@ public class CheckRoom {
 		+ "AND m.sluttidspunkt > '" + starttid + "' AND m.starttidspunkt < '" + slutttid + "' "
 		+ "AND m.dato = '" + dato + "' AND mr.rom_romnavn = r.romnavn) AND kapasitet >= " + kapasitet);
 		table=sqlret.getQuery();
-		System.out.print(table[0][0]);
 		if (sqlret.getQuery().length == 0) {
 			System.out.println("Ingen ledige rom");
 			return false;
 		}
-		System.out.println("Valgnr - Romnavn   - Kapasitet - Sted             - Beskrivelse");
+		/*System.out.println("Valgnr - Romnavn   - Kapasitet - Sted             - Beskrivelse");
 		for (int i = 0; i < sqlret.getQuery().length; i++) {
 			//for (int j = 0; j < sqlret.getQuery()[0].length; j++) {
 			 	System.out.print(i+"      -  ");
@@ -34,7 +33,7 @@ public class CheckRoom {
 				System.out.print(String.format("%-16s",sqlret.getQuery()[i][1]));
 				System.out.println();
 				//String.format("%40s",")
-		}
+		}*/
 		
 		return true;
 		
