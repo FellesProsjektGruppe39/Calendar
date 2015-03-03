@@ -17,8 +17,8 @@ public class CreateMeeting {
 	private int moteid;
 	private int capacity;
 	
-	CreateMeeting() {
-		this.userID=4;
+	CreateMeeting(int userID) {
+		this.userID=userID;
 	}
 	
 	public void setMeeting(){
@@ -86,7 +86,7 @@ public class CreateMeeting {
 	}
 	
 	public static void main(String[] args){
-		CreateMeeting meeting=new CreateMeeting();
+		CreateMeeting meeting=new CreateMeeting(4);
 		meeting.setMeeting();
 		meeting.ChooseRoom();
 		meeting.create();
