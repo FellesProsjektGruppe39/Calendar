@@ -8,7 +8,7 @@ public class CheckCalendar {
 	public void PrintDay(int brukerid){
 		sqlRetrieve info = new sqlRetrieve("SELECT * from mote, mote_has_bruker,mote_has_rom "
 				+ "WHERE mote_has_bruker.bruker_brukerid="+brukerid+
-				" AND mote_has_bruker.mote_moteid=mote.moteid AND mote_has_rom.mote_moteid=mote.moteid ");
+				" AND mote_has_bruker.mote_moteid=mote.moteid AND mote_has_rom.mote_moteid=mote.moteid ORDER BY dato, starttidspunkt ASC");
 		
 		
 		System.out.println("Date       - Start    - End      - Description - Room");
