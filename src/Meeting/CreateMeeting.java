@@ -72,7 +72,42 @@ public class CreateMeeting {
 		}
 		
 	}
-	
+	public void ChooseUsers(){
+		System.out.println("Vil du legge til deltagere eller grupper til motet?");
+		System.out.println("'N' : Nei");
+		System.out.println("'D' : Legg til deltagere");
+		System.out.println("'G' : Legg til gruppe");
+		Scanner scanner = new Scanner(System.in);
+		String choice =scanner.nextLine().toLowerCase();
+		boolean godkjent = false;
+		while(godkjent==false) {
+			System.out.println("Ugyldig valg.Vennligst velg igjen:");
+			System.out.println("Vil du legge til deltagere eller grupper til motet?");
+			System.out.println("'N' : Nei");
+			System.out.println("'D' : Legg til deltagere");
+			System.out.println("'G' : Legg til gruppe");
+			choice =scanner.nextLine();
+			if (choice.equalsIgnoreCase("N")){
+				godkjent=true;
+			}
+			else if(choice.equalsIgnoreCase("D")){
+				godkjent=true;
+			}
+			else if(choice.equalsIgnoreCase("G")){
+				godkjent=true;
+			}
+		}//while
+		EditMeeting editMeeting = new EditMeeting(this.moteid);
+		if (true){//Her må det fortsettes!
+			
+		}
+		else if(choice=="g"){
+			
+		}
+		editMeeting.leggtilbruker(this.userID);
+			
+		
+	}
 	public void create(){
 		sqlExecute cre = new sqlExecute();
 		cre.execute("INSERT INTO mote (starttidspunkt,sluttidspunkt,beskrivelse,dato,opprettet_av) "
@@ -87,6 +122,7 @@ public class CreateMeeting {
 	
 	public static void main(String[] args){
 		CreateMeeting meeting=new CreateMeeting(4);
+		meeting.ChooseUsers();
 		meeting.setMeeting();
 		meeting.ChooseRoom();
 		meeting.create();
