@@ -115,15 +115,15 @@ public class Group {
 	
 	
 	public static void main(String[] args) {
-		Group group = new Group("Lunsjklubben");
+		Group group = new Group("Konsulenter");
 		//group.newGroup();
 		//group.setGroupName("blablalba");
 		//group.newGroup();
 		//group.editGroupName("den beste gruppen");
 		//group.listUsers();
 		//group.listGroups();
-		//group.addUser("MartinRH");
-		//group.listUsers();
+		group.addUser("KimHD");
+		group.listUsers();
 		//group.removeUser("braged");
 		//group.deleteGroup();
 		

@@ -1,5 +1,6 @@
 package Meeting;
 import mysql.sqlExecute;
+import mysql.sqlRetrieve;
 public class EditMeeting {
 	
 	
@@ -35,6 +36,21 @@ public class EditMeeting {
 		public void leggtilbruker(int brukerid){
 			
 			sql.execute("INSERT INTO mote_has_bruker (mote_moteid,bruker_brukerid,attending) VALUES ('" + moteid + "','" + brukerid + "','" + "0" + "')");
+			
+		}
+		
+		public void listUsers() {
+			
+			sqlRetrieve sqlret = new sqlRetrieve("SELECT brukerid, fornavn, etternavn FROM bruker;");
+			
+			for (int i = 0; i < sqlret.getQuery().length; i++) {
+				System.out.println(sqlret.getQuery()[i][0] + 
+						sqlret.getQuery()[i][1] + sqlret.getQuery()[i][2]);
+			} 
+			
+		}
+		
+		public void addGroup() {
 			
 		}
 		
