@@ -3,6 +3,7 @@ package calendar;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import javafx.application.Platform;
 import logIn.LogIn;
 import mysql.sqlRetrieve;
 public class Main {
@@ -60,13 +61,9 @@ public class Main {
 		}
 	}
 	
-	public static void main(String[] args){
+	public static void main(final String[] args){
 		Test test = new Test();
-		LogIn login = new LogIn();
 		Test.main(args);
-		
-		
-		
 		
 //		bruk = true;
 //		while (bruk == true){
@@ -85,12 +82,5 @@ public class Main {
 //			}
 //		}
 //		
-		
-		
-		
-		
 	}
-	
-	
-
 }
