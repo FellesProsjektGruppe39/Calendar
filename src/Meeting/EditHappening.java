@@ -40,11 +40,17 @@ public class EditHappening {
 
 	}
 	
+	public void sletthendelse(int id){
+		
+		sql.execute("DELETE FROM hendelse WHERE hendelseid =" + "'" + id + "'");
+		
+	}
+	
 			
 	public static void main(String[] args) {
 		EditHappening happening = new EditHappening(3);
 		
-		happening.endreSted("Skolen");
+		happening.sletthendelse(3);
 		
 		
 	}

@@ -69,14 +69,23 @@ public class User {
 		create.execute("DELETE FROM bruker WHERE brukernavn ='" + this.brukernavn + "';");
 	}
 	
-	
+	public void listUsers() {
+		
+		sqlRetrieve sqlret = new sqlRetrieve("SELECT brukerid, fornavn, etternavn FROM bruker;");
+		
+		for (int i = 0; i < sqlret.getQuery().length; i++) {
+			System.out.println(sqlret.getQuery()[i][0] + 
+					sqlret.getQuery()[i][1] + sqlret.getQuery()[i][2]);
+		} 
+		
+	}
 	
 	public static void main(String[] args) {
 		
 		User User_1 = new User("KimH", "b");
-		User_1.CreateUser();
+		//User_1.CreateUser();
 		//User_1.DeleteUser();
-	
+		User_1.listUsers();
 	}
 
 }
