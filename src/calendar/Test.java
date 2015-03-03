@@ -104,7 +104,9 @@ public class Test extends Application{
 	        if(l.LogIn(username,password) > 0){
 	        	stage.close();
 	        	brukerid = l.LogIn(username,password);
+	        	System.out.println(brukerid);
 	        	CreateCalendar cal = new CreateCalendar();
+	        	cal.setBrukerid(brukerid);
                 Stage stage = new Stage();
                 try {
 					cal.start(stage);
