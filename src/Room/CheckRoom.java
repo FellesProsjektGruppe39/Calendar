@@ -6,7 +6,7 @@ import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 
 public class CheckRoom {
-	public String [][]table;
+	public String [][]allRoom;
 	
 	public boolean check(String dato, String starttid, String slutttid, int kapasitet) {
 
@@ -15,7 +15,7 @@ public class CheckRoom {
 		+ " FROM mote m, mote_has_rom mr, rom r WHERE mr.mote_moteid = m.moteid "
 		+ "AND m.sluttidspunkt > '" + starttid + "' AND m.starttidspunkt < '" + slutttid + "' "
 		+ "AND m.dato = '" + dato + "' AND mr.rom_romnavn = r.romnavn) AND kapasitet >= " + kapasitet);
-		table=sqlret.getQuery();
+		allRoom=sqlret.getQuery();
 		if (sqlret.getQuery().length == 0) {
 			System.out.println("Ingen ledige rom");
 			return false;

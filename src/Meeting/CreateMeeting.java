@@ -41,18 +41,18 @@ public class CreateMeeting {
 			int choice=10000;
 			Scanner scanner = new Scanner(System.in);
 			boolean run= false;
-			while(choice>=roomOption.table.length || choice<0){
+			while(choice>=roomOption.allRoom.length || choice<0){
 				System.out.println("Valgnr - Romnavn           - Kapasitet - Sted             - Beskrivelse");
-				for (int i = 0; i < roomOption.table.length; i++) {
+				for (int i = 0; i < roomOption.allRoom.length; i++) {
 					//for (int j = 0; j < sqlret.getQuery()[0].length; j++) {
 					 	System.out.print(i+"      -  ");
-						System.out.print(String.format("%-16s",roomOption.table[i][0]));
+						System.out.print(String.format("%-16s",roomOption.allRoom[i][0]));
 						System.out.print(" - ");
-						System.out.print(String.format("%-9s",roomOption.table[i][2]));
+						System.out.print(String.format("%-9s",roomOption.allRoom[i][2]));
 						System.out.print(" - ");
-						System.out.print(String.format("%-16s",roomOption.table[i][3]));
+						System.out.print(String.format("%-16s",roomOption.allRoom[i][3]));
 						System.out.print(" - ");
-						System.out.print(String.format("%-16s",roomOption.table[i][1]));
+						System.out.print(String.format("%-16s",roomOption.allRoom[i][1]));
 						System.out.println();
 						//String.format("%40s",")
 				}//for
@@ -64,7 +64,7 @@ public class CreateMeeting {
 				run=true;
 				
 			}//while
-			this.room=roomOption.table[choice][0];
+			this.room=roomOption.allRoom[choice][0];
 			
 		}//if
 		else{

@@ -70,13 +70,11 @@ public class User {
 	}
 	
 	
-	
 	public static void main(String[] args) {
 		
 		User User_1 = new User("KimH", "b");
-		User_1.CreateUser();
+		//User_1.CreateUser();
 		//User_1.DeleteUser();
-	
 	}
 
 }
