@@ -26,7 +26,6 @@ import logIn.LogIn;
 
 
 public class Test extends Application{
-
 	
 	private static String password;
 	private static String username;
@@ -66,8 +65,6 @@ public class Test extends Application{
 		Button cl = new Button("Close");
 		grid.add(sb, 1,3);
 		grid.add(cl, 2,3);
-	
-		//Adding a Label
 		final Label label = new Label();
 		GridPane.setConstraints(label, 1, 4);
 		GridPane.setColumnSpan(label, 2);
@@ -100,6 +97,14 @@ public class Test extends Application{
 	        password = pwBox.getText();
 	        if(l.LogIn(username,password) > 0){
 	        	stage.close();
+	        	CreateCalendar cal = new CreateCalendar();
+                Stage stage = new Stage();
+                try {
+					cal.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 	        }else 
 	        	System.out.println("Du feilet!");
 	        	label.setText("Feil brukernavn eller passord!");
