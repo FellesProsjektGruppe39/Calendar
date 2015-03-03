@@ -11,7 +11,9 @@ public class EditMeeting {
 		EditMeeting(int moteid) {
 			this.moteid = moteid;
 		}
-		
+		public void DeleteMeeting(){
+			sql.execute("DELETE FROM mote WHERE moteid ='"+this.moteid+ "'");
+		}
 		public void endreBeskrivelse(String Beskrivelse) {
 			
 			sql.execute("UPDATE mote SET beskrivelse =" + "\"" + Beskrivelse + "\"" + "WHERE moteid =" + moteid);
@@ -60,9 +62,10 @@ public class EditMeeting {
 		//}
 		
 		public static void main(String[] args) {
-			EditMeeting meeting = new EditMeeting(4);
+			EditMeeting meeting = new EditMeeting(17);
+			meeting.DeleteMeeting();
 			
-			meeting.fjernbruker(3);
+			//meeting.fjernbruker(3);
 			
 		}
 	}
