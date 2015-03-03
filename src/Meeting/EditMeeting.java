@@ -50,7 +50,11 @@ public class EditMeeting {
 			
 		}
 		
-		public void addGroup() {
+		public void addGroup(String name) {
+			sqlRetrieve sqlret = new sqlRetrieve("SELECT gruppeid FROM gruppe WHERE gruppenavn = '"
+					+ name + "';");
+
+			sql.execute("INSERT INTO mote_has_bruker (mote_moteid,gruppe_gruppeid,attending) VALUES ('" + this.moteid + "','" + sqlret.getQuery()[0][0] + "','" + "0" + "')"); 
 			
 		}
 		
@@ -78,9 +82,15 @@ public class EditMeeting {
 		//}
 		
 		public static void main(String[] args) {
+<<<<<<< Updated upstream
 			EditMeeting meeting = new EditMeeting(16);
 			meeting.listUsers();
 			
+=======
+			EditMeeting meeting = new EditMeeting(14);
+			//meeting.DeleteMeeting();
+			meeting.addGroup("Konsulenter");
+>>>>>>> Stashed changes
 			//meeting.fjernbruker(3);
 			
 		}
