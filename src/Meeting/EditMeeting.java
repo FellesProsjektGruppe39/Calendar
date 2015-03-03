@@ -42,10 +42,10 @@ public class EditMeeting {
 		public void listUsers() {
 			
 			sqlRetrieve sqlret = new sqlRetrieve("SELECT brukerid, fornavn, etternavn FROM bruker;");
-			
+			System.out.println("BrukerID - Fornavn   - Etternavn");
 			for (int i = 0; i < sqlret.getQuery().length; i++) {
-				System.out.println(sqlret.getQuery()[i][0] + 
-						sqlret.getQuery()[i][1] + sqlret.getQuery()[i][2]);
+				System.out.println(sqlret.getQuery()[i][0] + "        -  "+
+						String.format("%-8s",sqlret.getQuery()[i][1])+" - " + String.format("%-16s",sqlret.getQuery()[i][2]));
 			} 
 			
 		}
@@ -78,8 +78,8 @@ public class EditMeeting {
 		//}
 		
 		public static void main(String[] args) {
-			EditMeeting meeting = new EditMeeting(17);
-			meeting.DeleteMeeting();
+			EditMeeting meeting = new EditMeeting(16);
+			meeting.listUsers();
 			
 			//meeting.fjernbruker(3);
 			
