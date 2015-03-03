@@ -29,6 +29,7 @@ public class Test extends Application{
 	
 	private static String password;
 	private static String username;
+	private static int brukerid;
 	
 	public String getPassword(){
 		return password;
@@ -37,6 +38,11 @@ public class Test extends Application{
 	public String getUsername(){
 		return username;
 	}
+	
+	public int getBrukerid(){
+		return brukerid;
+	}
+	
 	
 	public void start(final Stage stage) throws IOException {
 		GridPane grid = new GridPane();
@@ -97,6 +103,7 @@ public class Test extends Application{
 	        password = pwBox.getText();
 	        if(l.LogIn(username,password) > 0){
 	        	stage.close();
+	        	brukerid = l.LogIn(username,password);
 	        	CreateCalendar cal = new CreateCalendar();
                 Stage stage = new Stage();
                 try {
@@ -105,6 +112,7 @@ public class Test extends Application{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+                System.out.println(brukerid);
 	        }else 
 	        	System.out.println("Du feilet!");
 	        	label.setText("Feil brukernavn eller passord!");

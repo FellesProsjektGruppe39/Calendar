@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
 
+<AnchorPane disable="false" prefHeight="600.0" prefWidth="599.9999000000025" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="calendar.CtreateCalendar">
+  <!-- TODO Add Nodes -->
+  <children>
+    <ImageView fitHeight="599.0" fitWidth="630.6666870117188" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="false">
+     
+    </ImageView>
+    <Button fx:id="StartButton" layoutX="240.0" layoutY="113.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="119.0" text="Start" textFill="BLACK" />
+    <Button fx:id="HelpButton" layoutX="240.0" layoutY="241.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="119.0" text="How To Play" />
+    <Button fx:id="ExitButton" layoutX="240.0" layoutY="360.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="119.0" text="Exit" />
+  </children>
+</AnchorPane>
