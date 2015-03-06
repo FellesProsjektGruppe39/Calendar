@@ -11,7 +11,7 @@ public class EditMeeting {
 		
 		private int moteid;
 		
-		EditMeeting(int moteid) {
+		public EditMeeting(int moteid) {
 			this.moteid = moteid;
 		}
 		public void DeleteMeeting(){
@@ -37,7 +37,7 @@ public class EditMeeting {
 		
 		public void leggtilbruker(int brukerid){
 			
-			sql.execute("INSERT INTO mote_has_bruker (mote_moteid,bruker_brukerid,attending) VALUES ('" + moteid + "','" + brukerid + "','" + "0" + "')");
+			sql.execute("INSERT INTO mote_has_bruker (mote_moteid,bruker_brukerid) VALUES ('" + moteid + "','" + brukerid + "')");
 			
 		}
 		

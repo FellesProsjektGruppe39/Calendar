@@ -18,7 +18,7 @@ public class CreateMeeting {
 	private int moteid;
 	private int capacity;
 	
-	CreateMeeting(int userID) {
+	public CreateMeeting(int userID) {
 		this.userID=userID;
 	}
 	
