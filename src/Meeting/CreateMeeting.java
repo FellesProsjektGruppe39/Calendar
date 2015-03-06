@@ -1,5 +1,6 @@
 package Meeting;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Room.CheckRoom;
@@ -36,6 +37,7 @@ public class CreateMeeting {
 
 	}
 	public void ChooseRoom(){
+		//this.capacity=numUsers;
 		CheckRoom roomOption=new CheckRoom();
 		if(roomOption.check(this.date, this.startTid, this.sluttTid, this.capacity)){
 			int choice=10000;
@@ -60,7 +62,7 @@ public class CreateMeeting {
 					System.out.println("Du valgte et ugyldig rom.");
 				}
 				System.out.println("Velg et rom:");
-				choice= Integer.parseInt(scanner.nextLine());
+				choice= Integer.parseInt(scanner.nextLine());//HER MAA DET LEGGES INN EN TRY CATCH HVIS DET SKRIVES INN NOE ANNET ENN TALL!
 				run=true;
 				
 			}//while
@@ -72,16 +74,12 @@ public class CreateMeeting {
 		}
 		
 	}
-	public void ChooseUsers(){
-		System.out.println("Vil du legge til deltagere eller grupper til motet?");
-		System.out.println("'N' : Nei");
-		System.out.println("'D' : Legg til deltagere");
-		System.out.println("'G' : Legg til gruppe");
+	public int ChooseUsers(){
+		int addedUsers=1;
+		String choice="";
 		Scanner scanner = new Scanner(System.in);
-		String choice =scanner.nextLine().toLowerCase();
 		boolean godkjent = false;
 		while(godkjent==false) {
-			System.out.println("Ugyldig valg.Vennligst velg igjen:");
 			System.out.println("Vil du legge til deltagere eller grupper til motet?");
 			System.out.println("'N' : Nei");
 			System.out.println("'D' : Legg til deltagere");
@@ -96,18 +94,58 @@ public class CreateMeeting {
 			else if(choice.equalsIgnoreCase("G")){
 				godkjent=true;
 			}
+			else{
+				System.out.println("Ugyldig valg.Vennligst velg igjen:");
+			}
 		}//while
 		EditMeeting editMeeting = new EditMeeting(this.moteid);
-		if (true){//Her må det fortsettes!
-			
-		}
-		else if(choice=="g"){
-			
-		}
 		editMeeting.leggtilbruker(this.userID);
+		if (choice.equalsIgnoreCase("N")){//
+		}
+		else if(choice.equalsIgnoreCase("G")){
 			
-		
-	}
+		}else if (choice.equalsIgnoreCase("D")){
+			ArrayList<Integer> chosenUsers=new ArrayList<Integer>();//List of chosen users
+			
+			chosenUsers.add(this.userID);
+			String answer= "";
+			//boolean go=true;
+			while(!answer.equalsIgnoreCase("Q")){
+				ArrayList<Integer> notChosenUsers=new ArrayList<Integer>();
+				notChosenUsers=editMeeting.listUsers(chosenUsers);//makes a list with users that is not added to the list.
+				if(notChosenUsers.size()==0){
+					break;
+				}
+				System.out.println("BrukerID: Skriv inn deltagerens brukerID for a legge til brukeren i motet");
+				System.out.println("Q: Du er ferdig med a legge til deltagere.");
+				try{						
+						answer=scanner.nextLine(); 
+						if(answer.equalsIgnoreCase("Q")){
+						}
+						else{
+							int cUser=Integer.parseInt(answer);
+							if(notChosenUsers.contains(cUser)){//if answer is a valid userid that is not already chosen add this user to meeting 
+								editMeeting.leggtilbruker(Integer.parseInt(answer));
+								chosenUsers.add(Integer.parseInt(answer));
+								addedUsers+=1;
+							}//if
+							else{
+								System.out.println("Ugyldig brukerid");
+							}
+						}//else
+				}//try
+				catch(Exception e){
+					System.out.println("Ugyldig input");
+					//answer=scanner.nextLine(); 
+				}//catch
+				
+				
+			}//while
+			
+		}//D: Add users
+			
+		return addedUsers;	
+	}//ChooseUsers
 	public void create(){
 		sqlExecute cre = new sqlExecute();
 		cre.execute("INSERT INTO mote (starttidspunkt,sluttidspunkt,beskrivelse,dato,opprettet_av) "
@@ -119,13 +157,15 @@ public class CreateMeeting {
 		cre.execute("INSERT INTO mote_has_rom(mote_moteid,rom_romnavn) "
 				+ "VALUES('" +this.moteid +"','"+this.room+"')");
 	}
-	
+	public void CMeeting(){
+		this.setMeeting();
+		this.ChooseRoom();
+		this.create();
+		this.ChooseUsers();
+	}
 	public static void main(String[] args){
 		CreateMeeting meeting=new CreateMeeting(4);
-		meeting.ChooseUsers();
-		meeting.setMeeting();
-		meeting.ChooseRoom();
-		meeting.create();
+		meeting.CMeeting();
 	}
 
 }
