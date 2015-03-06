@@ -36,6 +36,14 @@ public class CreateMeeting {
 		this.capacity=Integer.parseInt(scanner.nextLine());
 
 	}
+	public void setMeeting(String startTid, String sluttTid,String beskrivelse, String date, String capacity){
+		this.startTid = startTid;
+		this.sluttTid = sluttTid;
+		this.Beskrivelse = beskrivelse;
+		this.date= date;
+		this.capacity=Integer.parseInt(capacity);
+
+	}
 	public void ChooseRoom(){
 		//this.capacity=numUsers;
 		CheckRoom roomOption=new CheckRoom();
