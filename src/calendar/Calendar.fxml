@@ -8,18 +8,17 @@
 <AnchorPane disable="false" prefHeight="467.0" prefWidth="507.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="calendar.CreateCalendar">
   <!-- TODO Add Nodes -->
   <children>
-    <Button fx:id="ExitButton" layoutX="359.0" layoutY="406.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="66.0" text="Exit" />
-      <Button fx:id="SelectButton" layoutX="21.0" layoutY="406.0" mnemonicParsing="false" text="Update" />
-      <ScrollPane layoutX="84.0" layoutY="83.0" prefHeight="200.0" prefWidth="200.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="ID" text="IDnr" />
-                  <Label fx:id="avtaler" layoutY="17.0" prefHeight="321.0" prefWidth="414.0" text="Label" AnchorPane.bottomAnchor="-138.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-214.0" AnchorPane.topAnchor="17.0" />
-                  <Label text="NAME:" />
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
+      <Pane prefHeight="467.0" prefWidth="507.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+          <Button fx:id="ExitButton" layoutX="407.0" layoutY="409.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="66.0" text="Exit" />
+            <Button fx:id="SelectButton" layoutX="21.0" layoutY="409.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="111.0" text="Update" />
+            <Label fx:id="ID" layoutX="64.0" layoutY="53.0" text="IDnr" />
+            <Label layoutX="21.0" layoutY="53.0" text="NAME:" />
+            <Label fx:id="avtaler" layoutY="131.0" prefHeight="72.0" prefWidth="519.0" text="Label" />
+            <Button fx:id="NewMeeting" layoutX="292.0" layoutY="40.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="73.0" text="  New &#10;Meeting" />
+            <Button layoutX="378.0" layoutY="40.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="58.0" text=" New&#10;Gruop" />
+            <Button layoutX="440.0" layoutY="40.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="58.0" text="Button" />
+         </children>
+      </Pane>
   </children>
 </AnchorPane>

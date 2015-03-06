@@ -101,6 +101,7 @@ public class CreateMeeting {
 		EditMeeting editMeeting = new EditMeeting(this.moteid);
 		editMeeting.leggtilbruker(this.userID);
 		if (choice.equalsIgnoreCase("N")){//
+			
 		}
 		else if(choice.equalsIgnoreCase("G")){
 			
