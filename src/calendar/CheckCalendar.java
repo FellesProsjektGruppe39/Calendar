@@ -24,17 +24,15 @@ public class CheckCalendar {
 				+ "	AS temp2)"
 				+ " ORDER BY dato, starttidspunkt ASC");
 
-
-			
 		
-		str = ("Date       - Start    - End      - Description - Room");
+		str = String.format(" %-10s - %-8s - %-8s - %-30s - %-20s - %-30s","Date", "Start","End","Description","Room","Location");
 		sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(* )FROM mote_has_bruker WHERE bruker_brukerid = " + "\"" + brukerid + "\"");
 		
 		
 		
 		for( int i=0; i < Integer.parseInt(moter.getQuery()[0][0]); i++){
-			str += "\n" + (info.getQuery()[i][1] +" - "+info.getQuery()[i][2]+" - "
-		+ info.getQuery()[i][3]+" - "+info.getQuery()[i][5]+" - "+info.getQuery()[i][4] + " - " + info.getQuery()[i][6]);
+			str += String.format("\n %10s - %8s - %8s - %-30s - %-20s - %-30s", info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6]);
+					
 		}
 		System.out.println(str);
 		return str;
@@ -43,7 +41,8 @@ public class CheckCalendar {
 
 public static void main(String[] args) {
 	CheckCalendar test=new CheckCalendar();
-	test.PrintDay(5);
+	
+	test.PrintDay(1);
 	}
 }
 
