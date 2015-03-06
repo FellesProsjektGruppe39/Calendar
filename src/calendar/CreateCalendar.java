@@ -44,24 +44,16 @@ public class CreateCalendar extends Application  {
 	@FXML
 	private Label avtaler;
 	
-//	public void setName(String name){
-//		ID.setText(name);
-//	}
-	
 	@FXML
     void initialize() {
         assert ExitButton != null : "fx:id=\"ExitButton\" was not injected: check your FXML file 'Calendar.fxml'.";
         
-        SelectButton.setOnAction(new EventHandler<ActionEvent>() {
-        	public void handle(ActionEvent event) {
         		sqlRetrieve getName = new sqlRetrieve("SELECT * FROM bruker WHERE brukerid ='" + BID + "';");
         		String fornavn = getName.getQuery()[0][1];
         		String etterNavn = getName.getQuery()[0][2];
-        		ID.setText(fornavn + " " + etterNavn);
+        		ID.setText(fornavn + " " + etterNavn + "BrukerId: " + BID);
+        		avtaler.setText(CheckCalendar.PrintDay(BID));
         		
-        		avtaler.setText(fornavn + fornavn + fornavn + fornavn + fornavn + fornavn + fornavn + fornavn + fornavn + fornavn + fornavn + fornavn + "\n" + etterNavn + " ANDRE" + "\n"+ "ANDRE");
-        	}
-        });
         ExitButton.setOnAction(new EventHandler<ActionEvent>() {
         	public void handle(ActionEvent event) {
         		Platform.exit();
