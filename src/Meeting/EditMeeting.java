@@ -1,4 +1,6 @@
 package Meeting;
+import java.util.ArrayList;
+
 import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 public class EditMeeting {
@@ -49,6 +51,36 @@ public class EditMeeting {
 			} 
 			
 		}
+		public ArrayList<Integer> listUsers(ArrayList<Integer> alreadyChosen) {
+			String query ="SELECT brukerid, fornavn, etternavn FROM bruker";
+			for (int i =0;i<alreadyChosen.size();i++){
+				if (i==0){
+					query +=" WHERE ";
+				}
+				else{
+					query+= " AND ";
+				}
+				query+= "brukerid != " + alreadyChosen.get(i);
+			}
+			sqlRetrieve sqlret = new sqlRetrieve(query);
+			ArrayList<Integer> notChosen = new ArrayList<Integer>();
+			if(sqlret.getQuery().length==0){
+				
+			}
+			else{
+				System.out.println("BrukerID - Fornavn   - Etternavn");
+			
+				for (int i = 0; i < sqlret.getQuery().length; i++) {
+					System.out.println(sqlret.getQuery()[i][0] + "        -  "+
+							String.format("%-8s",sqlret.getQuery()[i][1])+" - " + String.format("%-16s",sqlret.getQuery()[i][2]));
+					notChosen.add(Integer.parseInt(sqlret.getQuery()[i][0]));
+				
+				}  
+			}
+			return notChosen;
+			
+			
+		}
 		
 		public void addGroup(String name) {
 			sqlRetrieve sqlret = new sqlRetrieve("SELECT gruppeid FROM gruppe WHERE gruppenavn = '"
@@ -83,9 +115,13 @@ public class EditMeeting {
 		
 		public static void main(String[] args) {
 
-			EditMeeting meeting = new EditMeeting(14);
+			EditMeeting meeting = new EditMeeting(16);
+			meeting.listUsers();
+			
+			EditMeeting meeting1 = new EditMeeting(14);
 			//meeting.DeleteMeeting();
-			meeting.addGroup("Konsulenter");
+			meeting1.addGroup("Konsulenter");
+
 			//meeting.fjernbruker(3);
 			
 		}
