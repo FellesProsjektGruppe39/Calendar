@@ -4,6 +4,7 @@ import java.awt.SecondaryLoop;
 import java.io.IOException;
 
 import Meeting.CreateMeeting;
+import Meeting.EditMeeting;
 
 import com.sun.glass.events.MouseEvent;
 
@@ -32,7 +33,7 @@ import javafx.stage.Stage;
 
 public class CreateCalendar extends Application  {
 
-	private static int BID;
+	private static int BID = 1;
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
@@ -48,13 +49,13 @@ public class CreateCalendar extends Application  {
 //        stage.setTitle("Calendar");
 //        stage.setScene(scene);
 //        stage.show();
-		GridPane grid = new GridPane();
+		final GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_LEFT);
 		grid.setHgap(50);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		
-		Scene scene = new Scene(grid, 680, 400);
+		Scene scene = new Scene(grid, 680, 500);
 		stage.setScene(scene);
 		stage.setTitle("Calendar");
 		stage.show();
@@ -68,6 +69,7 @@ public class CreateCalendar extends Application  {
 		Label name2 = new Label(getName(BID));
 		name2.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 		grid.add(name2, 0, 0, 1, 5);
+		
 		Label meeting = new Label(CheckCalendar.PrintDay(BID));
 		grid.add(meeting, 0, 6, 1, 10);
 		
@@ -85,7 +87,10 @@ public class CreateCalendar extends Application  {
 		
 		newMeeting.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
+				
 				final CreateMeeting mote = new CreateMeeting(BID);
+				
+					
 				final Stage stage1 = new Stage();
 				GridPane grid = new GridPane();
 				grid.setAlignment(Pos.TOP_LEFT);
@@ -126,7 +131,13 @@ public class CreateCalendar extends Application  {
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
 						mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), dato1.getText(), antall1.getText());
-						
+						mote.ChooseRoomGUI();
+						mote.create();
+						sqlRetrieve mid = new sqlRetrieve("SELECT MAX(moteid) FROM mote");
+						String MID = mid.getQuery()[0][0];
+						int Mid = Integer.parseInt(MID);
+						final EditMeeting editmote = new EditMeeting(Mid);
+						editmote.leggtilbruker(BID);
 						stage1.close();
 					}
 				});
@@ -145,6 +156,14 @@ public class CreateCalendar extends Application  {
 				stage.close();
 			}
 		});
+		
+		update.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				Label name2 = new Label(getName(BID));
+				name2.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+				grid.add(name2, 0, 0, 1, 5);
+			}
+		});
 	} 
 	
 	
@@ -152,8 +171,6 @@ public class CreateCalendar extends Application  {
 		sqlRetrieve getName = new sqlRetrieve("SELECT * FROM bruker WHERE brukerid ='" + bid + "';");
 		String fornavn = getName.getQuery()[0][1];
 		String etterNavn = getName.getQuery()[0][2];
-//		ID.setText(fornavn + " " + etterNavn + "BrukerId: " + BID);
-//		avtaler.setText(CheckCalendar.PrintDay(BID));
 		return fornavn + " " + etterNavn;
 	}
 	
