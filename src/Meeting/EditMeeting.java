@@ -82,15 +82,10 @@ public class EditMeeting {
 		//}
 		
 		public static void main(String[] args) {
-<<<<<<< Updated upstream
-			EditMeeting meeting = new EditMeeting(16);
-			meeting.listUsers();
-			
-=======
+
 			EditMeeting meeting = new EditMeeting(14);
 			//meeting.DeleteMeeting();
 			meeting.addGroup("Konsulenter");
->>>>>>> Stashed changes
 			//meeting.fjernbruker(3);
 			
 		}
