@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="402.0" prefWidth="439.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="402.0" prefWidth="439.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="52.0" layoutY="52.0" text="Start tid(hh:mm:ss):" />
+            <Label layoutX="51.0" layoutY="104.0" text="Slutt tid (hh:mm:ss):" />
+            <Label layoutX="51.0" layoutY="156.0" text="Beskrivelse av møtet:" />
+            <Label layoutX="52.0" layoutY="246.0" prefHeight="36.0" prefWidth="134.0" text="Dato (yyyy-mm-dd):" />
+            <Label layoutX="51.0" layoutY="308.0" text="Antall deltakere:" />
+            <TextField fx:id="StartTid" layoutX="186.0" layoutY="47.0" />
+            <TextField fx:id="SluttTid" layoutX="186.0" layoutY="99.0" />
+            <TextArea layoutX="186.0" layoutY="151.0" prefHeight="84.0" prefWidth="200.0" />
+            <TextField layoutX="186.0" layoutY="251.0" />
+            <TextField layoutX="186.0" layoutY="303.0" />
+            <Button fx:id="Save" layoutX="320.0" layoutY="353.0" mnemonicParsing="false" text="Save and Exit" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

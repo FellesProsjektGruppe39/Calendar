@@ -98,7 +98,7 @@ public class CreateMeeting {
 			}
 		}//while
 		EditMeeting editMeeting = new EditMeeting(this.moteid);
-		if (true){//Her må det fortsettes!
+		if (true){//Her mï¿½ det fortsettes!
 			
 		}
 		else if(choice=="g"){

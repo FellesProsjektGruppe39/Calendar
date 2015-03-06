@@ -14,7 +14,10 @@
             <Button fx:id="SelectButton" layoutX="21.0" layoutY="409.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="111.0" text="Update" />
             <Label fx:id="ID" layoutX="64.0" layoutY="53.0" text="IDnr" />
             <Label layoutX="21.0" layoutY="53.0" text="NAME:" />
-            <Label fx:id="avtaler" layoutY="61.0" prefHeight="222.0" prefWidth="519.0" text="Label" />
+            <Label fx:id="avtaler" layoutY="131.0" prefHeight="72.0" prefWidth="519.0" text="Label" />
+            <Button fx:id="NewMeeting" layoutX="292.0" layoutY="40.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="73.0" text="  New &#10;Meeting" />
+            <Button layoutX="378.0" layoutY="40.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="58.0" text=" New&#10;Gruop" />
+            <Button layoutX="440.0" layoutY="40.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="58.0" text="Button" />
          </children>
       </Pane>
   </children>
