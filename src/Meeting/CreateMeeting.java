@@ -44,6 +44,20 @@ public class CreateMeeting {
 		this.capacity=Integer.parseInt(capacity);
 
 	}
+	
+	public void ChooseRoomGUI(){
+		//this.capacity=numUsers;
+		CheckRoom roomOption=new CheckRoom();
+		if(roomOption.check(this.date, this.startTid, this.sluttTid, this.capacity)){
+			
+			this.room=roomOption.allRoom[0][0];
+			
+		}//if
+		else{
+			System.out.println("Vil du velge et annet tidspunkt for motet?");
+		}
+		
+	}
 	public void ChooseRoom(){
 		//this.capacity=numUsers;
 		CheckRoom roomOption=new CheckRoom();
