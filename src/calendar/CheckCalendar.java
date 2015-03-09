@@ -82,7 +82,7 @@ public class CheckCalendar {
 					
 		}
 		
-		System.out.println(str);
+//		System.out.println(str);
 		return str;
 	}
 

@@ -8,6 +8,7 @@ import Meeting.EditMeeting;
 
 import com.sun.glass.events.MouseEvent;
 
+import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -77,7 +78,7 @@ public class CreateCalendar extends Application  {
 		Button cl = new Button("Close");
 		Button update = new Button("Update");
 		Button newGroup = new Button("New Group");
-		Button changeMeeting = new Button("Change Meeting");
+		Button changeMeeting = new Button("Edit Meeting");
 		grid.add(cl, 2, 20,1,1);
 		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
@@ -156,6 +157,7 @@ public class CreateCalendar extends Application  {
 				stage1.setScene(scene1);
 				stage1.setTitle("New Meeting");
 				stage1.show();	
+				
 				final Text start = new Text("Start-tidspunkt(hh:mm:ss): ");
 				final Text slutt = new Text("Slutt-tidspunkt(hh:mm:ss): ");
 				final Text beskrivelse = new Text("Beskrivelse: ");
@@ -166,6 +168,7 @@ public class CreateCalendar extends Application  {
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField dato1 = new TextField();
 				final TextField antall1 = new TextField();
+				
 				Button cl = new Button("Save and Exit");
 				Button cl1 = new Button("Cancel");
 				
@@ -193,6 +196,8 @@ public class CreateCalendar extends Application  {
 						int Mid = Integer.parseInt(MID);
 						final EditMeeting editmote = new EditMeeting(Mid);
 						editmote.leggtilbruker(BID);
+						sqlExecute create = new sqlExecute();
+						create.execute("UPDATE mote_has_bruker SET attending ='" + 1 + "' WHERE mote_moteid = '" + MID + "'");
 						stage1.close();
 					}
 				});
