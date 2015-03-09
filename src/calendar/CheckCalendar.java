@@ -89,7 +89,7 @@ public class CheckCalendar {
 public static void main(String[] args) {
 	CheckCalendar test=new CheckCalendar();
 	
-	test.PrintWeek(1,11);
+	test.PrintWeek(1,10);
 //	test.PrintDay(1);
 	}
 }
