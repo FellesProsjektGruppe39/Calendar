@@ -7,6 +7,7 @@ import mysql.sqlRetrieve;;
  * @author Brage
  *
  */
+
 public class CheckCalendar {
 	//sqlRetrieve info = new sqlRetrieve();
 	public static String PrintDay(int brukerid){

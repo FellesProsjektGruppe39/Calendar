@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 
 public class CreateCalendar extends Application  {
 
-	private static int BID = 1;
+	private static int BID = 3;
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
@@ -55,7 +55,7 @@ public class CreateCalendar extends Application  {
 		grid.setVgap(10);
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		
-		Scene scene = new Scene(grid, 680, 500);
+		Scene scene = new Scene(grid, 1000, 1000);
 		stage.setScene(scene);
 		stage.setTitle("Calendar");
 		stage.show();
@@ -79,18 +79,73 @@ public class CreateCalendar extends Application  {
 		Button newGroup = new Button("New Group");
 		Button changeMeeting = new Button("Change Meeting");
 		grid.add(cl, 2, 20,1,1);
-		grid.add(newMeeting, 2, 0,1,1);
+		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
-		grid.add(newGroup,2,1,1,1);
-		grid.add(changeMeeting, 2,2,1,1);
+		grid.add(newGroup,2,2,1,1);
+		grid.add(changeMeeting, 2,3,1,1);
 		
+		
+		changeMeeting.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				final Stage stage2 = new Stage();
+				GridPane grid = new GridPane();
+				grid.setAlignment(Pos.TOP_LEFT);
+				grid.setHgap(50);
+				grid.setVgap(10);
+				grid.setPadding(new Insets(10, 10, 10, 10));
+				Scene scene1 = new Scene(grid, 450, 500);
+				stage2.setScene(scene1);
+				stage2.setTitle("Change Meeting");
+				stage2.show();
+				
+				Button cl = new Button("Save and Exit");
+				
+				grid.add(cl, 2, 6);
+				
+				
+				
+				
+				cl.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						stage2.close();
+					}
+				});
+			}
+		});
+		
+		newGroup.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				final Stage stage2 = new Stage();
+				GridPane grid = new GridPane();
+				grid.setAlignment(Pos.TOP_LEFT);
+				grid.setHgap(50);
+				grid.setVgap(10);
+				grid.setPadding(new Insets(10, 10, 10, 10));
+				Scene scene1 = new Scene(grid, 450, 500);
+				stage2.setScene(scene1);
+				stage2.setTitle("New Group");
+				stage2.show();
+				
+				Button cl = new Button("Save and Exit");
+				
+				grid.add(cl, 2, 2);
+				
+				
+				
+				
+				cl.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						stage2.close();
+					}
+				});
+			}
+		});
 		
 		newMeeting.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				
 				final CreateMeeting mote = new CreateMeeting(BID);
-				
-					
+	
 				final Stage stage1 = new Stage();
 				GridPane grid = new GridPane();
 				grid.setAlignment(Pos.TOP_LEFT);
@@ -169,9 +224,10 @@ public class CreateCalendar extends Application  {
 	
 	public String getName(int bid){
 		sqlRetrieve getName = new sqlRetrieve("SELECT * FROM bruker WHERE brukerid ='" + bid + "';");
-		String fornavn = getName.getQuery()[0][0];
-		String etterNavn = getName.getQuery()[0][1];
+		String fornavn = getName.getQuery()[0][1];
+		String etterNavn = getName.getQuery()[0][2];
 		return fornavn + " " + etterNavn;
+		
 	}
 	
 //	@FXML
