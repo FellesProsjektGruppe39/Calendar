@@ -209,38 +209,41 @@ public class CreateCalendar extends Application  {
 ////						sb.setOrientation(Orientation.VERTICAL);
 //						grid.add(sb, 0, 1, 10 ,1);
 						
-						Button close = new Button("Close");
+						Button close = new Button("Save And Exit");
 						Button add = new Button("Add All");
-						grid.add(close, 4, 4);
+						grid.add(close, 4, 2);
 						grid.add(add, 4, 7);
 						
 						String[] names = getNames();
+						final String[] names1 = names;
 						final CheckBox[] cbs = new CheckBox[names.length];
 						
 						for (int i = 0; i < names.length -1 ; i++) {
 							final CheckBox cb = cbs[i] = new CheckBox(names[i]);
 							grid.add(cb, 1, i+2);
 							
-							cb.selectedProperty().addListener(new ChangeListener<Boolean>() {
-						        public void changed(ObservableValue<? extends Boolean> ov,
-						            Boolean old_val, Boolean new_val) {
-								cbs[0].selectedProperty().addListener(new ChangeListener<Boolean>() {
-							        public void changed(ObservableValue<? extends Boolean> ov,
-							            Boolean old_val, Boolean new_val) {
-							        	System.out.println("Du trukket naa paa den forste");
-							        }
-							    });
-								cbs[1].selectedProperty().addListener(new ChangeListener<Boolean>() {
-									public void changed(ObservableValue<? extends Boolean> ov,
-											Boolean old_val, Boolean new_val) {
-										System.out.println("Du trykket paa ned andre");
-									}
-								});
-								
-						        }
-						    });
 							
 						}
+						
+						add.setOnAction(new EventHandler<ActionEvent>() {
+							@Override public void handle(ActionEvent e) {
+								for (int i = 0; i < cbs.length; i++) {
+									cbs[i].setSelected(true);		
+								}
+							}
+						});
+						
+						close.setOnAction(new EventHandler<ActionEvent>() {
+							@Override public void handle(ActionEvent e) {
+								for (int j = 0; j < cbs.length-1; j++) {
+									if (cbs[j].isSelected()){
+										System.out.println(names1[j]);
+									}
+								}
+			
+								stage3.close();
+							}
+						});
 						
 						
 						
