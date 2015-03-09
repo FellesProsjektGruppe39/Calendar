@@ -9,6 +9,10 @@ import mysql.sqlRetrieve;;
  */
 public class CheckCalendar {
 	//sqlRetrieve info = new sqlRetrieve();
+	/**
+	 * @param brukerid
+	 * @return
+	 */
 	public static String PrintDay(int brukerid){
 		String str;
 		sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt, "
@@ -29,13 +33,14 @@ public class CheckCalendar {
 				+ " ORDER BY dato, starttidspunkt ASC");
 
 		
-		str = String.format(" %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","Date", "Start","End","Description","Room","Location","Attending");
+		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","MoteId", "Date", "Start","End","Description","Room","Location","Attending");
+
 		sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(* )FROM mote_has_bruker WHERE bruker_brukerid = " + "\"" + brukerid + "\"");
 		
 		
 		
 		for( int i=0; i < Integer.parseInt(moter.getQuery()[0][0]); i++){
-			str += String.format("\n %-10s - %-8s - %-8s - %-30s - %-20s - %-30s %-8s", info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6], info.getQuery()[i][7]);
+			str += String.format("\n %-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6]);
 					
 		}
 		
@@ -44,6 +49,8 @@ public class CheckCalendar {
 	}
 	public static String PrintWeek(int brukerid, int ukenr){
 		String str;
+		String str2;
+		
 		sqlRetrieve info = new sqlRetrieve(
 				"(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt, null AS romnavn, beskrivelse, sted, attending"
 				+ " FROM mote m1, mote_has_bruker mb1"
@@ -67,7 +74,9 @@ public class CheckCalendar {
 				+ "	AS temp2)"
 				+ " ORDER BY dato, starttidspunkt ASC");
 		
-		str = String.format(" %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","Date", "Start","End","Description","Room","Location","Attending");
+		
+//		sqlRetrieve info2 = new sqlRetrieve(""); 
+		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","MoteId", "Date", "Start","End","Description","Room","Location","Attending");
 		sqlRetrieve moter = new sqlRetrieve (
 				"SELECT COUNT(moteid)"
 				+ " FROM mote m"
@@ -77,7 +86,7 @@ public class CheckCalendar {
 				+ " AND WEEK(m.dato,5) = " + ukenr);
 				
 		for( int i=0; i < Integer.parseInt(moter.getQuery()[0][0]); i++){
-			str += String.format("\n %-10s - %-8s - %-8s - %-30s - %-20s - %-30s %-8s", info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6], info.getQuery()[i][7]);
+			str += String.format("\n %-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6]);
 					
 		}
 		
@@ -89,8 +98,8 @@ public class CheckCalendar {
 public static void main(String[] args) {
 	CheckCalendar test=new CheckCalendar();
 	
-	test.PrintWeek(1,10);
-//	test.PrintDay(1);
+//	test.PrintWeek(1,10);
+	test.PrintDay(1);
 	}
 }
 
