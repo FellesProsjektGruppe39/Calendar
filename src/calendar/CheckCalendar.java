@@ -7,6 +7,7 @@ import mysql.sqlRetrieve;;
  * @author Brage
  *
  */
+
 public class CheckCalendar {
 	//sqlRetrieve info = new sqlRetrieve();
 	/**
@@ -90,7 +91,7 @@ public class CheckCalendar {
 					
 		}
 		
-		System.out.println(str);
+//		System.out.println(str);
 		return str;
 	}
 

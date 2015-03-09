@@ -169,6 +169,7 @@ public class CreateMeeting {
 			
 		return addedUsers;	
 	}//ChooseUsers
+	
 	public void create(){
 		sqlExecute cre = new sqlExecute();
 		cre.execute("INSERT INTO mote (starttidspunkt,sluttidspunkt,beskrivelse,dato,opprettet_av) "
@@ -179,6 +180,7 @@ public class CreateMeeting {
 		this.moteid=Integer.parseInt((retrieve.getQuery()[lastmeeting-1][0]));
 		cre.execute("INSERT INTO mote_has_rom(mote_moteid,rom_romnavn) "
 				+ "VALUES('" +this.moteid +"','"+this.room+"')");
+		
 	}
 	public void CMeeting(){
 		this.setMeeting();

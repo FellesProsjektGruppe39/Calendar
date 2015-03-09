@@ -8,6 +8,7 @@ import Meeting.EditMeeting;
 
 import com.sun.glass.events.MouseEvent;
 
+import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -33,7 +34,7 @@ import javafx.stage.Stage;
 
 public class CreateCalendar extends Application  {
 
-	private static int BID = 1;
+	private static int BID = 3;
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
@@ -55,7 +56,7 @@ public class CreateCalendar extends Application  {
 		grid.setVgap(10);
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		
-		Scene scene = new Scene(grid, 680, 500);
+		Scene scene = new Scene(grid, 1000, 1000);
 		stage.setScene(scene);
 		stage.setTitle("Calendar");
 		stage.show();
@@ -77,20 +78,75 @@ public class CreateCalendar extends Application  {
 		Button cl = new Button("Close");
 		Button update = new Button("Update");
 		Button newGroup = new Button("New Group");
-		Button changeMeeting = new Button("Change Meeting");
+		Button changeMeeting = new Button("Edit Meeting");
 		grid.add(cl, 2, 20,1,1);
-		grid.add(newMeeting, 2, 0,1,1);
+		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
-		grid.add(newGroup,2,1,1,1);
-		grid.add(changeMeeting, 2,2,1,1);
+		grid.add(newGroup,2,2,1,1);
+		grid.add(changeMeeting, 2,3,1,1);
 		
+		
+		changeMeeting.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				final Stage stage2 = new Stage();
+				GridPane grid = new GridPane();
+				grid.setAlignment(Pos.TOP_LEFT);
+				grid.setHgap(50);
+				grid.setVgap(10);
+				grid.setPadding(new Insets(10, 10, 10, 10));
+				Scene scene1 = new Scene(grid, 450, 500);
+				stage2.setScene(scene1);
+				stage2.setTitle("Change Meeting");
+				stage2.show();
+				
+				Button cl = new Button("Save and Exit");
+				
+				grid.add(cl, 2, 6);
+				
+				
+				
+				
+				cl.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						stage2.close();
+					}
+				});
+			}
+		});
+		
+		newGroup.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				final Stage stage2 = new Stage();
+				GridPane grid = new GridPane();
+				grid.setAlignment(Pos.TOP_LEFT);
+				grid.setHgap(50);
+				grid.setVgap(10);
+				grid.setPadding(new Insets(10, 10, 10, 10));
+				Scene scene1 = new Scene(grid, 450, 500);
+				stage2.setScene(scene1);
+				stage2.setTitle("New Group");
+				stage2.show();
+				
+				Button cl = new Button("Save and Exit");
+				
+				grid.add(cl, 2, 2);
+				
+				
+				
+				
+				cl.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						stage2.close();
+					}
+				});
+			}
+		});
 		
 		newMeeting.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				
 				final CreateMeeting mote = new CreateMeeting(BID);
-				
-					
+	
 				final Stage stage1 = new Stage();
 				GridPane grid = new GridPane();
 				grid.setAlignment(Pos.TOP_LEFT);
@@ -101,6 +157,7 @@ public class CreateCalendar extends Application  {
 				stage1.setScene(scene1);
 				stage1.setTitle("New Meeting");
 				stage1.show();	
+				
 				final Text start = new Text("Start-tidspunkt(hh:mm:ss): ");
 				final Text slutt = new Text("Slutt-tidspunkt(hh:mm:ss): ");
 				final Text beskrivelse = new Text("Beskrivelse: ");
@@ -111,6 +168,7 @@ public class CreateCalendar extends Application  {
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField dato1 = new TextField();
 				final TextField antall1 = new TextField();
+				
 				Button cl = new Button("Save and Exit");
 				Button cl1 = new Button("Cancel");
 				
@@ -138,6 +196,8 @@ public class CreateCalendar extends Application  {
 						int Mid = Integer.parseInt(MID);
 						final EditMeeting editmote = new EditMeeting(Mid);
 						editmote.leggtilbruker(BID);
+						sqlExecute create = new sqlExecute();
+						create.execute("UPDATE mote_has_bruker SET attending ='" + 1 + "' WHERE mote_moteid = '" + MID + "'");
 						stage1.close();
 					}
 				});
@@ -172,6 +232,7 @@ public class CreateCalendar extends Application  {
 		String fornavn = getName.getQuery()[0][1];
 		String etterNavn = getName.getQuery()[0][2];
 		return fornavn + " " + etterNavn;
+		
 	}
 	
 //	@FXML
