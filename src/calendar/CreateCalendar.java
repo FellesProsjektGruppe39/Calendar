@@ -17,13 +17,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -146,7 +149,6 @@ public class CreateCalendar extends Application  {
 			@Override public void handle(ActionEvent e) {
 				
 				final CreateMeeting mote = new CreateMeeting(BID);
-	
 				final Stage stage1 = new Stage();
 				GridPane grid = new GridPane();
 				grid.setAlignment(Pos.TOP_LEFT);
@@ -162,15 +164,25 @@ public class CreateCalendar extends Application  {
 				final Text slutt = new Text("Slutt-tidspunkt(hh:mm:ss): ");
 				final Text beskrivelse = new Text("Beskrivelse: ");
 				final Text dato = new Text("Dato(yyyy-mm-dd): ");
-				final Text antall = new Text("Antall: ");
+//				final Text antall = new Text("Antall: ");
 				final TextField start1 = new TextField();
 				final TextField slutt1 = new TextField();
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField dato1 = new TextField();
-				final TextField antall1 = new TextField();
+//				final TextField antall1 = new TextField();
+				
 				
 				Button cl = new Button("Save and Exit");
 				Button cl1 = new Button("Cancel");
+				
+				String names = getNames();
+				int count = names.length() - names.replace(";", "").length();
+				
+				for (int i = 0; i < count; i++) {
+				    CheckBox cb = new CheckBox(names.substring(0, names.indexOf(";")));
+				    names = names.substring(names.indexOf(";") +1 , names.length());
+				    grid.add(cb, 3, i);
+				}
 				
 				grid.add(cl, 2, 20);
 				grid.add(cl1, 1, 20);
@@ -182,9 +194,8 @@ public class CreateCalendar extends Application  {
 				grid.add(beskrivelse1, 2,7);
 				grid.add(dato, 1, 13);
 				grid.add(dato1, 2, 13);
-				grid.add(antall, 1, 15);
-				grid.add(antall1, 2, 15);
-				
+//				grid.add(antall, 1, 15);
+//				grid.add(antall1, 2, 15);
 				
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
@@ -233,6 +244,18 @@ public class CreateCalendar extends Application  {
 		String etterNavn = getName.getQuery()[0][2];
 		return fornavn + " " + etterNavn;
 		
+	}
+	public String getNames(){
+		String str = "";
+		sqlRetrieve getName = new sqlRetrieve("SELECT fornavn, etternavn FROM bruker");
+		int l = getName.getQuery().length;
+		for (int i = 0; i < l; i++) {
+		String fornavn = getName.getQuery()[i][0];
+		String etterNavn = getName.getQuery()[i][1];
+		str += fornavn + " " + etterNavn + "; ";
+		}
+//		System.out.println(str);
+		return str;
 	}
 	
 //	@FXML
@@ -297,7 +320,8 @@ public class CreateCalendar extends Application  {
 	
 	public static void main(String[] args) {
 		launch(CreateCalendar.class, args);
-		
+//		CreateCalendar a = new CreateCalendar();
+//		a.getNames();
 		
 	}
 }
