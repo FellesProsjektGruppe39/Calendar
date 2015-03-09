@@ -12,6 +12,8 @@ import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -27,6 +29,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -172,17 +175,9 @@ public class CreateCalendar extends Application  {
 //				final TextField antall1 = new TextField();
 				
 				
-				Button cl = new Button("Save and Exit");
+				Button cl = new Button("Add Users to Meeting");
 				Button cl1 = new Button("Cancel");
 				
-				String names = getNames();
-				int count = names.length() - names.replace(";", "").length();
-				
-				for (int i = 0; i < count; i++) {
-				    CheckBox cb = new CheckBox(names.substring(0, names.indexOf(";")));
-				    names = names.substring(names.indexOf(";") +1 , names.length());
-				    grid.add(cb, 3, i);
-				}
 				
 				grid.add(cl, 2, 20);
 				grid.add(cl1, 1, 20);
@@ -198,9 +193,59 @@ public class CreateCalendar extends Application  {
 //				grid.add(antall1, 2, 15);
 				
 				cl.setOnAction(new EventHandler<ActionEvent>() {
+					@SuppressWarnings("null")
 					@Override public void handle(ActionEvent e) {
-						mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), dato1.getText(), antall1.getText());
-						mote.ChooseRoomGUI();
+						final Stage stage3 = new Stage();
+						GridPane grid = new GridPane();
+						grid.setAlignment(Pos.TOP_LEFT);
+						grid.setHgap(50);
+						grid.setVgap(10);
+						grid.setPadding(new Insets(10, 10, 10, 10));
+						Scene scene1 = new Scene(grid, 450, 500);
+						stage3.setScene(scene1);
+						stage3.setTitle("Add Users");
+						stage3.show();
+//						ScrollPane sb = new ScrollPane();
+////						sb.setOrientation(Orientation.VERTICAL);
+//						grid.add(sb, 0, 1, 10 ,1);
+						
+						Button close = new Button("Close");
+						Button add = new Button("Add All");
+						grid.add(close, 4, 4);
+						grid.add(add, 4, 7);
+						
+						String[] names = getNames();
+						final CheckBox[] cbs = new CheckBox[names.length];
+						
+						for (int i = 0; i < names.length -1 ; i++) {
+							final CheckBox cb = cbs[i] = new CheckBox(names[i]);
+							grid.add(cb, 1, i+2);
+							
+							cb.selectedProperty().addListener(new ChangeListener<Boolean>() {
+						        public void changed(ObservableValue<? extends Boolean> ov,
+						            Boolean old_val, Boolean new_val) {
+								cbs[0].selectedProperty().addListener(new ChangeListener<Boolean>() {
+							        public void changed(ObservableValue<? extends Boolean> ov,
+							            Boolean old_val, Boolean new_val) {
+							        	System.out.println("Du trukket naa paa den forste");
+							        }
+							    });
+								cbs[1].selectedProperty().addListener(new ChangeListener<Boolean>() {
+									public void changed(ObservableValue<? extends Boolean> ov,
+											Boolean old_val, Boolean new_val) {
+										System.out.println("Du trykket paa ned andre");
+									}
+								});
+								
+						        }
+						    });
+							
+						}
+						
+						
+						
+						mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), dato1.getText());
+//						mote.ChooseRoomGUI();
 						mote.create();
 						sqlRetrieve mid = new sqlRetrieve("SELECT MAX(moteid) FROM mote");
 						String MID = mid.getQuery()[0][0];
@@ -245,17 +290,20 @@ public class CreateCalendar extends Application  {
 		return fornavn + " " + etterNavn;
 		
 	}
-	public String getNames(){
+	public String[] getNames(){
 		String str = "";
 		sqlRetrieve getName = new sqlRetrieve("SELECT fornavn, etternavn FROM bruker");
 		int l = getName.getQuery().length;
 		for (int i = 0; i < l; i++) {
 		String fornavn = getName.getQuery()[i][0];
 		String etterNavn = getName.getQuery()[i][1];
-		str += fornavn + " " + etterNavn + "; ";
+		str += fornavn + " " + etterNavn + ", ";
 		}
-//		System.out.println(str);
-		return str;
+		String[] names1 = str.split(",");
+//		names1[2].trim();
+		
+//		System.out.println(names1.length);
+		return names1;
 	}
 	
 //	@FXML
