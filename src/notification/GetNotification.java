@@ -7,7 +7,7 @@ public class GetNotification {
 	private int brukerid;
 	public String out = "";
 	
-	GetNotification(int brukerid){
+	public GetNotification(int brukerid){
 		this.brukerid = brukerid;
 	}
 	

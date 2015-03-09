@@ -1,6 +1,9 @@
 package calendar;
 
 import java.awt.SecondaryLoop;
+
+import notification.GetNotification;
+
 import java.io.IOException;
 
 import Meeting.CreateMeeting;
@@ -32,15 +35,17 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import notification.notificationTest;
 public class CreateCalendar extends Application  {
 
-	private static int BID = 3;
+	private static int BID = 5;
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
@@ -66,6 +71,37 @@ public class CreateCalendar extends Application  {
 		stage.setScene(scene);
 		stage.setTitle("Calendar");
 		stage.show();
+		
+		GetNotification getNot = new GetNotification(BID);
+		String insertionstring = getNot.get();
+		insertionstring += getNot.get();
+		insertionstring += getNot.get();
+		insertionstring += getNot.get();
+		insertionstring += getNot.get();
+		insertionstring += getNot.get();
+		insertionstring += getNot.get();
+		insertionstring += getNot.get();
+		insertionstring += getNot.get();
+		insertionstring += getNot.get();
+		
+		BorderPane borderPane = new BorderPane();
+        VBox myView = new VBox();
+        
+		Text text = new Text(insertionstring);
+		text.setWrappingWidth(500);
+        myView.getChildren().addAll(text);
+        
+        ScrollPane scroll = new ScrollPane();
+        scroll.setContent(myView);
+        scroll.fitToWidthProperty();
+        scroll.setMaxHeight(200);
+        scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        borderPane.setCenter(scroll);
+        grid.add(scroll,0,30);
+        
+		
+		
+		
 		
 		Text name1 = new Text("Name: ");
 		name1.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
