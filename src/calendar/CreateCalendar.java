@@ -169,8 +169,8 @@ public class CreateCalendar extends Application  {
 	
 	public String getName(int bid){
 		sqlRetrieve getName = new sqlRetrieve("SELECT * FROM bruker WHERE brukerid ='" + bid + "';");
-		String fornavn = getName.getQuery()[0][1];
-		String etterNavn = getName.getQuery()[0][2];
+		String fornavn = getName.getQuery()[0][0];
+		String etterNavn = getName.getQuery()[0][1];
 		return fornavn + " " + etterNavn;
 	}
 	
