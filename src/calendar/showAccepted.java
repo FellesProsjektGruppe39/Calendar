@@ -86,9 +86,15 @@ public class showAccepted extends Application {
 		+ "ORDER BY dato, starttidspunkt ASC");
 		
 		final ArrayList<Integer> moteid = new ArrayList<Integer>();
+		final ArrayList<Label> print = new ArrayList<Label>();
 		
 		String str;
 		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","MoteId", "Date", "Start","End","Description","Room","Location","Attending");
+		
+		print.add(new Label(str));
+		print.get(0).setFont(Font.font("Consolas"));
+		grid.add(print.get(0), 0, 0, 1, 1);
+		
 		
 		final ArrayList<ChoiceBox> cb = new ArrayList<ChoiceBox>();	
 		
@@ -97,17 +103,20 @@ public class showAccepted extends Application {
 			cb.add(new ChoiceBox(FXCollections.observableArrayList(0, 1, 2)));
 			cb.get(i).setValue(1);
 			moteid.add(Integer.parseInt(info.getQuery()[i][0]));
-			
-			grid.add(cb.get(i), 2, i, 1, 1);
-			
-			str += String.format("\n %-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s %-1s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6], info.getQuery()[i][7]);
-					
+			String a = String.format("%-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s %-1s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6], info.getQuery()[i][7]);					
+			print.add(new Label(a));
+			print.get(i+1).setFont(Font.font("Consolas"));
+			grid.add(print.get(i+1), 0, i+1, 1, 1);
+			grid.add(cb.get(i), 1, i+1, 1, 1);
 		}
 		
+<<<<<<< Updated upstream
 		Label meeting = new Label(str);
 		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 		grid.add(meeting, 0, 0, 1, 10);
 		
+=======
+>>>>>>> Stashed changes
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 		@Override public void handle(ActionEvent e) {
 		    stage.close();
