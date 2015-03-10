@@ -71,23 +71,25 @@ public class CreateCalendar extends Application  {
 		stage.setTitle("Calendar");
 		stage.show();
 		
+		// Notifications
 		GetNotification getNot = new GetNotification(BID);
 		String insertionstring = getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
 		
 		BorderPane borderPane = new BorderPane();
         VBox myView = new VBox();
         
 		Text text = new Text(insertionstring);
-		text.setWrappingWidth(500);
+		text.setFont(Font.font("Consolas"));
+		text.setWrappingWidth(1000);
         myView.getChildren().addAll(text);
         
         ScrollPane scroll = new ScrollPane();
