@@ -10,7 +10,6 @@ import Meeting.EditMeeting;
 
 import com.sun.glass.events.MouseEvent;
 
-import logIn.LogIn;
 import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 import javafx.application.Application;
@@ -49,7 +48,6 @@ public class CreateCalendar extends Application  {
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
-	private int antall = 0;
 	
 	public void setBrukerid(int id){
 		this.brukerid = id;
@@ -88,11 +86,9 @@ public class CreateCalendar extends Application  {
 		
 		BorderPane borderPane = new BorderPane();
         VBox myView = new VBox();
-        BorderPane borderPane1 = new BorderPane();
-        
         
 		Text text = new Text(insertionstring);
-		text.setFont(Font.font("Consolas", FontWeight.NORMAL, 20));
+		text.setFont(Font.font("Consolas",FontWeight.NORMAL, 20));
 		text.setWrappingWidth(1000);
         myView.getChildren().addAll(text);
         
@@ -102,15 +98,7 @@ public class CreateCalendar extends Application  {
         scroll.setMaxHeight(200);
         scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         borderPane.setCenter(scroll);
-        grid.add(scroll,0,30, 10, 10);
-        
-        ScrollPane scroll1 = new ScrollPane();
-        scroll1.fitToWidthProperty();
-        scroll1.setMaxHeight(600);
-        scroll1.setPrefHeight(200);
-        scroll1.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        borderPane1.setCenter(scroll1);
-        grid.add(scroll1,0,6,10,10);
+        grid.add(scroll,0,30);
         
 		
 		
@@ -125,42 +113,19 @@ public class CreateCalendar extends Application  {
 		grid.add(name2, 0, 0, 1, 5);
 		
 		Label meeting = new Label(CheckCalendar.PrintDay(BID));
-
-		scroll1.setContent(meeting);
-//		grid.add(meeting, 0, 6, 1, 10);
-
-		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 20));
+		meeting.setFont(Font.font("Consolas",FontWeight.NORMAL, 20));
 		grid.add(meeting, 0, 6, 1, 10);
-
+		
 		Button newMeeting = new Button("New Meeting");
 		Button cl = new Button("Close");
 		Button update = new Button("Update");
 		Button newGroup = new Button("New Group");
 		Button changeMeeting = new Button("Edit Meeting");
-		Button showAttendings = new Button("Show unanswered meetings");
 		grid.add(cl, 2, 20,1,1);
 		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
 		grid.add(newGroup,2,2,1,1);
 		grid.add(changeMeeting, 2,3,1,1);
-		grid.add(showAttendings, 0,21,1,1);
-		
-
-		showAttendings.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
-
-		        	showAttendings show = new showAttendings();
-		        	show.setBrukerid(BID);
-	                Stage stage = new Stage();
-	                try {
-						show.start(stage);
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-			}
-		});
-
 		
 		
 		changeMeeting.setOnAction(new EventHandler<ActionEvent>() {
@@ -229,7 +194,7 @@ public class CreateCalendar extends Application  {
 				grid.setHgap(50);
 				grid.setVgap(10);
 				grid.setPadding(new Insets(10, 10, 10, 10));
-				Scene scene1 = new Scene(grid, 460, 500);
+				Scene scene1 = new Scene(grid, 450, 500);
 				stage1.setScene(scene1);
 				stage1.setTitle("New Meeting");
 				stage1.show();	
@@ -266,12 +231,6 @@ public class CreateCalendar extends Application  {
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@SuppressWarnings("null")
 					@Override public void handle(ActionEvent e) {
-						
-						sqlRetrieve mid = new sqlRetrieve("SELECT MAX(moteid) FROM mote");
-						String MID = mid.getQuery()[0][0];
-						int Mid = Integer.parseInt(MID);
-						final EditMeeting meeting = new EditMeeting(Mid);
-						
 						final Stage stage3 = new Stage();
 						GridPane grid = new GridPane();
 						grid.setAlignment(Pos.TOP_LEFT);
@@ -282,22 +241,23 @@ public class CreateCalendar extends Application  {
 						stage3.setScene(scene1);
 						stage3.setTitle("Add Users");
 						stage3.show();
-						
+//						ScrollPane sb = new ScrollPane();
+////						sb.setOrientation(Orientation.VERTICAL);
+//						grid.add(sb, 0, 1, 10 ,1);
 						
 						Button close = new Button("Save And Exit");
 						Button add = new Button("Add All");
-						grid.add(close, 2, 4);
-						grid.add(add, 2, 2);
+						grid.add(close, 4, 2);
+						grid.add(add, 4, 7);
 						
 						String[] names = getNames();
 						final String[] names1 = names;
 						final CheckBox[] cbs = new CheckBox[names.length];
 						
-						for (int i = 0; i < names.length; i++) {
+						for (int i = 0; i < names.length -1 ; i++) {
 							final CheckBox cb = cbs[i] = new CheckBox(names[i]);
-							if(!cbs[i].getText().equals(names1[BID-1])){
-								grid.add(cb, 1, i+2);
-							}
+							grid.add(cb, 1, i+2);
+							
 							
 						}
 						
@@ -309,26 +269,28 @@ public class CreateCalendar extends Application  {
 							}
 						});
 						
-						
 						close.setOnAction(new EventHandler<ActionEvent>() {
 							@Override public void handle(ActionEvent e) {
 								for (int j = 0; j < cbs.length-1; j++) {
 									if (cbs[j].isSelected()){
-										meeting.leggtilbruker(getID(cbs[j].getText()));
-										antall += 1;
-										
+										System.out.println(names1[j]);
 									}
 								}
+			
 								stage3.close();
 							}
 						});
 						
 						
 						
-						mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), dato1.getText(), antall);
-						mote.ChooseRoomGUI();
+						mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), dato1.getText());
+//						mote.ChooseRoomGUI();
 						mote.create();
-						meeting.leggtilbruker(BID);
+						sqlRetrieve mid = new sqlRetrieve("SELECT MAX(moteid) FROM mote");
+						String MID = mid.getQuery()[0][0];
+						int Mid = Integer.parseInt(MID);
+						final EditMeeting editmote = new EditMeeting(Mid);
+						editmote.leggtilbruker(BID);
 						sqlExecute create = new sqlExecute();
 						create.execute("UPDATE mote_has_bruker SET attending ='" + 1 + "' WHERE mote_moteid = '" + MID + "'");
 						stage1.close();
@@ -367,7 +329,6 @@ public class CreateCalendar extends Application  {
 		return fornavn + " " + etterNavn;
 		
 	}
-	
 	public String[] getNames(){
 		String str = "";
 		sqlRetrieve getName = new sqlRetrieve("SELECT fornavn, etternavn FROM bruker");
@@ -375,25 +336,13 @@ public class CreateCalendar extends Application  {
 		for (int i = 0; i < l; i++) {
 		String fornavn = getName.getQuery()[i][0];
 		String etterNavn = getName.getQuery()[i][1];
-		str +=  " " + fornavn + " " + etterNavn + ",";
+		str += fornavn + " " + etterNavn + ", ";
 		}
 		String[] names1 = str.split(",");
 //		names1[2].trim();
 		
 //		System.out.println(names1.length);
 		return names1;
-	}
-	
-	public int getID(String navn){
-		int ID;
-		String[] na = navn.split(" ");
-		if(na.length > 3){
-		na[2] = na[2] +" "+na[3];
-		}
-		sqlRetrieve getID = new sqlRetrieve("SELECT brukerid FROM bruker WHERE fornavn = '" + na[1] + "'AND"+ " etternavn = '" + na[2]+"'");
-		ID = Integer.parseInt(getID.getQuery()[0][0]);
-//		System.out.println(ID);
-		return BID;
 	}
 	
 //	@FXML
@@ -459,7 +408,7 @@ public class CreateCalendar extends Application  {
 	public static void main(String[] args) {
 		launch(CreateCalendar.class, args);
 //		CreateCalendar a = new CreateCalendar();
-//		a.getID(" Martin Raknes Holth");
+//		a.getNames();
 		
 	}
 }
