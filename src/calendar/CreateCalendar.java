@@ -111,6 +111,7 @@ public class CreateCalendar extends Application  {
 		grid.add(name2, 0, 0, 1, 5);
 		
 		Label meeting = new Label(CheckCalendar.PrintDay(BID));
+		meeting.setFont(Font.font("Consolas"));
 		grid.add(meeting, 0, 6, 1, 10);
 		
 		Button newMeeting = new Button("New Meeting");

@@ -97,10 +97,13 @@ public class CheckCalendar {
 
 
 public static void main(String[] args) {
-	CheckCalendar test=new CheckCalendar();
+	CheckCalendar test = new CheckCalendar();
+	System.out.println(test.PrintDay(5));
 	
-//	test.PrintWeek(1,10);
-	test.PrintDay(1);
+	//CheckCalendar test=new CheckCalendar();
+	
+	//	test.PrintWeek(1,10);
+	//test.PrintDay(1);
 	}
 }
 
