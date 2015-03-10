@@ -110,13 +110,7 @@ public class showAccepted extends Application {
 			grid.add(cb.get(i), 1, i+1, 1, 1);
 		}
 		
-<<<<<<< Updated upstream
-		Label meeting = new Label(str);
-		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
-		grid.add(meeting, 0, 0, 1, 10);
-		
-=======
->>>>>>> Stashed changes
+
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 		@Override public void handle(ActionEvent e) {
 		    stage.close();
