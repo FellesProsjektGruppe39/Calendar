@@ -87,14 +87,14 @@ public class EditMeeting {
 		
 		public void leggtilbruker(int brukerid){
 			
-			sqlRetrieve info = new sqlRetrieve("SELECT bruker_brukerid, mote_moteid, beskrivelse, starttidspunkt, sluttidspunkt, dato"
-					+ " FROM mote_has_bruker, mote"
-					+ " WHERE mote_moteid = moteid"
-					+ " AND mote_moteid = " + this.moteid);
+			sqlRetrieve info = new sqlRetrieve("SELECT moteid, beskrivelse, starttidspunkt, sluttidspunkt, dato"
+					+ " FROM  mote"
+					+ " WHERE moteid = " + this.moteid);
+				
 			
 			
-				cn.create(brukerid, "Du har blitt invitert til " + info.getQuery()[0][2] + " den " + info.getQuery()[0][5] 
-						+ " fra " + info.getQuery()[0][3] + " til " + info.getQuery()[0][4]);
+				cn.create(brukerid, "Du har blitt invitert til " + info.getQuery()[0][1] + " den " + info.getQuery()[0][4] 
+						+ " fra " + info.getQuery()[0][2] + " til " + info.getQuery()[0][3]);
 						
 			
 		
