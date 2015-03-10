@@ -22,6 +22,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -44,22 +45,27 @@ public class showAttendings extends Application {
 	
 	public void start(final Stage stage) throws IOException {
 		
-		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.CENTER);
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(25, 25, 25, 25));
+		GridPane grid2 = new GridPane();
+		grid2.setAlignment(Pos.CENTER);
+		grid2.setHgap(10);
+		grid2.setVgap(10);
+		grid2.setPadding(new Insets(25, 25, 25, 25));
 		
-		Scene scene = new Scene(grid, 1100, 600);
+		GridPane grid = new GridPane();
+		
+		ScrollPane sp = new ScrollPane(grid);
+		grid2.add(sp, 0, 1);
+		
+		Scene scene = new Scene(grid2, 1100, 600);
 		stage.setScene(scene);
 		stage.setTitle("Ikke-besvarte møteinnkallelser");
 		stage.show();
 		
 		Button cl = new Button("Close");
-		grid.add(cl, 0,10);
+		grid2.add(cl, 0,10);
 		
 		Button save = new Button("Save");
-		grid.add(save, 0,11);
+		grid2.add(save, 0,11);
 		
 		sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
 		+ "FROM mote m1, mote_has_bruker mb1 "
