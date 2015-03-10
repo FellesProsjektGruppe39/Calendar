@@ -38,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -249,7 +250,7 @@ public class CreateCalendar extends Application  {
 			@Override public void handle(ActionEvent e) {
 				
 				final Stage stage1 = new Stage();
-				GridPane grid = new GridPane();
+				final GridPane grid = new GridPane();
 				grid.setAlignment(Pos.TOP_LEFT);
 				grid.setHgap(50);
 				grid.setVgap(10);
@@ -267,12 +268,12 @@ public class CreateCalendar extends Application  {
 				final TextField slutt1 = new TextField();
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField dato1 = new TextField();
-				
+				final Text text3 = new Text();
 				
 				Button cl = new Button("Add Users to Meeting");
 				Button cl1 = new Button("Cancel");
 				
-				
+				grid.add(text3, 2, 15);
 				grid.add(cl, 2, 20);
 				grid.add(cl1, 1, 20);
 				grid.add(start, 1, 3);
@@ -287,8 +288,13 @@ public class CreateCalendar extends Application  {
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@SuppressWarnings("null")
 					@Override public void handle(ActionEvent e) {
+						CheckCalendar c = new CheckCalendar();
 						
-						
+						if (!c.checkinput(start1.getText(), slutt1.getText(), dato1.getText())){
+							text3.setText("FEIL");
+							text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+							text3.setFill(Color.RED);
+						}else{
 						final Stage stage3 = new Stage();
 						GridPane grid = new GridPane();
 						grid.setAlignment(Pos.TOP_LEFT);
@@ -299,12 +305,11 @@ public class CreateCalendar extends Application  {
 						stage3.setScene(scene1);
 						stage3.setTitle("Add Users");
 						stage3.show();
-						
-						
 						Button close = new Button("Save And Exit");
 						Button add = new Button("Add All");
 						grid.add(close, 2, 4);
 						grid.add(add, 2, 2);
+						
 						
 						String[] names = getNames();
 						final String[] names1 = names;
@@ -339,6 +344,7 @@ public class CreateCalendar extends Application  {
 								stage3.close();
 								
 								final CreateMeeting mote = new CreateMeeting(BID);
+								
 								mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), dato1.getText(), antall);
 								mote.ChooseRoomGUI();
 								mote.create();
@@ -363,7 +369,7 @@ public class CreateCalendar extends Application  {
 						});
 						
 						
-						
+						}	
 					}
 				});
 				cl1.setOnAction(new EventHandler<ActionEvent>() {

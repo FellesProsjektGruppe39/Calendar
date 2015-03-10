@@ -1,6 +1,8 @@
 package calendar;
 import java.util.Scanner;
 
+import com.oracle.jrockit.jfr.TimedEvent;
+
 import mysql.sqlRetrieve;;
 
 /**
@@ -101,7 +103,10 @@ public class CheckCalendar {
 //		System.out.println(str);
 		return str;
 	}
-
+public boolean checkinput(String string, String string2, String string3){
+	return true;
+	
+}
 
 public static void main(String[] args) {
 	CheckCalendar test = new CheckCalendar();
