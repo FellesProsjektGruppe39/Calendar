@@ -36,12 +36,12 @@ public class CreateMeeting {
 		this.capacity=Integer.parseInt(scanner.nextLine());
 
 	}
-	public void setMeeting(String startTid, String sluttTid,String beskrivelse, String date){
+	public void setMeeting(String startTid, String sluttTid,String beskrivelse, String date, int capacity){
 		this.startTid = startTid;
 		this.sluttTid = sluttTid;
 		this.Beskrivelse = beskrivelse;
 		this.date= date;
-//		this.capacity=Integer.parseInt(capacity);
+		this.capacity=(capacity);
 
 	}
 	
