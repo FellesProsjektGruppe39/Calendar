@@ -49,10 +49,7 @@ public class CheckCalendar {
 		}
 		
 //		System.out.println(str);
-<<<<<<< HEAD
 
-=======
->>>>>>> f32b80359e5c7cec173deaaef74bb62392e53d86
 		return str;
 	}
 	public static String PrintWeek(int brukerid, int ukenr){
