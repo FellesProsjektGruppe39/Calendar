@@ -1,12 +1,16 @@
 package Meeting;
 import java.util.ArrayList;
+import notification.CreateNotification;
 
 import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 public class EditMeeting {
 	
 	
-		
+	
+	
+	
+		CreateNotification cn = new CreateNotification();
 		sqlExecute sql = new sqlExecute();
 		
 		private int moteid;
@@ -15,7 +19,11 @@ public class EditMeeting {
 			this.moteid = moteid;
 		}
 		public void DeleteMeeting(){
+			
 			sql.execute("DELETE FROM mote WHERE moteid ='"+this.moteid+ "'");
+			
+			
+			
 		}
 		public void endreBeskrivelse(String Beskrivelse) {
 			
