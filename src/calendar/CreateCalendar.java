@@ -133,12 +133,14 @@ public class CreateCalendar extends Application  {
 		Button newGroup = new Button("New Group");
 		Button changeMeeting = new Button("Edit Meeting");
 		Button showAttendings = new Button("Show unanswered meetings");
+		Button showDeclines = new Button("Show declined meetings");
 		grid.add(cl, 2, 20,1,1);
 		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
 		grid.add(newGroup,2,2,1,1);
 		grid.add(changeMeeting, 2,3,1,1);
 		grid.add(showAttendings, 0,21,1,1);
+		grid.add(showDeclines, 0,22,1,1);
 		
 
 		showAttendings.setOnAction(new EventHandler<ActionEvent>() {
@@ -155,8 +157,21 @@ public class CreateCalendar extends Application  {
 					}
 			}
 		});
-
 		
+		showDeclines.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+
+		        	showDeclines show = new showDeclines();
+		        	show.setBrukerid(BID);
+	                Stage stage = new Stage();
+	                try {
+						show.start(stage);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			}
+		});
 		
 		changeMeeting.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {

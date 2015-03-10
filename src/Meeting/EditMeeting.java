@@ -203,9 +203,8 @@ public class EditMeeting {
 		
 		public static void main(String[] args) {
 
-			EditMeeting meeting = new EditMeeting(34);
-			meeting.DeleteMeeting();
-			
+			EditMeeting meeting = new EditMeeting(11);
+			meeting.endreSluttid("23:59:59");
 			
 		}
 	}

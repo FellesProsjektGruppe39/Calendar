@@ -22,13 +22,15 @@ public class CheckCalendar {
 				+ " (SELECT moteid FROM mote m2, mote_has_bruker mb2, mote_has_rom mr2 "
 				+ " WHERE mb2.bruker_brukerid= " + brukerid + " AND mr2.mote_moteid = m2.moteid "
 				+ " AND mb2.mote_moteid = m2.moteid) AND m1.moteid = mb1.mote_moteid"
-				+ " AND mb1.bruker_brukerid = " + brukerid +") AS temp1)"
+				+ " AND mb1.bruker_brukerid = " + brukerid 
+				+ " AND mb1.attending = 1) AS temp1)"
 				+ " UNION "
 				+"	(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn, m3.beskrivelse, m3.sted, mb3.attending"
 				+ "	FROM mote m3, mote_has_bruker mb3,mote_has_rom mr3 "
 				+ "	WHERE mb3.bruker_brukerid= " + brukerid
 				+ " AND mr3.mote_moteid = m3.moteid"
 				+ "	AND mb3.mote_moteid = m3.moteid"
+				+ " AND mb3.attending = 1"
 				+ "	ORDER BY dato, starttidspunkt ASC)"
 				+ "	AS temp2)"
 				+ " ORDER BY dato, starttidspunkt ASC");
@@ -36,7 +38,8 @@ public class CheckCalendar {
 		
 		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","MoteId", "Date", "Start","End","Description","Room","Location","Attending");
 
-		sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(* )FROM mote_has_bruker WHERE bruker_brukerid = " + "\"" + brukerid + "\"");
+		sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(* )FROM mote_has_bruker WHERE bruker_brukerid = " + brukerid 
+				+ " AND attending = 1");
 		
 		
 		
@@ -46,6 +49,7 @@ public class CheckCalendar {
 		}
 		
 //		System.out.println(str);
+
 		return str;
 	}
 	public static String PrintWeek(int brukerid, int ukenr){
@@ -57,12 +61,13 @@ public class CheckCalendar {
 				+ " FROM mote m1, mote_has_bruker mb1"
 				+ " WHERE m1.moteid NOT IN"
 				+ " (SELECT moteid FROM mote m2, mote_has_bruker mb2, mote_has_rom mr2 "
-				+ " WHERE mb2.bruker_brukerid= " + brukerid + " "
-				+  "AND mr2.mote_moteid = m2.moteid "
+				+ " WHERE mb2.bruker_brukerid= " + brukerid 
+				+ " AND mr2.mote_moteid = m2.moteid "
 				+ " AND mb2.mote_moteid = m2.moteid)"
 				+ " AND m1.moteid = mb1.mote_moteid"
 				+ " AND mb1.bruker_brukerid = " + brukerid 
-				+ " AND WEEK(m1.dato,5) = " + ukenr + ")"
+				+ " AND WEEKOFYEAR(m1.dato) = " + ukenr 
+				+ " AND mb1.attending = 1)"
 				+ " AS temp1)"
 				+ " UNION "
 				+"	(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn, m3.beskrivelse, m3.sted, mb3.attending"
@@ -70,7 +75,8 @@ public class CheckCalendar {
 				+ "	WHERE mb3.bruker_brukerid= " + brukerid
 				+ " AND mr3.mote_moteid = m3.moteid"
 				+ "	AND mb3.mote_moteid = m3.moteid"
-				+ " AND WEEK(m3.dato,5) = " + ukenr
+				+ " AND WEEKOFYEAR(m3.dato) = " + ukenr
+				+ " AND mb3.attending = 1"
 				+ "	ORDER BY dato, starttidspunkt ASC)"
 				+ "	AS temp2)"
 				+ " ORDER BY dato, starttidspunkt ASC");
@@ -84,7 +90,8 @@ public class CheckCalendar {
 				+ " INNER JOIN mote_has_bruker mb "
 				+ " ON m.moteid = mb.mote_moteid"
 				+ " WHERE mb.bruker_brukerid = " + brukerid
-				+ " AND WEEK(m.dato,5) = " + ukenr);
+				+ " AND WEEKOFYEAR(m.dato) = " + ukenr
+				+ " AND mb.attending = 1");
 				
 		for( int i=0; i < Integer.parseInt(moter.getQuery()[0][0]); i++){
 			str += String.format("\n %-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6]);
@@ -98,12 +105,12 @@ public class CheckCalendar {
 
 public static void main(String[] args) {
 	CheckCalendar test = new CheckCalendar();
-	System.out.println(test.PrintDay(5));
+	//System.out.println(test.PrintDay(5));
 	
 	//CheckCalendar test=new CheckCalendar();
 	
-	//	test.PrintWeek(1,10);
-	//test.PrintDay(1);
+	test.PrintWeek(5,12);
+//	test.PrintDay(1);
 	}
 }
 
