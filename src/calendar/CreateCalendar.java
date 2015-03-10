@@ -92,8 +92,8 @@ public class CreateCalendar extends Application  {
         
         
 		Text text = new Text(insertionstring);
-		text.setFont(Font.font("Consolas", FontWeight.NORMAL, 20));
-		text.setWrappingWidth(1000);
+		text.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
+		text.setWrappingWidth(100000000);
         myView.getChildren().addAll(text);
         
         ScrollPane scroll = new ScrollPane();
@@ -129,7 +129,7 @@ public class CreateCalendar extends Application  {
 		scroll1.setContent(meeting);
 //		grid.add(meeting, 0, 6, 1, 10);
 
-		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 20));
+		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 		grid.add(meeting, 0, 6, 1, 10);
 
 		Button newMeeting = new Button("New Meeting");
