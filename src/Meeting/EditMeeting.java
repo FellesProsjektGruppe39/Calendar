@@ -203,10 +203,9 @@ public class EditMeeting {
 		
 		public static void main(String[] args) {
 
-			EditMeeting meeting = new EditMeeting(36);
+			EditMeeting meeting = new EditMeeting(34);
 			meeting.DeleteMeeting();
-
-			//meeting.fjernbruker(3);
+			
 			
 		}
 	}
