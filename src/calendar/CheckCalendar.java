@@ -118,7 +118,7 @@ public static void main(String[] args) {
 	//CheckCalendar test=new CheckCalendar();
 	
 //	test.PrintWeek(5,12);
-	test.PrintDay(3);
+	test.PrintDay(2);
 	}
 }
 
