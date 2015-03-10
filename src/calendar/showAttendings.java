@@ -105,7 +105,7 @@ public class showAttendings extends Application {
 		}
 		
 		Label meeting = new Label(str);
-		meeting.setFont(Font.font("Consolas"));
+		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 		grid.add(meeting, 0, 0, 1, 10);
 		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
