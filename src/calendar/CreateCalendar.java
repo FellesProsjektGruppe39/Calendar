@@ -57,16 +57,11 @@ public class CreateCalendar extends Application  {
 	}
 
 	public void start(final Stage stage) throws Exception {
-//		Parent root = FXMLLoader.load(getClass().getResource("Calendar.fxml"));
-//		Scene scene = new Scene(root);
-//        stage.setTitle("Calendar");
-//        stage.setScene(scene);
-//        stage.show();
 		final GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_LEFT);
 		grid.setHgap(50);
 		grid.setVgap(10);
-		grid.setPadding(new Insets(10, 10, 10, 10));
+//		grid.setPadding(new Insets(10, 10, 10, 10));
 		
 		Scene scene = new Scene(grid, 1000, 1000);
 		stage.setScene(scene);
@@ -93,7 +88,7 @@ public class CreateCalendar extends Application  {
         
 		Text text = new Text(insertionstring);
 		text.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
-		text.setWrappingWidth(100000000);
+		text.setWrappingWidth(1000);
         myView.getChildren().addAll(text);
         
         ScrollPane scroll = new ScrollPane();
@@ -125,12 +120,12 @@ public class CreateCalendar extends Application  {
 		grid.add(name2, 0, 0, 1, 5);
 		
 		Label meeting = new Label(CheckCalendar.PrintDay(BID));
-
+		System.out.println(meeting.getText());
 		scroll1.setContent(meeting);
 //		grid.add(meeting, 0, 6, 1, 10);
-
-		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
-		grid.add(meeting, 0, 6, 1, 10);
+//
+//		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 20));
+//		grid.add(meeting, 0, 6, 1, 10);
 
 		Button newMeeting = new Button("New Meeting");
 		Button cl = new Button("Close");
