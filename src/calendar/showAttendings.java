@@ -43,15 +43,15 @@ public class showAttendings extends Application {
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
 		
-		Scene scene = new Scene(grid, 700, 400);
+		Scene scene = new Scene(grid, 1100, 400);
 		stage.setScene(scene);
 		stage.setTitle("Ikke-besvarte møteinnkallelser");
 		stage.show();
 		
 		Button cl = new Button("Close");
-		grid.add(cl, 0,0);
+		grid.add(cl, 0,10);
 		
-		sqlRetrieve sql = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
+		sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
 		+ "FROM mote m1, mote_has_bruker mb1 "
 		+ "WHERE moteid "
 		+ "NOT IN "
@@ -75,7 +75,19 @@ public class showAttendings extends Application {
 		+ "AS temp2) "
 		+ "ORDER BY dato, starttidspunkt ASC");
 				
+		String str;
+		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","MoteId", "Date", "Start","End","Description","Room","Location","Attending");
 		
+		System.out.println(info.getQuery().length);
+		
+		for( int i=0; i < info.getQuery().length; i++){
+			str += String.format("\n %-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s %-1s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6], info.getQuery()[i][7]);
+					
+		}
+		
+		Label meeting = new Label(str);
+		meeting.setFont(Font.font("Consolas"));
+		grid.add(meeting, 0, 0, 1, 10);
 		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 		@Override public void handle(ActionEvent e) {
