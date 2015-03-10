@@ -15,7 +15,7 @@ public class GetNotification {
 		
 		sqlRetrieve notifications = new sqlRetrieve(("SELECT beskrivelse, time_stamp FROM notification WHERE bruker_brukerid = " +  brukerid +" ORDER BY time_stamp DESC"));
 		for (int i = 0; i < notifications.getQuery().length; i++) {
-			out += String.format(" %-60s", notifications.getQuery()[i][0]) + "        -  " +
+			out += String.format(" %-90s", notifications.getQuery()[i][0]) + "        -  " +
 					String.format("%-8s %n",notifications.getQuery()[i][1] );
 			
 			
