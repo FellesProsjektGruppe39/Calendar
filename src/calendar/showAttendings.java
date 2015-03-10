@@ -1,12 +1,15 @@
 package calendar;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 
 import com.sun.prism.paint.Color;
 
 import sun.launcher.resources.launcher;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +18,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -30,6 +35,8 @@ public class showAttendings extends Application {
 	private static int BID = 3;
 	private int brukerid;
 	
+	sqlExecute sql = new sqlExecute();
+	
 	public void setBrukerid(int id){
 		this.brukerid = id;
 		BID = this.brukerid;
@@ -43,13 +50,16 @@ public class showAttendings extends Application {
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
 		
-		Scene scene = new Scene(grid, 1100, 400);
+		Scene scene = new Scene(grid, 1100, 600);
 		stage.setScene(scene);
 		stage.setTitle("Ikke-besvarte møteinnkallelser");
 		stage.show();
 		
 		Button cl = new Button("Close");
 		grid.add(cl, 0,10);
+		
+		Button save = new Button("Save");
+		grid.add(save, 0,11);
 		
 		sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
 		+ "FROM mote m1, mote_has_bruker mb1 "
@@ -74,13 +84,22 @@ public class showAttendings extends Application {
 		+ "ORDER BY dato, starttidspunkt ASC) "
 		+ "AS temp2) "
 		+ "ORDER BY dato, starttidspunkt ASC");
-				
+		
+		final ArrayList<Integer> moteid = new ArrayList<Integer>();
+		
 		String str;
 		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","MoteId", "Date", "Start","End","Description","Room","Location","Attending");
 		
-		System.out.println(info.getQuery().length);
+		final ArrayList<ChoiceBox> cb = new ArrayList<ChoiceBox>();	
 		
 		for( int i=0; i < info.getQuery().length; i++){
+			
+			cb.add(new ChoiceBox(FXCollections.observableArrayList(0, 1, 2)));
+			cb.get(i).setValue(0);
+			moteid.add(Integer.parseInt(info.getQuery()[i][0]));
+			
+			grid.add(cb.get(i), 2, i, 1, 1);
+			
 			str += String.format("\n %-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s %-1s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6], info.getQuery()[i][7]);
 					
 		}
@@ -93,6 +112,18 @@ public class showAttendings extends Application {
 		@Override public void handle(ActionEvent e) {
 		    stage.close();
 		    }
+		});
+		
+		save.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				
+				for (int i = 0; i < cb.size(); i++) {
+					
+					sql.execute("UPDATE mote_has_bruker SET attending = " + cb.get(i).getValue() +
+							" WHERE mote_moteid = " + moteid.get(i) + " AND bruker_brukerid = " + BID);
+				}
+				stage.close();
+			}
 		});
 		
 	}
