@@ -25,7 +25,9 @@ public class CheckCalendar {
 				+ " WHERE mb2.bruker_brukerid= " + brukerid + " AND mr2.mote_moteid = m2.moteid "
 				+ " AND mb2.mote_moteid = m2.moteid) AND m1.moteid = mb1.mote_moteid"
 				+ " AND mb1.bruker_brukerid = " + brukerid 
-				+ " AND mb1.attending = 1) AS temp1)"
+				+ " AND mb1.attending = 1"
+				+ " AND m1.dato >= CURDATE())"
+				+ " AS temp1)"
 				+ " UNION "
 				+"	(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn, m3.beskrivelse, m3.sted, mb3.attending"
 				+ "	FROM mote m3, mote_has_bruker mb3,mote_has_rom mr3 "
@@ -33,6 +35,7 @@ public class CheckCalendar {
 				+ " AND mr3.mote_moteid = m3.moteid"
 				+ "	AND mb3.mote_moteid = m3.moteid"
 				+ " AND mb3.attending = 1"
+				+ " AND m3.dato >= CURDATE() "
 				+ "	ORDER BY dato, starttidspunkt ASC)"
 				+ "	AS temp2)"
 				+ " ORDER BY dato, starttidspunkt ASC");
@@ -40,9 +43,14 @@ public class CheckCalendar {
 		
 		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","MoteId", "Date", "Start","End","Description","Room","Location","Attending");
 
-		sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(* )FROM mote_has_bruker WHERE bruker_brukerid = " + brukerid 
-				+ " AND attending = 1");
-		
+		sqlRetrieve moter = new sqlRetrieve (
+				"SELECT COUNT(moteid)"
+				+ " FROM mote m"
+				+ " INNER JOIN mote_has_bruker mb "
+				+ " ON m.moteid = mb.mote_moteid"
+				+ " WHERE mb.bruker_brukerid = " + brukerid
+				+ " AND m.dato >= CURDATE()"
+				+ " AND mb.attending = 1");
 		
 		
 		for( int i=0; i < Integer.parseInt(moter.getQuery()[0][0]); i++){
@@ -50,7 +58,7 @@ public class CheckCalendar {
 					
 		}
 		
-//		System.out.println(str);
+		System.out.println(str);
 
 		return str;
 	}
@@ -104,8 +112,97 @@ public class CheckCalendar {
 		return str;
 	}
 public boolean checkinput(String string, String string2, String string3){
-	return true;
-	
+	String[] start = string.split(":");
+	String[] slutt = string2.split(":");
+	String[] dag = string3.split("-");
+	if(start.length == 3 && slutt.length == 3 && dag.length == 3){
+		int s1 = Integer.parseInt(start[0]);
+		int sl1 = Integer.parseInt(slutt[0]);
+		int s2 = Integer.parseInt(start[1]);
+		int sl2 = Integer.parseInt(slutt[1]);
+		int s3 = Integer.parseInt(start[2]);
+		int sl3 = Integer.parseInt(slutt[2]);
+		int d1 = Integer.parseInt(dag[0]);
+		int d2 = Integer.parseInt(dag[1]);
+		int d3 = Integer.parseInt(dag[2]);
+		
+		if((s1>=0 && s1<25)&&(s2>=0 && s2<61)&&(s3>=0 && s3<61)&&(sl1>=0 && sl1<25)&&(sl2>=0 && sl2<61)&&(sl3>=0 && sl3<61)){
+			if(sl1<s1){
+				System.out.println("False");
+				return false;
+			}if((sl2<s2)&&(sl1==s1)){
+				System.out.println("False");
+				return false;
+			}if((sl3<s3)&&(sl1==s1)&&(sl1==s1)){
+				System.out.println("False");
+				return false;
+			}
+			return true;
+		}
+		switch (d3) {
+		case 1:
+			if(d3<=31 && d3>=0){
+				return true;
+			}
+		case 2:
+			if(isLeapYear(d1)){
+				if(d3<=29 && d3>=0){
+					return true;
+				}else
+					if((d3<=28 && d3>=0)){
+						return true;
+					}
+			}
+		case 3:
+			if(d3<=31 && d3>=0){
+				return true;
+			}
+		case 4:
+		if(d3<=30 && d3>=0){
+			return true;
+		}
+		case 5:
+		if(d3<=31 && d3>=0){
+			return true;
+		}
+		case 6:
+		if(d3<=30 && d3>=0){
+			return true;
+		}
+		case 7:
+		if(d3<=31 && d3>=0){
+			return true;
+		}
+		case 8:
+		if(d3<=31 && d3>=0){
+			return true;
+		}
+		case 9:
+		if(d3<=30 && d3>=0){
+			return true;
+		}
+		case 10:
+		if(d3<=31 && d3>=0){
+			return true;
+		}
+		case 11:
+		if(d3<=30 && d3>=0){
+			return true;
+		}
+		case 12:
+		if(d3<=31 && d3>=0){
+			return true;
+		}
+
+		default:
+			break;
+		}
+	}
+	return false;
+}
+public static boolean isLeapYear(int year) {
+    assert year >= 1583; // not valid before this date.
+    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 }
 
 public static void main(String[] args) {
@@ -114,8 +211,8 @@ public static void main(String[] args) {
 	
 	//CheckCalendar test=new CheckCalendar();
 	
-	test.PrintWeek(5,12);
-//	test.PrintDay(1);
+//	test.PrintWeek(5,12);
+	test.checkinput("11:10:50", "11:10:50", "2015-01-01");
 	}
 }
 

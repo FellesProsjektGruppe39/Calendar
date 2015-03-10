@@ -1,4 +1,5 @@
 
+
 package calendar;
 
 import java.awt.SecondaryLoop;
@@ -291,7 +292,7 @@ public class CreateCalendar extends Application  {
 						CheckCalendar c = new CheckCalendar();
 						
 						if (!c.checkinput(start1.getText(), slutt1.getText(), dato1.getText())){
-							text3.setText("FEIL");
+							text3.setText("FEIL INPUT!!");
 							text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 							text3.setFill(Color.RED);
 						}else{
