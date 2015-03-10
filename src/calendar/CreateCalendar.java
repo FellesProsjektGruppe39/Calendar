@@ -10,6 +10,7 @@ import Meeting.EditMeeting;
 
 import com.sun.glass.events.MouseEvent;
 
+import logIn.LogIn;
 import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 import javafx.application.Application;
@@ -44,7 +45,7 @@ import javafx.stage.Stage;
 
 public class CreateCalendar extends Application  {
 
-	private static int BID = 1;
+	private static int BID = 3;
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
@@ -72,17 +73,18 @@ public class CreateCalendar extends Application  {
 		stage.setTitle("Calendar");
 		stage.show();
 		
+		// Notifications
 		GetNotification getNot = new GetNotification(BID);
 		String insertionstring = getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
-		insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
+		//insertionstring += getNot.get();
 		
 		BorderPane borderPane = new BorderPane();
         VBox myView = new VBox();
@@ -90,7 +92,8 @@ public class CreateCalendar extends Application  {
         
         
 		Text text = new Text(insertionstring);
-		text.setWrappingWidth(500);
+		text.setFont(Font.font("Consolas", FontWeight.NORMAL, 20));
+		text.setWrappingWidth(1000);
         myView.getChildren().addAll(text);
         
         ScrollPane scroll = new ScrollPane();
@@ -122,19 +125,40 @@ public class CreateCalendar extends Application  {
 		grid.add(name2, 0, 0, 1, 5);
 		
 		Label meeting = new Label(CheckCalendar.PrintDay(BID));
+
 		scroll1.setContent(meeting);
 //		grid.add(meeting, 0, 6, 1, 10);
-		
+
+		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 20));
+		grid.add(meeting, 0, 6, 1, 10);
+
 		Button newMeeting = new Button("New Meeting");
 		Button cl = new Button("Close");
 		Button update = new Button("Update");
 		Button newGroup = new Button("New Group");
 		Button changeMeeting = new Button("Edit Meeting");
+//		Button showAttendings = new Button("Show unanswered meetings");
 		grid.add(cl, 2, 20,1,1);
 		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
 		grid.add(newGroup,2,2,1,1);
 		grid.add(changeMeeting, 2,3,1,1);
+//		grid.add(showAttendings, 0,21,1,1);
+		
+//		showAttendings.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override public void handle(ActionEvent e) {
+//
+//		        	showAttendings show = new showAttendings();
+//		        	
+//	                Stage stage = new Stage();
+//	                try {
+//						show.start(stage);
+//					} catch (Exception e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//			    }
+//			});
 		
 		
 		changeMeeting.setOnAction(new EventHandler<ActionEvent>() {
