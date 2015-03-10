@@ -134,7 +134,7 @@ public class CreateCalendar extends Application  {
 			@Override public void handle(ActionEvent e) {
 
 		        	showAttendings show = new showAttendings();
-		        	
+		        	show.setBrukerid(BID);
 	                Stage stage = new Stage();
 	                try {
 						show.start(stage);
@@ -142,8 +142,8 @@ public class CreateCalendar extends Application  {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-			    }
-			});
+			}
+		});
 		
 		
 		changeMeeting.setOnAction(new EventHandler<ActionEvent>() {
