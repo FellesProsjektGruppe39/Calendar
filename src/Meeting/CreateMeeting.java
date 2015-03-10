@@ -180,6 +180,9 @@ public class CreateMeeting {
 		this.moteid=Integer.parseInt((retrieve.getQuery()[lastmeeting-1][0]));
 		cre.execute("INSERT INTO mote_has_rom(mote_moteid,rom_romnavn) "
 				+ "VALUES('" +this.moteid +"','"+this.room+"')");
+		System.out.println(moteid);
+		final EditMeeting meeting = new EditMeeting(moteid);
+		meeting.leggtilbruker(userID);
 		
 	}
 	public void CMeeting(){
