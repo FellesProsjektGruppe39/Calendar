@@ -91,13 +91,13 @@ public class EditMeeting {
 					+ " FROM mote_has_bruker, mote"
 					+ " WHERE mote_moteid = moteid"
 					+ " AND mote_moteid = " + this.moteid);
-			sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(*)FROM mote_has_bruker WHERE mote_moteid = " + this.moteid);
-			for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
-				cn.create(Integer.parseInt(info.getQuery()[i][0]), "Du har blitt invitert til " + info.getQuery()[0][2] + " den " + info.getQuery()[0][5] 
+			
+			
+				cn.create(brukerid, "Du har blitt invitert til " + info.getQuery()[0][2] + " den " + info.getQuery()[0][5] 
 						+ " fra " + info.getQuery()[0][3] + " til " + info.getQuery()[0][4]);
 						
 			
-		}
+		
 			
 			sql.execute("INSERT INTO mote_has_bruker (mote_moteid,bruker_brukerid) VALUES ('" + moteid + "','" + brukerid + "')");
 			
