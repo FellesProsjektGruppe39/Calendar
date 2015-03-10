@@ -30,7 +30,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.application.Application;
 
-public class showAttendings extends Application {
+public class showAccepted extends Application {
 	
 	private static int BID = 3;
 	private int brukerid;
@@ -52,7 +52,7 @@ public class showAttendings extends Application {
 		
 		Scene scene = new Scene(grid, 1100, 600);
 		stage.setScene(scene);
-		stage.setTitle("Ikke-besvarte møteinnkallelser");
+		stage.setTitle("Accepted meetings");
 		stage.show();
 		
 		Button cl = new Button("Close");
@@ -72,7 +72,7 @@ public class showAttendings extends Application {
 		+ "AND mb2.mote_moteid = m2.moteid) "
 		+ "AND m1.moteid = mb1.mote_moteid "
 		+ "AND mb1.bruker_brukerid = " + BID
-		+ " AND mb1.attending = 0) "
+		+ " AND mb1.attending = 1) "
 		+ "AS temp1) "
 		+ "UNION "
 		+ "(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending "
@@ -80,7 +80,7 @@ public class showAttendings extends Application {
 		+ "WHERE mb3.bruker_brukerid= " + BID
 		+ " AND mr3.mote_moteid = m3.moteid "
 		+ "AND mb3.mote_moteid = m3.moteid  "
-		+ "AND mb3.attending = 0 "
+		+ "AND mb3.attending = 1 "
 		+ "ORDER BY dato, starttidspunkt ASC) "
 		+ "AS temp2) "
 		+ "ORDER BY dato, starttidspunkt ASC");
@@ -95,7 +95,7 @@ public class showAttendings extends Application {
 		for( int i=0; i < info.getQuery().length; i++){
 			
 			cb.add(new ChoiceBox(FXCollections.observableArrayList(0, 1, 2)));
-			cb.get(i).setValue(0);
+			cb.get(i).setValue(1);
 			moteid.add(Integer.parseInt(info.getQuery()[i][0]));
 			
 			grid.add(cb.get(i), 2, i, 1, 1);
@@ -105,7 +105,7 @@ public class showAttendings extends Application {
 		}
 		
 		Label meeting = new Label(str);
-		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
+		meeting.setFont(Font.font("Consolas"));
 		grid.add(meeting, 0, 0, 1, 10);
 		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
@@ -131,6 +131,6 @@ public class showAttendings extends Application {
 	
 	
 	public static void main(String[] args) {
-		launch(showAttendings.class, args);
+		launch(showAccepted.class, args);
 	}
 }

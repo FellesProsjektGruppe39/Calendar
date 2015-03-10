@@ -16,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -94,6 +96,46 @@ public class Test extends Application{
 		@Override public void handle(ActionEvent e) {
 		    stage.close();
 		    }
+		});
+		
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	        @Override
+	        public void handle(KeyEvent t) {
+	            KeyCode key = t.getCode();
+	            if (key == KeyCode.ESCAPE){
+	                stage.close();
+	            }
+	        }
+	    });
+		
+		pwBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent t) {
+				KeyCode key = t.getCode();
+				if (key == KeyCode.ENTER){
+					LogIn l = new  LogIn();
+			        username = name.getText();
+			        password = pwBox.getText();
+			        if(l.LogIn(username,password) > 0){
+			        	stage.close();
+			        	brukerid = l.LogIn(username,password);
+			        	System.out.println(brukerid);
+			        	CreateCalendar cal = new CreateCalendar();
+			        	cal.setBrukerid(brukerid);
+		                Stage stage = new Stage();
+		                try {
+							cal.start(stage);
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		                
+			        }else 
+			        	System.out.println("Du feilet!");
+			        	label.setText("Feil brukernavn eller passord!");
+			    }
+				
+			}
 		});
 		
 		sb.setOnAction(new EventHandler<ActionEvent>() {
