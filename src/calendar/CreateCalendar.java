@@ -115,17 +115,16 @@ public class CreateCalendar extends Application  {
 //		name1.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		Text title = new Text("Her er en liste over dine avtaler:");
 		grid.add(title, 0,2,1,6);
+		Text title1 = new Text("Her er dine notifications:");
+		grid.add(title1, 0,29,1,1);
 		Label name2 = new Label(getName(BID));
 		name2.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 		grid.add(name2, 0, 0, 1, 5);
 		
 		Label meeting = new Label(CheckCalendar.PrintDay(BID));
-		System.out.println(meeting.getText());
+//		System.out.println(meeting.getText());
 		scroll1.setContent(meeting);
-//		grid.add(meeting, 0, 6, 1, 10);
-//
 		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
-//		grid.add(meeting, 0, 6, 1, 10);
 
 		Button newMeeting = new Button("New Meeting");
 		Button cl = new Button("Close");
@@ -264,12 +263,10 @@ public class CreateCalendar extends Application  {
 				final Text slutt = new Text("Slutt-tidspunkt(hh:mm:ss): ");
 				final Text beskrivelse = new Text("Beskrivelse: ");
 				final Text dato = new Text("Dato(yyyy-mm-dd): ");
-//				final Text antall = new Text("Antall: ");
 				final TextField start1 = new TextField();
 				final TextField slutt1 = new TextField();
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField dato1 = new TextField();
-//				final TextField antall1 = new TextField();
 				
 				
 				Button cl = new Button("Add Users to Meeting");
@@ -286,8 +283,6 @@ public class CreateCalendar extends Application  {
 				grid.add(beskrivelse1, 2,7);
 				grid.add(dato, 1, 13);
 				grid.add(dato1, 2, 13);
-//				grid.add(antall, 1, 15);
-//				grid.add(antall1, 2, 15);
 				
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@SuppressWarnings("null")
