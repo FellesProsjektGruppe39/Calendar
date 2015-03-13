@@ -18,8 +18,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -48,7 +46,7 @@ import javafx.stage.Stage;
 
 public class CreateCalendar extends Application  {
 
-	private static int BID = 1;
+	private static int BID = 3;
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
@@ -193,8 +191,7 @@ public class CreateCalendar extends Application  {
 		});
 		
 		changeMeeting.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
+			@Override public void handle(ActionEvent e) {
 				final Stage stage2 = new Stage();
 				GridPane grid = new GridPane();
 				grid.setAlignment(Pos.TOP_LEFT);
@@ -203,23 +200,13 @@ public class CreateCalendar extends Application  {
 				grid.setPadding(new Insets(10, 10, 10, 10));
 				Scene scene1 = new Scene(grid, 450, 500);
 				stage2.setScene(scene1);
-				stage2.setTitle("My meetings");
+				stage2.setTitle("Change Meeting");
 				stage2.show();
-	
-				sqlRetrieve minemoter = new sqlRetrieve("SELECT moteid, dato, beskrivelse FROM mote WHERE opprettet_av = " + BID);
-				sqlRetrieve count = new sqlRetrieve("SELECT COUNT(*) FROM mote WHERE opprettetav = " + BID);
 				
-				
-				ObservableList<String> moter = FXCollections.observableArrayList();
-				for
-				
-			
-
 				Button cl = new Button("Save and Exit");
 				
-				grid.add(cl, 8, 48);
-//				ObservableList<String> countries = FXCollections.observableArrayList();
-//				countries.add(e)
+				grid.add(cl, 2, 6);
+				
 				
 				
 				
@@ -508,4 +495,5 @@ public class CreateCalendar extends Application  {
 //		a.getID(" Martin Raknes Holth");
 		
 	}
+>>>>>>> 144e7f9293f59db816130ab38efc8308a9b9a6ff
 }
