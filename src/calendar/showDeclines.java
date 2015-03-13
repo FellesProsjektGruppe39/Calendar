@@ -98,7 +98,7 @@ public class showDeclines extends Application {
 		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","MoteId", "Date", "Start","End","Description","Room","Location","Attending");
 		
 		print.add(new Label(str));
-		print.get(0).setFont(Font.font("Consolas"));
+		print.get(0).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 		grid.add(print.get(0), 0, 0, 1, 1);
 		
 		
@@ -111,11 +111,17 @@ public class showDeclines extends Application {
 			moteid.add(Integer.parseInt(info.getQuery()[i][0]));
 			String a = String.format("%-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s %-1s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6], info.getQuery()[i][7]);					
 			print.add(new Label(a));
-			print.get(i+1).setFont(Font.font("Consolas"));
+			print.get(i+1).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 			grid.add(print.get(i+1), 0, i+1, 1, 1);
 			grid.add(cb.get(i), 1, i+1, 1, 1);
 		}
 		
+
+
+		Label meeting = new Label(str);
+		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
+		grid.add(meeting, 0, 0, 1, 10);
+
 		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 		@Override public void handle(ActionEvent e) {
