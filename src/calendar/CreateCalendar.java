@@ -5,7 +5,12 @@ import java.awt.SecondaryLoop;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.EventObject;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
+import sun.util.resources.LocaleData;
 import notification.GetNotification;
 import Meeting.CreateMeeting;
 import Meeting.EditMeeting;
@@ -50,7 +55,7 @@ import javafx.stage.Stage;
 
 public class CreateCalendar extends Application  {
 
-	private static int BID = 3;
+	private static int BID = 1;
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
@@ -309,20 +314,202 @@ public class CreateCalendar extends Application  {
 				
 				grid.add(print.get(0), 0, 0, 1, 1);
 				
-				
-				final ArrayList<Button> b = new ArrayList<Button>();
-				
 				for( int i=0; i < sql.getQuery().length; i++){
 					
-					b.add(new Button("  Edit  "));
+			
 					moteid.add(Integer.parseInt(sql.getQuery()[i][0]));
 					String a = String.format("%-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-15s",sql.getQuery()[i][0], sql.getQuery()[i][1], sql.getQuery()[i][2], sql.getQuery()[i][3],sql.getQuery()[i][4], sql.getQuery()[i][5], sql.getQuery()[i][6]);					
 					print.add(new Label(a));
 					print.get(i+1).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 					grid.add(print.get(i+1), 0, i+1, 1, 1);
-					grid.add(b.get(i), 1, i+1, 1, 1);
-					
 				}
+				
+				final Text endre = new Text("MeetingID of the meeting you want to edit: ");
+				grid2.add(endre, 0,6);
+				final TextField endremoteid = new TextField();
+				grid2.add(endremoteid, 0,7);
+				Button confirm = new Button("  Edit  ");
+				grid2.add(confirm, 0, 8);
+				
+				confirm.setOnAction(new EventHandler<ActionEvent>(){
+					
+
+					@Override public void handle(ActionEvent e) {
+						final int moteid = Integer.parseInt(endremoteid.getText());
+						sqlRetrieve sql2 = new sqlRetrieve("SELECT * FROM mote WHERE moteid = " + moteid);
+						
+						
+						final Stage stage1 = new Stage();
+						final GridPane grid = new GridPane();
+						grid.setAlignment(Pos.TOP_LEFT);
+						grid.setHgap(50);
+						grid.setVgap(10);
+						grid.setPadding(new Insets(10, 10, 10, 10));
+						Scene scene1 = new Scene(grid, 460, 500);
+						stage1.setScene(scene1);
+						stage1.setTitle("Edit meeting");
+						stage1.show();	
+						
+						
+					
+						
+						final LocalDate myDate = LocalDate.parse(sql2.getQuery()[0][4]);
+						
+						
+						final Text start = new Text("Start-tidspunkt(hh:mm:ss): ");
+						final Text slutt = new Text("Slutt-tidspunkt(hh:mm:ss): ");
+						final Text beskrivelse = new Text("Beskrivelse: ");
+						final Text dato = new Text("Dato(yyyy-mm-dd): ");
+						final TextField start1 = new TextField(sql2.getQuery()[0][1]);
+						final TextField slutt1 = new TextField(sql2.getQuery()[0][2]);
+						final TextArea beskrivelse1 = new TextArea(sql2.getQuery()[0][3]);
+						final DatePicker datePicker = new DatePicker(myDate);
+						 datePicker.setOnAction(new EventHandler<ActionEvent>() {
+						     public void handle(ActionEvent t) {
+						         LocalDate date = datePicker.getValue();
+						     }
+						 });
+						 
+						final Text text3 = new Text();
+						
+						Button cl = new Button("Edit users");
+						Button cl1 = new Button("Cancel");
+						
+						grid.add(text3, 2, 15);
+						grid.add(cl, 2, 20);
+						grid.add(cl1, 1, 20);
+						grid.add(start, 1, 3);
+						grid.add(start1, 2, 3);
+						grid.add(slutt, 1, 5);
+						grid.add(slutt1, 2, 5);
+						grid.add(beskrivelse, 1,7);
+						grid.add(beskrivelse1, 2,7);
+						grid.add(dato, 1, 13);
+						grid.add(datePicker, 2, 13);
+						
+						cl.setOnAction(new EventHandler<ActionEvent>() {
+							@SuppressWarnings("null")
+							@Override public void handle(ActionEvent e) {
+								CheckCalendar c = new CheckCalendar();
+								
+								if (!c.checkinput(start1.getText(), slutt1.getText(), datePicker.getValue().toString())){
+									text3.setText("FEIL INPUT!!");
+									text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+									text3.setFill(Color.RED);
+								}else{
+								final Stage stage3 = new Stage();
+								GridPane grid = new GridPane();
+								grid.setAlignment(Pos.TOP_LEFT);
+								grid.setHgap(50);
+								grid.setVgap(10);
+								grid.setPadding(new Insets(10, 10, 10, 10));
+								Scene scene1 = new Scene(grid, 450, 500);
+								stage3.setScene(scene1);
+								stage3.setTitle("Edit Users");
+								stage3.show();
+								Button close = new Button("Save And Exit");
+								Button add = new Button("Add All");
+								grid.add(close, 2, 4);
+								grid.add(add, 2, 2);
+								
+								
+								String[] names = getNames();
+								final String[] names1 = names;
+								final CheckBox[] cbs = new CheckBox[names.length];
+								
+								ArrayList<Integer> attendingusers = new ArrayList<Integer>();
+								
+								sqlRetrieve sql3 = new sqlRetrieve("SELECT bruker_brukerid FROM mote_has_bruker WHERE mote_moteid = " + moteid);
+								sqlRetrieve sql4 = new sqlRetrieve("SELECT count(*) FROM mote_has_bruker WHERE mote_moteid = " + moteid);
+								
+								int lengde = Integer.parseInt(sql4.getQuery()[0][0]);
+								
+								for(int i = 0; i < lengde; i++){
+									attendingusers.add(Integer.parseInt(sql3.getQuery()[i][0]));
+								}
+								
+								
+								for (int i = 0; i < names.length; i++) {
+									final CheckBox cb = cbs[i] = new CheckBox(names[i]);
+									if (attendingusers.contains(getID(names[i]))){
+										cbs[i].setSelected(true);
+										
+									}
+							
+									if(!cbs[i].getText().equals(names1[BID-1])){
+										grid.add(cb, 1, i+2);
+									}
+									
+								}
+								
+								add.setOnAction(new EventHandler<ActionEvent>() {
+									@Override public void handle(ActionEvent e) {
+										for (int i = 0; i < cbs.length; i++) {
+											cbs[i].setSelected(true);		
+										}
+									}
+								});
+								
+								
+								close.setOnAction(new EventHandler<ActionEvent>() {
+									@Override public void handle(ActionEvent e) {
+										for (int j = 0; j < cbs.length-1; j++) {
+											if (cbs[j].isSelected()){
+												antall += 1;
+											} else
+												cbs[j].setText(null);
+										}
+//										System.out.println(antall);
+										stage3.close();
+										
+										final CreateMeeting mote = new CreateMeeting(BID);
+										
+										mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), datePicker.getValue().toString(), antall);
+										mote.ChooseRoomGUI();
+										mote.create();
+										
+										sqlRetrieve mid = new sqlRetrieve("SELECT MAX(moteid) FROM mote");
+										final String MID = mid.getQuery()[0][0];
+										final int Mid = Integer.parseInt(MID);
+										final EditMeeting meeting = new EditMeeting(Mid);
+										System.out.println(Mid);
+										
+										for (int i = 0; i < cbs.length; i++) {
+											if(cbs[i].getText() != null){
+												if(BID != getID(cbs[i].getText())){
+													meeting.leggtilbruker(getID(cbs[i].getText()));
+												}
+											}
+										}
+										sqlExecute create = new sqlExecute();
+										create.execute("UPDATE mote_has_bruker SET attending ='" + 1 + "' WHERE mote_moteid = '" + Mid + "' AND "+"bruker_brukerid= '"+ BID +"'");
+										stage1.close();
+									}
+								});
+								
+								
+								}	
+							}
+						});
+						cl1.setOnAction(new EventHandler<ActionEvent>() {
+							@Override public void handle(ActionEvent e) {
+			
+								stage1.close();
+							}
+						});
+					}
+
+					
+				});
+
+					
+						
+					
+		
+				
+				
+				
+				
 				
 		
 				cl.setOnAction(new EventHandler<ActionEvent>() {
