@@ -45,15 +45,17 @@ public class ShowCalendar extends Application{
 		stage.show();
 		
 		Text user = new Text("Show calendar for: ");
-		
+		String[] users = getNames();
 		
 		Button cl = new Button("Close");
 		Button save = new Button("Do it");
 		grid2.add(cl, 2,15);
 		grid2.add(save, 3,15);
 		grid2.add(user, 0,3);
-		grid2.add(users, 1,4);
-		
+		for (int i = 0; i < length(); i++) {
+			Button b = new Button(users[i]);
+			grid2.add(b, 1, 3+i);
+		}
 		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -62,19 +64,27 @@ public class ShowCalendar extends Application{
 		});
 	}
 	
-	public String getNames(){
+	public String[] getNames(){
 		String str = "";
 		sqlRetrieve getName = new sqlRetrieve("SELECT fornavn, etternavn FROM bruker");
 		int l = getName.getQuery().length;
 		for (int i = 0; i < l; i++) {
 		String fornavn = getName.getQuery()[i][0];
 		String etterNavn = getName.getQuery()[i][1];
-		str +=  " " + fornavn + " " + etterNavn + "\n";
+		str +=  " " + fornavn + " " + etterNavn + ",";
 		}
 //		System.out.println(str);
-		return str;
+		String[] names1 = str.split(",");
+		System.out.println(names1);
+		return names1;
 	}
 	
+	public int length(){
+		String str = "";
+		sqlRetrieve getName = new sqlRetrieve("SELECT fornavn, etternavn FROM bruker");
+		int l = getName.getQuery().length;
+		return l;
+	}
 	public static void main(String[] args) {
 		ShowCalendar c = new ShowCalendar();
 		c.getNames();
