@@ -33,7 +33,7 @@ import javafx.application.Application;
 
 public class showDeclines extends Application {
 	
-	private static int BID = 3;
+	private static int BID = 1;
 	private int brukerid;
 	
 	sqlExecute sql = new sqlExecute();
@@ -72,28 +72,30 @@ public class showDeclines extends Application {
 		grid2.add(t,0,0);
 		
 		sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
-		+ "FROM mote m1, mote_has_bruker mb1 "
-		+ "WHERE moteid "
-		+ "NOT IN "
-		+ "(SELECT m2.moteid "
-		+ "FROM mote m2, mote_has_bruker mb2,mote_has_rom mr2  "
-		+ "WHERE mb2.bruker_brukerid= " + BID
-		+ " AND mr2.mote_moteid = m2.moteid "
-		+ "AND mb2.mote_moteid = m2.moteid) "
-		+ "AND m1.moteid = mb1.mote_moteid "
-		+ "AND mb1.bruker_brukerid = " + BID
-		+ " AND mb1.attending = 2) "
-		+ "AS temp1) "
-		+ "UNION "
-		+ "(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending "
-		+ "FROM mote m3, mote_has_bruker mb3,mote_has_rom mr3  "
-		+ "WHERE mb3.bruker_brukerid= " + BID
-		+ " AND mr3.mote_moteid = m3.moteid "
-		+ "AND mb3.mote_moteid = m3.moteid  "
-		+ "AND mb3.attending = 2 "
-		+ "ORDER BY dato, starttidspunkt ASC) "
-		+ "AS temp2) "
-		+ "ORDER BY dato, starttidspunkt ASC");
+				+ " FROM mote m1, mote_has_bruker mb1 "
+				+ " WHERE moteid "
+				+ " NOT IN "
+				+ " (SELECT m2.moteid "
+				+ " FROM mote m2, mote_has_bruker mb2,mote_has_rom mr2  "
+				+ " WHERE mb2.bruker_brukerid= " + BID
+				+ " AND mr2.mote_moteid = m2.moteid "
+				+ " AND mb2.mote_moteid = m2.moteid) "
+				+ " AND m1.moteid = mb1.mote_moteid "
+				+ " AND m1.dato >= CURDATE()"
+				+ " AND mb1.bruker_brukerid = " + BID
+				+ " AND mb1.attending = 2) "
+				+ " AS temp1) "
+				+ " UNION "
+				+ " (SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending "
+				+ " FROM mote m3, mote_has_bruker mb3,mote_has_rom mr3  "
+				+ " WHERE mb3.bruker_brukerid= " + BID
+				+ " AND mr3.mote_moteid = m3.moteid "
+				+ " AND mb3.mote_moteid = m3.moteid  "
+				+ " AND mb3.attending = 2 "
+				+ " AND m3.dato >= CURDATE()"
+				+ " ORDER BY dato, starttidspunkt ASC) "
+				+ " AS temp2) "
+				+ " ORDER BY dato, starttidspunkt ASC");
 		
 		final ArrayList<Integer> moteid = new ArrayList<Integer>();
 		final ArrayList<Label> print = new ArrayList<Label>();
