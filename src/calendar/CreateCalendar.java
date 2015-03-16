@@ -9,12 +9,14 @@ import java.util.EventObject;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+
 import sun.util.resources.LocaleData;
 import notification.CreateNotification;
 import notification.GetNotification;
 import Meeting.CreateMeeting;
 import Meeting.EditMeeting;
 import Room.Room;
+
 import com.sun.glass.events.MouseEvent;
 
 import logIn.LogIn;
@@ -58,7 +60,7 @@ public class CreateCalendar extends Application  {
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
-	private int antall = 1;
+	private int antall = 1, antall2;
 	
 	public void setBrukerid(int id){
 		this.brukerid = id;
@@ -501,16 +503,6 @@ public class CreateCalendar extends Application  {
 					
 				});
 
-					
-						
-					
-		
-				
-				
-				
-				
-				
-		
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
 						stage.close();
@@ -655,27 +647,61 @@ public class CreateCalendar extends Application  {
 						stage3.setTitle("Add Users");
 						stage3.show();
 						Button close = new Button("Save And Exit");
-						Button add = new Button("Add All");
+						Button add = new Button("Add All Users");
+						Button adda = new Button("Add All Groups");
+						Text us = new Text("Her legger man til enkeltbrukere: ");
+						Text us1 = new Text("Her legger man til grupper: ");
 						grid.add(close, 2, 4);
 						grid.add(add, 2, 2);
+						grid.add(adda, 2, 3);
+						grid.add(us, 0, 0);
+						grid.add(us1, 0, 2);
 						
+						GridPane grid2 = new GridPane();
+						grid2.setAlignment(Pos.TOP_LEFT);
+						grid2.setHgap(10);
+						grid2.setVgap(10);
+						grid2.setPadding(new Insets(10, 10, 10, 10));
+						ScrollPane sp = new ScrollPane(grid2);
+						grid.add(sp, 0, 1);
+						
+						GridPane grid3 = new GridPane();
+						grid3.setAlignment(Pos.TOP_LEFT);
+						grid3.setHgap(10);
+						grid3.setVgap(10);
+						grid3.setPadding(new Insets(10, 10, 10, 10));
+						ScrollPane sp1 = new ScrollPane(grid3);
+						grid.add(sp1, 0, 3);
 						
 						String[] names = getNames();
+						String[] groups = getGroups();
 						final String[] names1 = names;
 						final CheckBox[] cbs = new CheckBox[names.length];
+						final CheckBox[] cbs1 = new CheckBox[groups.length];
 						
 						for (int i = 0; i < names.length; i++) {
 							final CheckBox cb = cbs[i] = new CheckBox(names[i]);
 							if(!cbs[i].getText().equals(names1[BID-1])){
-								grid.add(cb, 1, i+2);
+								grid2.add(cb, 1, i);
 							}
 							
+						}
+						for (int i = 0; i < groups.length; i++) {
+							final CheckBox cb1 = cbs1[i] = new CheckBox(groups[i]);
+							grid3.add(cb1, 1, i);
 						}
 						
 						add.setOnAction(new EventHandler<ActionEvent>() {
 							@Override public void handle(ActionEvent e) {
 								for (int i = 0; i < cbs.length; i++) {
 									cbs[i].setSelected(true);		
+								}
+							}
+						});
+						adda.setOnAction(new EventHandler<ActionEvent>() {
+							@Override public void handle(ActionEvent e) {
+								for (int i = 0; i < cbs1.length; i++) {
+									cbs1[i].setSelected(true);		
 								}
 							}
 						});
@@ -688,6 +714,12 @@ public class CreateCalendar extends Application  {
 										antall += 1;
 									} else
 										cbs[j].setText(null);
+								}
+								for (int j = 0; j < cbs1.length-1; j++) {
+									if (cbs1[j].isSelected()){
+										antall2 += 1;
+									} else
+										cbs1[j].setText(null);
 								}
 //								System.out.println(antall);
 								stage3.close();
@@ -702,13 +734,17 @@ public class CreateCalendar extends Application  {
 								final String MID = mid.getQuery()[0][0];
 								final int Mid = Integer.parseInt(MID);
 								final EditMeeting meeting = new EditMeeting(Mid);
-								System.out.println(Mid);
 								
 								for (int i = 0; i < cbs.length; i++) {
 									if(cbs[i].getText() != null){
 										if(BID != getID(cbs[i].getText())){
 											meeting.leggtilbruker(getID(cbs[i].getText()));
 										}
+									}
+								}
+								for (int i = 0; i < cbs1.length; i++) {
+									if(cbs1[i].getText() != null){
+										meeting.leggtilgruppe(cbs1[i].getText());
 									}
 								}
 								sqlExecute create = new sqlExecute();
@@ -743,8 +779,6 @@ public class CreateCalendar extends Application  {
 				try {
 					c.start(stage);
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -785,6 +819,15 @@ public class CreateCalendar extends Application  {
 		ID = Integer.parseInt(getID.getQuery()[0][0]);
 //		System.out.println(ID);
 		return ID;
+	}
+	public String[] getGroups(){
+		sqlRetrieve ret = new sqlRetrieve("SELECT gruppenavn FROM gruppe");
+		String str ="";
+		for (int i = 0; i < ret.getQuery().length; i++) {
+			str += " "+ ret.getQuery()[i][0] + ",";
+		}
+		String[] res = str.split(",");
+		return res;
 	}
 	
 //	@FXML
@@ -850,7 +893,7 @@ public class CreateCalendar extends Application  {
 	public static void main(String[] args) {
 		launch(CreateCalendar.class, args);
 //		CreateCalendar a = new CreateCalendar();
-//		a.getID(" Martin Raknes Holth");
-		
+//		a.getGroups();
+//		
 	}
 }
