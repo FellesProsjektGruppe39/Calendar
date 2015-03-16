@@ -1,6 +1,4 @@
 
-
-
 package calendar;
 
 import java.awt.SecondaryLoop;
@@ -11,6 +9,7 @@ import java.util.ArrayList;
 import notification.GetNotification;
 import Meeting.CreateMeeting;
 import Meeting.EditMeeting;
+import Room.Room;
 
 import com.sun.glass.events.MouseEvent;
 
@@ -21,7 +20,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,7 +32,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -53,7 +50,7 @@ import javafx.stage.Stage;
 
 public class CreateCalendar extends Application  {
 
-	private static int BID = 1;
+	private static int BID = 3;
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
@@ -142,6 +139,9 @@ public class CreateCalendar extends Application  {
 		Button showAttendings = new Button("Show unanswered meetings");
 		Button showDeclines = new Button("Show declined meetings");
 		Button showAccepted = new Button("Show accepted meetings");
+		Button showCalendar = new Button("Show calendar for another user");
+		Button createRoom = new Button("Create a new Room");
+		grid.add(createRoom,4,22,1,1);
 		grid.add(cl, 2, 20,1,1);
 		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
@@ -150,7 +150,20 @@ public class CreateCalendar extends Application  {
 		grid.add(showAttendings, 0,21,1,1);
 		grid.add(showDeclines, 0,22,1,1);
 		grid.add(showAccepted, 0,23,1,1);
+		grid.add(showCalendar, 1,20, 1,1);
 		
+		showCalendar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				ShowCalendar show = new ShowCalendar();
+				Stage stage = new Stage();
+                try {
+					show.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		showAttendings.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -167,6 +180,61 @@ public class CreateCalendar extends Application  {
 			}
 		});
 		
+		createRoom.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				final Stage stage1 = new Stage();
+				final GridPane grid = new GridPane();
+				grid.setAlignment(Pos.TOP_LEFT);
+				grid.setHgap(50);
+				grid.setVgap(10);
+				grid.setPadding(new Insets(10, 10, 10, 10));
+				Scene scene1 = new Scene(grid, 460, 500);
+				stage1.setScene(scene1);
+				stage1.setTitle("Create a Room");
+				stage1.show();	
+				
+				final Text Romnavn = new Text("Gi rommet et navn: ");
+				final Text Sted = new Text("Angi et sted for rommet: ");
+				final Text beskrivelse = new Text("Beskrivelse: ");
+				final Text Kapasitet = new Text("Romkapasitet: ");
+				final TextField Romnavn1 = new TextField();
+				final TextField Sted1 = new TextField();
+				final TextArea beskrivelse1 = new TextArea();
+				final TextField Kapasitet1 = new TextField();
+				//final Text text3 = new Text();
+				
+				Button SandE = new Button("Save and Exit");
+				Button cl = new Button("Cancel");
+
+				grid.add(cl, 2, 20);
+				grid.add(SandE,1,20);
+				grid.add(Romnavn, 1, 3);
+				grid.add(Romnavn1, 2, 3);
+				grid.add(Sted, 1, 5);
+				grid.add(Sted1, 2, 5);
+				grid.add(beskrivelse, 1,7);
+				grid.add(beskrivelse1, 2,7);
+				grid.add(Kapasitet, 1, 13);
+				grid.add(Kapasitet1, 2, 13);
+				
+				cl.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+	
+						stage1.close();
+					}
+				});
+				
+				SandE.setOnAction(new EventHandler<ActionEvent>(){
+					@Override public void handle(ActionEvent e) {
+						final Room rom = new Room();
+						final String Kappa = Kapasitet1.getText();
+						final int kapasitet = Integer.parseInt(Kappa);
+						rom.createRoom(Romnavn1.getText(), kapasitet, Sted1.getText(), beskrivelse1.getText());
+						stage1.close();
+					}
+				});
+			}
+		});
 		showDeclines.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 
@@ -280,17 +348,7 @@ public class CreateCalendar extends Application  {
 				
 				Button cl = new Button("Save and Exit");
 				
-				final DatePicker datePicker = new DatePicker();
-				 datePicker.setOnAction(new EventHandler<ActionEvent>() {
-				     public void handle(ActionEvent e) {
-				         LocalDate date = datePicker.getValue();
-				         System.err.println("Selected date: " + date);
-				     }
-				 });
-				 
-				
 				grid.add(cl, 2, 2);
-				grid.add(datePicker, 5, 5);
 				
 				
 				
@@ -454,9 +512,13 @@ public class CreateCalendar extends Application  {
 		
 		update.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-				Label name2 = new Label(getName(BID));
-				name2.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
-				grid.add(name2, 0, 0, 1, 5);
+				CreateCalendar c = new CreateCalendar();
+				try {
+					c.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	} 
@@ -564,5 +626,4 @@ public class CreateCalendar extends Application  {
 //		a.getID(" Martin Raknes Holth");
 		
 	}
-
 }

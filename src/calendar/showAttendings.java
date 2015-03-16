@@ -1,8 +1,10 @@
+
 package calendar;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import notification.CreateNotification;
 import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 
@@ -71,31 +73,29 @@ public class showAttendings extends Application {
 		t.setText("0 - Not replied yet \n1 - Attending \n2 - Not attending");
 		grid2.add(t,0,0);
 		
-		sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
-				+ " FROM mote m1, mote_has_bruker mb1 "
-				+ " WHERE moteid "
-				+ " NOT IN "
-				+ " (SELECT m2.moteid "
-				+ " FROM mote m2, mote_has_bruker mb2,mote_has_rom mr2  "
-				+ " WHERE mb2.bruker_brukerid= " + BID
-				+ " AND mr2.mote_moteid = m2.moteid "
-				+ " AND mb2.mote_moteid = m2.moteid) "
-				+ " AND m1.moteid = mb1.mote_moteid "
-				+ " AND m1.dato >= CURDATE()"
-				+ " AND mb1.bruker_brukerid = " + BID
-				+ " AND mb1.attending = 0) "
-				+ " AS temp1) "
-				+ " UNION "
-				+ " (SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending "
-				+ " FROM mote m3, mote_has_bruker mb3,mote_has_rom mr3  "
-				+ " WHERE mb3.bruker_brukerid= " + BID
-				+ " AND mr3.mote_moteid = m3.moteid "
-				+ " AND mb3.mote_moteid = m3.moteid  "
-				+ " AND mb3.attending = 0 "
-				+ " AND m3.dato >= CURDATE()"
-				+ " ORDER BY dato, starttidspunkt ASC) "
-				+ " AS temp2) "
-				+ " ORDER BY dato, starttidspunkt ASC");
+		final sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
+		+ "FROM mote m1, mote_has_bruker mb1 "
+		+ "WHERE moteid "
+		+ "NOT IN "
+		+ "(SELECT m2.moteid "
+		+ "FROM mote m2, mote_has_bruker mb2,mote_has_rom mr2  "
+		+ "WHERE mb2.bruker_brukerid= " + BID
+		+ " AND mr2.mote_moteid = m2.moteid "
+		+ "AND mb2.mote_moteid = m2.moteid) "
+		+ "AND m1.moteid = mb1.mote_moteid "
+		+ "AND mb1.bruker_brukerid = " + BID
+		+ " AND mb1.attending = 0) "
+		+ "AS temp1) "
+		+ "UNION "
+		+ "(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending "
+		+ "FROM mote m3, mote_has_bruker mb3,mote_has_rom mr3  "
+		+ "WHERE mb3.bruker_brukerid= " + BID
+		+ " AND mr3.mote_moteid = m3.moteid "
+		+ "AND mb3.mote_moteid = m3.moteid  "
+		+ "AND mb3.attending = 0 "
+		+ "ORDER BY dato, starttidspunkt ASC) "
+		+ "AS temp2) "
+		+ "ORDER BY dato, starttidspunkt ASC");
 		
 		final ArrayList<Integer> moteid = new ArrayList<Integer>();
 		final ArrayList<Label> print = new ArrayList<Label>();
@@ -132,10 +132,28 @@ public class showAttendings extends Application {
 		save.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				
+				CreateNotification Notif = new CreateNotification();
+				
 				for (int i = 0; i < cb.size(); i++) {
 					
 					sql.execute("UPDATE mote_has_bruker SET attending = " + cb.get(i).getValue() +
 							" WHERE mote_moteid = " + moteid.get(i) + " AND bruker_brukerid = " + BID);
+					
+					int a = (int) cb.get(i).getValue();
+					
+					if (Integer.parseInt(info.getQuery()[i][7]) != a) {
+						if (a == 0) {
+							Notif.create(Integer.parseInt(info.getQuery()[i][8]), "Bruker id "+ BID + " har endret til ikke svart paa mote id " + moteid.get(i));
+						}
+						if (a == 1) {
+							Notif.create(Integer.parseInt(info.getQuery()[i][8]), "Bruker id "+ BID + " har endret til attending mote id " + moteid.get(i));
+						}
+						if (a == 2) {
+							Notif.create(Integer.parseInt(info.getQuery()[i][8]), "Bruker id "+ BID + " har endret til not attending mote id " + moteid.get(i));
+						}
+						
+					}
+					
 				}
 				stage.close();
 			}

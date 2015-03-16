@@ -1,4 +1,3 @@
-
 package calendar;
 
 import java.io.IOException;
@@ -16,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,16 +24,18 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.application.Application;
 
-public class showDeclines extends Application {
+public class addUser extends Application {
 	
 	private static int BID = 3;
 	private int brukerid;
@@ -60,7 +62,7 @@ public class showDeclines extends Application {
 		
 		Scene scene = new Scene(grid2, 1100, 600);
 		stage.setScene(scene);
-		stage.setTitle("Declined meetings");
+		stage.setTitle("Accepted meetings");
 		stage.show();
 		
 		Button cl = new Button("Close");
@@ -73,7 +75,7 @@ public class showDeclines extends Application {
 		t.setText("0 - Not replied yet \n1 - Attending \n2 - Not attending");
 		grid2.add(t,0,0);
 		
-		final sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending, opprettet_av "
+		final sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
 		+ "FROM mote m1, mote_has_bruker mb1 "
 		+ "WHERE moteid "
 		+ "NOT IN "
@@ -84,15 +86,15 @@ public class showDeclines extends Application {
 		+ "AND mb2.mote_moteid = m2.moteid) "
 		+ "AND m1.moteid = mb1.mote_moteid "
 		+ "AND mb1.bruker_brukerid = " + BID
-		+ " AND mb1.attending = 2) "
+		+ " AND mb1.attending = 1) "
 		+ "AS temp1) "
 		+ "UNION "
-		+ "(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending, m3.opprettet_av "
+		+ "(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending "
 		+ "FROM mote m3, mote_has_bruker mb3,mote_has_rom mr3  "
 		+ "WHERE mb3.bruker_brukerid= " + BID
 		+ " AND mr3.mote_moteid = m3.moteid "
 		+ "AND mb3.mote_moteid = m3.moteid  "
-		+ "AND mb3.attending = 2 "
+		+ "AND mb3.attending = 1 "
 		+ "ORDER BY dato, starttidspunkt ASC) "
 		+ "AS temp2) "
 		+ "ORDER BY dato, starttidspunkt ASC");
@@ -113,7 +115,7 @@ public class showDeclines extends Application {
 		for( int i=0; i < info.getQuery().length; i++){
 			
 			cb.add(new ChoiceBox(FXCollections.observableArrayList(0, 1, 2)));
-			cb.get(i).setValue(2);
+			cb.get(i).setValue(1);
 			moteid.add(Integer.parseInt(info.getQuery()[i][0]));
 			String a = String.format("%-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s %-1s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6], info.getQuery()[i][7]);					
 			print.add(new Label(a));
@@ -122,7 +124,7 @@ public class showDeclines extends Application {
 			grid.add(cb.get(i), 1, i+1, 1, 1);
 		}
 		
-		
+
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 		@Override public void handle(ActionEvent e) {
 		    stage.close();
@@ -164,6 +166,6 @@ public class showDeclines extends Application {
 	
 	
 	public static void main(String[] args) {
-		launch(showDeclines.class, args);
+		launch(showAccepted.class, args);
 	}
 }
