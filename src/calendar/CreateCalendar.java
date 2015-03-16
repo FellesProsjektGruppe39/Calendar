@@ -284,10 +284,6 @@ public class CreateCalendar extends Application  {
 				final TextField dato1 = new TextField();
 				final Text text3 = new Text();
 				
-				
-				
-				 
-				
 				Button cl = new Button("Add Users to Meeting");
 				Button cl1 = new Button("Cancel");
 				
