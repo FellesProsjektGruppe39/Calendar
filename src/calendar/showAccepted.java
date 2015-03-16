@@ -70,6 +70,10 @@ public class showAccepted extends Application {
 		Button save = new Button("Save");
 		grid2.add(save, 0,11);
 		
+		Text t = new Text();
+		t.setText("0 - Not replied yet \n1 - Attending \n2 - Not attending");
+		grid2.add(t,0,0);
+		
 		sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
 		+ "FROM mote m1, mote_has_bruker mb1 "
 		+ "WHERE moteid "

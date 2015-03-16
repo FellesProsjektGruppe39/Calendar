@@ -501,5 +501,4 @@ public class CreateCalendar extends Application  {
 //		a.getID(" Martin Raknes Holth");
 		
 	}
->>>>>>> 144e7f9293f59db816130ab38efc8308a9b9a6ff
 }
