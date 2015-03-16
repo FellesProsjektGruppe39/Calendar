@@ -135,6 +135,7 @@ public class CreateCalendar extends Application  {
 		Button showAttendings = new Button("Show unanswered meetings");
 		Button showDeclines = new Button("Show declined meetings");
 		Button showAccepted = new Button("Show accepted meetings");
+		Button showCalendar = new Button("Show calendar for another user");
 		grid.add(cl, 2, 20,1,1);
 		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
@@ -143,7 +144,20 @@ public class CreateCalendar extends Application  {
 		grid.add(showAttendings, 0,21,1,1);
 		grid.add(showDeclines, 0,22,1,1);
 		grid.add(showAccepted, 0,23,1,1);
+		grid.add(showCalendar, 1,20, 1,1);
 		
+		showCalendar.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				ShowCalendar show = new ShowCalendar();
+				Stage stage = new Stage();
+                try {
+					show.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		showAttendings.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -270,6 +284,10 @@ public class CreateCalendar extends Application  {
 				final TextField dato1 = new TextField();
 				final Text text3 = new Text();
 				
+				
+				
+				 
+				
 				Button cl = new Button("Add Users to Meeting");
 				Button cl1 = new Button("Cancel");
 				
@@ -390,9 +408,13 @@ public class CreateCalendar extends Application  {
 		
 		update.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-				Label name2 = new Label(getName(BID));
-				name2.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
-				grid.add(name2, 0, 0, 1, 5);
+				CreateCalendar c = new CreateCalendar();
+				try {
+					c.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	} 
