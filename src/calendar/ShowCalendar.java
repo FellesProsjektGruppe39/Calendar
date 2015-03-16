@@ -45,8 +45,7 @@ public class ShowCalendar extends Application{
 		stage.show();
 		
 		Text user = new Text("Show calendar for: ");
-		ScrollPane users = new ScrollPane();
-		users.setContent();
+		
 		
 		Button cl = new Button("Close");
 		Button save = new Button("Do it");

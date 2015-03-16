@@ -35,7 +35,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.application.Application;
 
-public class showAccepted extends Application {
+public class addUser extends Application {
 	
 	private static int BID = 3;
 	private int brukerid;
