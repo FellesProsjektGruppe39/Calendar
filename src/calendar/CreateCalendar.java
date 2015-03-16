@@ -1,8 +1,11 @@
 
+
+
 package calendar;
 
 import java.awt.SecondaryLoop;
 import java.io.IOException;
+import java.time.LocalDate;
 
 import notification.GetNotification;
 import Meeting.CreateMeeting;
@@ -29,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollBar;
@@ -202,13 +206,19 @@ public class CreateCalendar extends Application  {
 				stage2.setScene(scene1);
 				stage2.setTitle("Change Meeting");
 				stage2.show();
-				
 				Button cl = new Button("Save and Exit");
 				
+				sqlRetrieve sql = new sqlRetrieve("SELECT moteid, starttidspunkt, sluttidspunkt, beskrivelse, dato, sted"
+						+ " FROM mote "
+						+ " WHERE opprettet_av = " + BID 
+						+ " AND mr.mote_moteid = moteid");
+				
+				
+				String heading;
+				heading = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s","MoteId", "Date", "Start","End","Description","Room","Location");
 				grid.add(cl, 2, 6);
 				
-				
-				
+								
 				
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
@@ -233,7 +243,17 @@ public class CreateCalendar extends Application  {
 				
 				Button cl = new Button("Save and Exit");
 				
+				final DatePicker datePicker = new DatePicker();
+				 datePicker.setOnAction(new EventHandler<ActionEvent>() {
+				     public void handle(ActionEvent e) {
+				         LocalDate date = datePicker.getValue();
+				         System.err.println("Selected date: " + date);
+				     }
+				 });
+				 
+				
 				grid.add(cl, 2, 2);
+				grid.add(datePicker, 5, 5);
 				
 				
 				
@@ -500,4 +520,5 @@ public class CreateCalendar extends Application  {
 //		a.getID(" Martin Raknes Holth");
 		
 	}
+
 }
