@@ -120,12 +120,6 @@ public class showDeclines extends Application {
 			grid.add(cb.get(i), 1, i+1, 1, 1);
 		}
 		
-
-
-		Label meeting = new Label(str);
-		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
-		grid.add(meeting, 0, 0, 1, 10);
-
 		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 		@Override public void handle(ActionEvent e) {
