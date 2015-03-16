@@ -3,6 +3,8 @@ package calendar;
 
 import java.awt.SecondaryLoop;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import notification.CreateNotification;
 import notification.GetNotification;
@@ -31,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollBar;
@@ -265,27 +268,67 @@ public class CreateCalendar extends Application  {
 		
 		changeMeeting.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-				final Stage stage2 = new Stage();
+				
+				
+				GridPane grid2 = new GridPane();
+				grid2.setAlignment(Pos.CENTER);
+				grid2.setHgap(10);
+				grid2.setVgap(10);
+				grid2.setPadding(new Insets(25, 25, 25, 25));
+				
 				GridPane grid = new GridPane();
-				grid.setAlignment(Pos.TOP_LEFT);
-				grid.setHgap(50);
-				grid.setVgap(10);
-				grid.setPadding(new Insets(10, 10, 10, 10));
-				Scene scene1 = new Scene(grid, 450, 500);
-				stage2.setScene(scene1);
-				stage2.setTitle("Change Meeting");
-				stage2.show();
 				
-				Button cl = new Button("Save and Exit");
+				ScrollPane sp = new ScrollPane(grid);
+				grid2.add(sp, 0, 1);
 				
-				grid.add(cl, 2, 6);
+				Scene scene = new Scene(grid2, 1100, 600);
+				stage.setScene(scene);
+				stage.setTitle("Your Meetings");
+				stage.show();
+				
+				Button cl = new Button("Close");
+				grid2.add(cl, 1,10);
+				
+				Button save = new Button("Save");
+				grid2.add(save, 2,10);
+				
+				final ArrayList<Integer> moteid = new ArrayList<Integer>();
+				final ArrayList<Label> print = new ArrayList<Label>();
+				
+				sqlRetrieve sql = new sqlRetrieve("SELECT moteid, dato, starttidspunkt, sluttidspunkt, beskrivelse, rom_romnavn, sted"
+						+ " FROM mote m, mote_has_rom mr "
+						+ " WHERE opprettet_av = " + BID 
+						+ " AND mr.mote_moteid = moteid"
+						+ " AND m.dato >= CURDATE()"
+						+ " ORDER BY dato, starttidspunkt ASC");
 				
 				
+				String heading;
+				heading = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s","MoteId", "Date", "Start","End","Description","Room","Location");
+				print.add(new Label(heading));
+				print.get(0).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
+				
+				grid.add(print.get(0), 0, 0, 1, 1);
 				
 				
+				final ArrayList<Button> b = new ArrayList<Button>();
+				
+				for( int i=0; i < sql.getQuery().length; i++){
+					
+					b.add(new Button("  Edit  "));
+					moteid.add(Integer.parseInt(sql.getQuery()[i][0]));
+					String a = String.format("%-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-15s",sql.getQuery()[i][0], sql.getQuery()[i][1], sql.getQuery()[i][2], sql.getQuery()[i][3],sql.getQuery()[i][4], sql.getQuery()[i][5], sql.getQuery()[i][6]);					
+					print.add(new Label(a));
+					print.get(i+1).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
+					grid.add(print.get(i+1), 0, i+1, 1, 1);
+					grid.add(b.get(i), 1, i+1, 1, 1);
+					
+				}
+				
+		
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
-						stage2.close();
+						stage.close();
 					}
 				});
 			}
@@ -381,6 +424,14 @@ public class CreateCalendar extends Application  {
 				final TextField slutt1 = new TextField();
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField dato1 = new TextField();
+				final DatePicker datePicker = new DatePicker();
+				 datePicker.setOnAction(new EventHandler<ActionEvent>() {
+				     public void handle(ActionEvent t) {
+				         LocalDate date = datePicker.getValue();
+				         System.err.println("Selected date: " + date);
+				     }
+				 });
+				 
 				final Text text3 = new Text();
 				
 				Button cl = new Button("Add Users to Meeting");
@@ -396,14 +447,14 @@ public class CreateCalendar extends Application  {
 				grid.add(beskrivelse, 1,7);
 				grid.add(beskrivelse1, 2,7);
 				grid.add(dato, 1, 13);
-				grid.add(dato1, 2, 13);
+				grid.add(datePicker, 2, 13);
 				
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@SuppressWarnings("null")
 					@Override public void handle(ActionEvent e) {
 						CheckCalendar c = new CheckCalendar();
 						
-						if (!c.checkinput(start1.getText(), slutt1.getText(), dato1.getText())){
+						if (!c.checkinput(start1.getText(), slutt1.getText(), datePicker.getValue().toString())){
 							text3.setText("FEIL INPUT!!");
 							text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 							text3.setFill(Color.RED);
@@ -458,7 +509,7 @@ public class CreateCalendar extends Application  {
 								
 								final CreateMeeting mote = new CreateMeeting(BID);
 								
-								mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), dato1.getText(), antall);
+								mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), datePicker.getValue().toString(), antall);
 								mote.ChooseRoomGUI();
 								mote.create();
 								
