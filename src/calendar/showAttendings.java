@@ -67,6 +67,10 @@ public class showAttendings extends Application {
 		Button save = new Button("Save");
 		grid2.add(save, 0,11);
 		
+		Text t = new Text();
+		t.setText("0 - Not replied yet \n1 - Attending \n2 - Not attending");
+		grid2.add(t,0,0);
+		
 		sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
 		+ "FROM mote m1, mote_has_bruker mb1 "
 		+ "WHERE moteid "
@@ -115,12 +119,7 @@ public class showAttendings extends Application {
 			grid.add(print.get(i+1), 0, i+1, 1, 1);
 			grid.add(cb.get(i), 1, i+1, 1, 1);
 		}
-		
-
-		Label meeting = new Label(str);
-		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
-		grid.add(meeting, 0, 0, 1, 10);
-
+	
 
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 		@Override public void handle(ActionEvent e) {
