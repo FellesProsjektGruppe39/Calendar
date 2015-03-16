@@ -166,14 +166,14 @@ public class EditMeeting {
 		}
 		public void endreDato(String dato){
 			
-			sqlRetrieve info = new sqlRetrieve("SELECT bruker_brukerid, mote_moteid, beskrivelse, starttidspunkt, sluttidspunkt, dato"
-					+ " FROM mote_has_bruker, mote"
-					+ " WHERE mote_moteid = moteid"
-					+ " AND mote_moteid = " + this.moteid);
-			sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(*)FROM mote_has_bruker WHERE mote_moteid = " + this.moteid);
-			for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
-				cn.create(Integer.parseInt(info.getQuery()[i][0]),  info.getQuery()[0][2] + " har endret dato fra " + info.getQuery()[0][5] + " til " + dato);
-		}
+//			sqlRetrieve info = new sqlRetrieve("SELECT bruker_brukerid, mote_moteid, beskrivelse, starttidspunkt, sluttidspunkt, dato"
+//					+ " FROM mote_has_bruker, mote"
+//					+ " WHERE mote_moteid = moteid"
+//					+ " AND mote_moteid = " + this.moteid);
+//			sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(*)FROM mote_has_bruker WHERE mote_moteid = " + this.moteid);
+//			for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
+//				cn.create(Integer.parseInt(info.getQuery()[i][0]),  info.getQuery()[0][2] + " har endret dato fra " + info.getQuery()[0][5] + " til " + dato);
+//		}
 			
 			sql.execute("UPDATE mote SET dato =" + "\"" + dato + "\"" + "WHERE moteid =" + moteid);
 			

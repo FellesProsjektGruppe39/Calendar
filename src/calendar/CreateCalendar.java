@@ -1,4 +1,3 @@
-
 package calendar;
 
 import java.awt.SecondaryLoop;
@@ -829,66 +828,6 @@ public class CreateCalendar extends Application  {
 		String[] res = str.split(",");
 		return res;
 	}
-	
-//	@FXML
-//	private Button ExitButton, NewMeeting, SelectButton, NewGroup, Save;
-//	
-//	@FXML
-//	private Label ID, avtaler;
-//	
-//	@FXML
-//	private TextField StartTid, SluttTid;
-//	
-//	
-//	@FXML
-//    void initialize() {
-//        assert ExitButton != null : "fx:id=\"ExitButton\" was not injected: check your FXML file 'Calendar.fxml'.";
-//        assert Save != null : "fx:id=\"Save\" was not injected: check your FXML file 'NewMeeting.fxml'.";
-//        
-//        		sqlRetrieve getName = new sqlRetrieve("SELECT * FROM bruker WHERE brukerid ='" + BID + "';");
-//        		String fornavn = getName.getQuery()[0][1];
-//        		String etterNavn = getName.getQuery()[0][2];
-//        		ID.setText(fornavn + " " + etterNavn + "BrukerId: " + BID);
-//        		avtaler.setText(CheckCalendar.PrintDay(BID));
-//        		
-////		Save.setOnAction(new EventHandler<ActionEvent>() {
-////        	public void handle(ActionEvent event) {
-////        		Platform.exit();
-////        	}
-////        });	
-//        
-//        
-//		SelectButton.setOnAction(new EventHandler<ActionEvent>() {
-//        	public void handle(ActionEvent event) {
-//        		Platform.exit();
-//        	}
-//        });
-//        		
-//        ExitButton.setOnAction(new EventHandler<ActionEvent>() {
-//        	public void handle(ActionEvent event) {
-//        		Platform.exit();
-//        	}
-//        });
-//        
-//        NewMeeting.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//            	Parent root;
-//                try {
-//                    root = FXMLLoader.load(getClass().getResource("NewMeeting.fxml"));
-//                    Stage stage = new Stage();
-//                    stage.setTitle("New Meeting");
-//                    stage.setScene(new Scene(root, 500, 450));
-//                    stage.show();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-////                ((Node)(event.getSource())).getScene().getWindow().hide();
-//            }
-//        });
-//    
-//    }
-	
 	
 	public static void main(String[] args) {
 		launch(CreateCalendar.class, args);
