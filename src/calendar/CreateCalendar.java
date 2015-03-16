@@ -4,9 +4,11 @@ package calendar;
 import java.awt.SecondaryLoop;
 import java.io.IOException;
 
+import notification.CreateNotification;
 import notification.GetNotification;
 import Meeting.CreateMeeting;
 import Meeting.EditMeeting;
+import Room.Room;
 
 import com.sun.glass.events.MouseEvent;
 
@@ -136,6 +138,8 @@ public class CreateCalendar extends Application  {
 		Button showDeclines = new Button("Show declined meetings");
 		Button showAccepted = new Button("Show accepted meetings");
 		Button showCalendar = new Button("Show calendar for another user");
+		Button createRoom = new Button("Create a new Room");
+		grid.add(createRoom,4,22,1,1);
 		grid.add(cl, 2, 20,1,1);
 		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
@@ -174,6 +178,61 @@ public class CreateCalendar extends Application  {
 			}
 		});
 		
+		createRoom.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				final Stage stage1 = new Stage();
+				final GridPane grid = new GridPane();
+				grid.setAlignment(Pos.TOP_LEFT);
+				grid.setHgap(50);
+				grid.setVgap(10);
+				grid.setPadding(new Insets(10, 10, 10, 10));
+				Scene scene1 = new Scene(grid, 460, 500);
+				stage1.setScene(scene1);
+				stage1.setTitle("Create a Room");
+				stage1.show();	
+				
+				final Text Romnavn = new Text("Gi rommet et navn: ");
+				final Text Sted = new Text("Angi et sted for rommet: ");
+				final Text beskrivelse = new Text("Beskrivelse: ");
+				final Text Kapasitet = new Text("Romkapasitet: ");
+				final TextField Romnavn1 = new TextField();
+				final TextField Sted1 = new TextField();
+				final TextArea beskrivelse1 = new TextArea();
+				final TextField Kapasitet1 = new TextField();
+				//final Text text3 = new Text();
+				
+				Button SandE = new Button("Save and Exit");
+				Button cl = new Button("Cancel");
+
+				grid.add(cl, 2, 20);
+				grid.add(SandE,1,20);
+				grid.add(Romnavn, 1, 3);
+				grid.add(Romnavn1, 2, 3);
+				grid.add(Sted, 1, 5);
+				grid.add(Sted1, 2, 5);
+				grid.add(beskrivelse, 1,7);
+				grid.add(beskrivelse1, 2,7);
+				grid.add(Kapasitet, 1, 13);
+				grid.add(Kapasitet1, 2, 13);
+				
+				cl.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+	
+						stage1.close();
+					}
+				});
+				
+				SandE.setOnAction(new EventHandler<ActionEvent>(){
+					@Override public void handle(ActionEvent e) {
+						final Room rom = new Room();
+						final String Kappa = Kapasitet1.getText();
+						final int kapasitet = Integer.parseInt(Kappa);
+						rom.createRoom(Romnavn1.getText(), kapasitet, Sted1.getText(), beskrivelse1.getText());
+						stage1.close();
+					}
+				});
+			}
+		});
 		showDeclines.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 
@@ -240,21 +299,61 @@ public class CreateCalendar extends Application  {
 				grid.setHgap(50);
 				grid.setVgap(10);
 				grid.setPadding(new Insets(10, 10, 10, 10));
-				Scene scene1 = new Scene(grid, 450, 500);
+				Scene scene1 = new Scene(grid, 800, 500);
 				stage2.setScene(scene1);
 				stage2.setTitle("New Group");
 				stage2.show();
 				
-				Button cl = new Button("Save and Exit");
+				Text name = new Text("Name of the group:");
+				Text name1 = new Text("Participants of the group:");
+				final TextField name2 = new TextField();
+				Button cl = new Button("Exit");
+				Button add = new Button("Add all");
+				Button save = new Button("Save");
 				
-				grid.add(cl, 2, 2);
+				grid.add(save, 3, 18);
+				grid.add(add, 2, 18);
+				grid.add(name, 1, 2);
+				grid.add(name1, 1, 3);
+				grid.add(name2, 2, 2, 3,1);
+				grid.add(cl, 3, 19);
 				
+				String[] names = getNames();
+				final String[] names1 = names;
+				final CheckBox[] cbs = new CheckBox[names.length];
 				
+				for (int i = 0; i < names.length; i++) {
+					final CheckBox cb = cbs[i] = new CheckBox(names[i]);
+						grid.add(cb, 2, i+3);
+				}
 				
 				
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
 						stage2.close();
+					}
+				});
+				add.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						for (int i = 0; i < cbs.length; i++) {
+							cbs[i].setSelected(true);		
+						}
+					}
+				});
+				save.setOnAction(new EventHandler<ActionEvent>() {
+					@Override public void handle(ActionEvent e) {
+						sqlExecute create = new sqlExecute();
+						create.execute("INSERT INTO gruppe (gruppenavn) VALUES ('"+ name2.getText()+"')");
+						sqlRetrieve gid = new sqlRetrieve("SELECT max(gruppeid) FROM gruppe");
+						String GID = gid.getQuery()[0][0];
+						for (int i = 0; i < cbs.length; i++) {
+							if(cbs[i].isSelected()){
+								create.execute("INSERT INTO bruker_has_Gruppe (bruker_brukerid, Gruppe_gruppeid) VALUES ('" + getID(names1[i]) +"', "+GID+")");
+								CreateNotification not = new CreateNotification();
+								not.create(getID(names1[i]), "Du ble nå lagt til i gruppen "+ name2.getText());
+							}
+							stage2.close();
+						}
 					}
 				});
 			}
@@ -416,7 +515,7 @@ public class CreateCalendar extends Application  {
 	} 
 	
 	
-	public String getName(int bid){
+	public static String getName(int bid){
 		sqlRetrieve getName = new sqlRetrieve("SELECT * FROM bruker WHERE brukerid ='" + bid + "';");
 		String fornavn = getName.getQuery()[0][1];
 		String etterNavn = getName.getQuery()[0][2];
