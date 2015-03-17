@@ -48,7 +48,7 @@ public class EditMeeting {
 					+ " AND mote_moteid = " + this.moteid);
 			sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(*)FROM mote_has_bruker WHERE mote_moteid = " + this.moteid);
 			for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
-				cn.create(Integer.parseInt(info.getQuery()[i][0]), info.getQuery()[0][2] + " den " + info.getQuery()[0][5] + " har fått en oppdatert beskrivelse");
+				cn.create(Integer.parseInt(info.getQuery()[i][0]), info.getQuery()[0][2] + " den " + info.getQuery()[0][5] + " har fï¿½tt en oppdatert beskrivelse");
 			}
 			sql.execute("UPDATE mote SET beskrivelse =" + "\"" + Beskrivelse + "\"" + "WHERE moteid =" + moteid);
 			
@@ -195,6 +195,38 @@ public class EditMeeting {
 		}
 			
 		}
+		public void leggtilgruppe(String text) {
+			sqlRetrieve ret = new sqlRetrieve("SELECT gruppeid FROM gruppe WHERE gruppenavn = '" + text + "'");
+			String gid = (ret.getQuery()[0][0]);
+			sqlRetrieve user = new sqlRetrieve("SELECT bruker_brukerid FROM bruker_has_Gruppe WHERE Gruppe_gruppeid = '" + gid +"'");
+			String str = "";
+			for (int i = 0; i < user.getQuery().length; i++) {
+				str += user.getQuery()[i][0] + ";";
+			}
+			String[] users = str.split(";");
+			System.out.println(users[0]);
+			System.out.println(users[1]);
+			String str1 = "";
+			sqlRetrieve m = new sqlRetrieve("SELECT bruker_brukerid FROM mote_has_bruker WHERE mote_moteid = '" + moteid +"'");
+			for (int i = 0; i < m.getQuery().length; i++) {
+				str1 += m.getQuery()[i][0] + ";";
+			}
+			int l = str.length();
+			System.out.println(str1);
+			for (int i = 0; i < users.length; i++) {
+					if((str1.contains((users[i])))){
+						
+					}else{
+						
+				}
+			}
+			str1 = (str1.replace(";", ""));
+			System.out.println(str1);
+			for (int i = 0; i < str1.length(); i++) {
+//				leggtilbruker((str1.charAt(i)));
+			}
+			}
+		
 		
 		//public void endreBeskrivelse(String nyBeskrivelse) {
 			
@@ -203,9 +235,10 @@ public class EditMeeting {
 		
 		public static void main(String[] args) {
 
-			EditMeeting meeting = new EditMeeting(11);
-			meeting.endreSluttid("23:59:59");
+			EditMeeting meeting = new EditMeeting(123);
+			meeting.leggtilgruppe("THE best");
 			
 		}
+
 	}
 
