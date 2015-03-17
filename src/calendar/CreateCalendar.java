@@ -8,7 +8,6 @@ import java.util.EventObject;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-
 import sun.util.resources.LocaleData;
 import notification.CreateNotification;
 import notification.GetNotification;
@@ -17,10 +16,8 @@ import Meeting.EditMeeting;
 import Room.CheckRoom;
 import Room.Room;
 import notification.ClearNotification;
-
 import com.sun.glass.events.MouseEvent;
 import com.sun.xml.internal.ws.Closeable;
-
 import logIn.LogIn;
 import mysql.sqlExecute;
 import mysql.sqlRetrieve;
@@ -63,10 +60,17 @@ public class CreateCalendar extends Application  {
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
 	private int antall = 1, antall2;
+	private int week;
+	private int year;
 	
 	public void setBrukerid(int id){
 		this.brukerid = id;
 		BID = this.brukerid;
+	}
+	
+	public void setWeek(int week, int year){
+		this.week = week;
+		this.year = year;
 	}
 
 	public void start(final Stage stage) throws Exception {
@@ -103,7 +107,7 @@ public class CreateCalendar extends Application  {
         borderPane.setCenter(scroll);
         grid.add(scroll,0,30, 10, 10);
         
-        ScrollPane scroll1 = new ScrollPane();
+        final ScrollPane scroll1 = new ScrollPane();
         scroll1.fitToWidthProperty();
         scroll1.setMaxHeight(600);
         scroll1.setPrefHeight(200);
@@ -125,7 +129,9 @@ public class CreateCalendar extends Application  {
 		name2.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 		grid.add(name2, 0, 0, 1, 5);
 		
-		Label meeting = new Label(CheckCalendar.PrintDay(BID));
+		setWeek(getWeek(), getYear());
+		
+		Label meeting = new Label(CheckCalendar.PrintWeek(BID, this.week));
 //		System.out.println(meeting.getText());
 		scroll1.setContent(meeting);
 		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
@@ -142,6 +148,9 @@ public class CreateCalendar extends Application  {
 		Button createRoom = new Button("New Room");
 		Button addUser = new Button("New user");
 		Button ClearNotification = new Button("Clear Notifications");
+		Button nextweek = new Button("Next Week");
+		Button prevweek = new Button("Prev. Week");
+		
 		grid.add(ClearNotification, 0,21,1,1);
 		grid.add(createRoom,5,1,3,1);
 		grid.add(cl, 2, 25,1,1);
@@ -154,6 +163,32 @@ public class CreateCalendar extends Application  {
 		grid.add(showAccepted, 1,23,1,1);
 		grid.add(showCalendar, 1,20, 1,1);
 		grid.add(addUser, 3,1, 3,1);
+		grid.add(nextweek, 1,1, 3,5);
+		grid.add(prevweek, 1,2, 3,5);
+		
+		nextweek.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				System.out.println(week);
+				week = week +1;
+				System.out.println(week);
+				Label meeting = new Label(CheckCalendar.PrintWeek(BID, week));
+//				System.out.println(meeting.getText());
+				scroll1.setContent(meeting);
+				meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
+			}
+		});
+		
+		prevweek.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				System.out.println(week);
+				week = week -1;
+				System.out.println(week);
+				Label meeting = new Label(CheckCalendar.PrintWeek(BID, week));
+//				System.out.println(meeting.getText());
+				scroll1.setContent(meeting);
+				meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
+			}
+		});
 		
 		addUser.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -915,7 +950,8 @@ public class CreateCalendar extends Application  {
 				clear.clearAll();
 				CreateCalendar c = new CreateCalendar();
 				try {
-					c.start(stage);
+//					c.start(stage);
+					
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -969,6 +1005,16 @@ public class CreateCalendar extends Application  {
 		ID = Integer.parseInt(getID.getQuery()[0][0]);
 //		System.out.println(ID);
 		return ID;
+	}
+	public int getWeek(){
+		sqlRetrieve week = new sqlRetrieve("SELECT WEEKOFYEAR(CURDATE())");
+		int wee = Integer.parseInt(week.getQuery()[0][0]);
+		return wee;
+	}
+	public int getYear(){
+		sqlRetrieve week = new sqlRetrieve("SELECT YEAR(CURDATE())");
+		int wee = Integer.parseInt(week.getQuery()[0][0]);
+		return wee;
 	}
 	
 	public static void main(String[] args) {
