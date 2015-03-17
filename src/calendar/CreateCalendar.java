@@ -324,16 +324,16 @@ public class CreateCalendar extends Application  {
 				final ArrayList<Integer> moteidarr = new ArrayList<Integer>();
 				final ArrayList<Label> print = new ArrayList<Label>();
 				
-				sqlRetrieve sql = new sqlRetrieve("SELECT moteid, dato, starttidspunkt, sluttidspunkt, beskrivelse, rom_romnavn, sted"
+				sqlRetrieve sql = new sqlRetrieve("SELECT moteid, dato, starttidspunkt, sluttidspunkt, beskrivelse, rom_romnavn"
 						+ " FROM mote m, mote_has_rom mr "
 						+ " WHERE opprettet_av = " + BID 
 						+ " AND mr.mote_moteid = moteid"
-						+ " AND m.dato >= CURDATE()"
+						+ " AND m.dato >= CURDATE()" 
 						+ " ORDER BY dato, starttidspunkt ASC");
 				
 				
 				String heading;
-				heading = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s","MoteId", "Date", "Start","End","Description","Room","Location");
+				heading = String.format("%-5s    %-10s   %-8s   %-8s   %-40s   %-20s ","MoteId", "Date", "Start","End","Description","Room");
 				print.add(new Label(heading));
 				print.get(0).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 				
@@ -343,7 +343,7 @@ public class CreateCalendar extends Application  {
 					
 			
 					moteidarr.add(Integer.parseInt(sql.getQuery()[i][0]));
-					String a = String.format("%-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-15s",sql.getQuery()[i][0], sql.getQuery()[i][1], sql.getQuery()[i][2], sql.getQuery()[i][3],sql.getQuery()[i][4], sql.getQuery()[i][5], sql.getQuery()[i][6]);					
+					String a = String.format("%-5s %-10s - %-8s   %-8s   %-40s   %-20s",sql.getQuery()[i][0], sql.getQuery()[i][1], sql.getQuery()[i][2], sql.getQuery()[i][3],sql.getQuery()[i][4], sql.getQuery()[i][5]);					
 					print.add(new Label(a));
 					print.get(i+1).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 					grid.add(print.get(i+1), 0, i+1, 1, 1);
@@ -855,9 +855,7 @@ public class CreateCalendar extends Application  {
 								create.execute("UPDATE mote_has_bruker SET attending ='" + 1 + "' WHERE mote_moteid = '" + Mid + "' AND "+"bruker_brukerid= '"+ BID +"'");
 								stage1.close();
 								}else{
-
 									Text feil = new Text("Ingen ledige rom, vennligst gå tilbake og velg ett nytt tidspunkt!");
-
 									feil.setFill(Color.RED);
 									feil.setFont(Font.font("Tahoma", FontWeight.NORMAL, 13));
 									grid.add(feil, 0, 4);
