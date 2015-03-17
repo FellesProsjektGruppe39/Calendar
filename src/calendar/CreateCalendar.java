@@ -1,4 +1,3 @@
-
 package calendar;
 
 import java.awt.SecondaryLoop;
@@ -61,7 +60,7 @@ public class CreateCalendar extends Application  {
 	private int width = 1000, height = 600, brukerid;
 	private String username, password, start;
 	private String StartT, SlutT, Beskrivelse;
-	private int antall = 1;
+	private int antall = 1, antall2;
 	
 	public void setBrukerid(int id){
 		this.brukerid = id;
@@ -150,10 +149,10 @@ public class CreateCalendar extends Application  {
 		Button createRoom = new Button("Create a new Room");
 		grid.add(createRoom,4,22,1,1);
 		grid.add(cl, 2, 20,1,1);
-		grid.add(newMeeting, 2, 1,3,1);
+		grid.add(newMeeting, 2, 1,1,1);
 		grid.add(update, 0,20,1,1);
-		grid.add(newGroup,2,2,3,1);
-		grid.add(changeMeeting, 2,3,3,1);
+		grid.add(newGroup,2,2,1,1);
+		grid.add(changeMeeting, 2,3,1,1);
 		grid.add(showAttendings, 0,21,1,1);
 		grid.add(showDeclines, 0,22,1,1);
 		grid.add(showAccepted, 0,23,1,1);
@@ -765,7 +764,12 @@ public class CreateCalendar extends Application  {
 									} 
 //										cbs[j].setText(null);
 								}
-								 
+								for (int j = 0; j < cbs1.length-1; j++) {
+									if (cbs1[j].isSelected()){
+										antall2 += 1;
+									} 
+//										cbs1[j].setText(null);
+								}
 //								System.out.println(antall);
 								stage3.close();
 								
@@ -809,6 +813,7 @@ public class CreateCalendar extends Application  {
 					}
 				});
 			}
+
 		});
 		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
@@ -855,6 +860,16 @@ public class CreateCalendar extends Application  {
 		return names1;
 	}
 	
+	public String[] getGroups(){
+		sqlRetrieve ret = new sqlRetrieve("SELECT gruppenavn FROM gruppe");
+		String str ="";
+		for (int i = 0; i < ret.getQuery().length; i++) {
+			str += " "+ ret.getQuery()[i][0] + ",";
+		}
+		String[] res = str.split(",");
+		return res;
+	}
+	
 	public int getID(String navn){
 		int ID;
 		String[] na = navn.split(" ");
@@ -865,16 +880,6 @@ public class CreateCalendar extends Application  {
 		ID = Integer.parseInt(getID.getQuery()[0][0]);
 //		System.out.println(ID);
 		return ID;
-	}
-	
-	public String[] getGroups(){
-		sqlRetrieve ret = new sqlRetrieve("SELECT gruppenavn FROM gruppe");
-		String str ="";
-		for (int i = 0; i < ret.getQuery().length; i++) {
-			str += " "+ ret.getQuery()[i][0] + ",";
-		}
-		String[] res = str.split(",");
-		return res;
 	}
 	
 	public static void main(String[] args) {
