@@ -8,18 +8,18 @@ public class User {
 	
 	private String fornavn;
 	private String etternavn;
-	private int TlfNr;
+	private String TlfNr;
 	private String stilling;
 	private String passord;
 	private int admin;
 	private String brukernavn;
 	sqlExecute create = new sqlExecute();
 	
-	User(String fornavn, String etternavn, int TlfNr,
+	public User(String fornavn, String etternavn, String string,
 			String brukernavn, String passord, String stilling, int admin) {
 		this.fornavn=fornavn;
 		this.etternavn=etternavn;
-		this.TlfNr=TlfNr;
+		this.TlfNr=string;
 		this.brukernavn=brukernavn;
 		this.passord=passord;
 		this.stilling=stilling;
@@ -72,8 +72,8 @@ public class User {
 	
 	public static void main(String[] args) {
 		
-		User User_1 = new User("Petter", "Northug", 90909090, "PettN", "Brage", "Insatt", 0);
-		User_1.CreateUser();
+		//User User_1 = new User("Petter", "Northug", 90909090, "PettN", "Brage", "Insatt", 0);
+		//User_1.CreateUser();
 		//User_1.DeleteUser();
 	}
 

@@ -1,3 +1,4 @@
+
 package Room;
 
 import java.util.Date;
@@ -19,7 +20,7 @@ public class CheckRoom {
 		if (sqlret.getQuery().length == 0) {
 			System.out.println("Ingen ledige rom");
 			return false;
-		}
+		}else{
 		/*System.out.println("Valgnr - Romnavn   - Kapasitet - Sted             - Beskrivelse");
 		for (int i = 0; i < sqlret.getQuery().length; i++) {
 			//for (int j = 0; j < sqlret.getQuery()[0].length; j++) {
@@ -34,15 +35,16 @@ public class CheckRoom {
 				System.out.println();
 				//String.format("%40s",")
 		}*/
-		
-		return true;
+			
+			return true;
+		}
 		
 	}
 	
 	
 	public static void main(String[] args) {
 		CheckRoom rom = new CheckRoom();
-		rom.check("2015-03-30", "08:00:00", "09:30:00", 5);
+		rom.check("2015-03-18", "10:00:00", "11:30:00", 5);
 	
 	}
 	

@@ -148,6 +148,7 @@ public class CreateCalendar extends Application  {
 		Button showAccepted = new Button("Show accepted meetings");
 		Button showCalendar = new Button("Show calendar for another user");
 		Button createRoom = new Button("Create a new Room");
+		Button addUser = new Button("Create a new user");
 		grid.add(createRoom,4,22,1,1);
 		grid.add(cl, 2, 20,1,1);
 		grid.add(newMeeting, 2, 1,1,1);
@@ -158,6 +159,21 @@ public class CreateCalendar extends Application  {
 		grid.add(showDeclines, 0,22,1,1);
 		grid.add(showAccepted, 0,23,1,1);
 		grid.add(showCalendar, 1,20, 1,1);
+		grid.add(addUser, 1,21, 1,1);
+		
+		addUser.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+
+		        	addUser add = new addUser();
+	                Stage stage = new Stage();
+	                try {
+						add.start(stage);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			}
+		});
 		
 		showCalendar.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -208,11 +224,12 @@ public class CreateCalendar extends Application  {
 				final TextField Sted1 = new TextField();
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField Kapasitet1 = new TextField();
-				//final Text text3 = new Text();
+				final Text text3 = new Text();
 				
 				Button SandE = new Button("Save and Exit");
 				Button cl = new Button("Cancel");
-
+				
+				grid.add(text3, 2, 15);
 				grid.add(cl, 2, 20);
 				grid.add(SandE,1,20);
 				grid.add(Romnavn, 1, 3);
@@ -233,11 +250,20 @@ public class CreateCalendar extends Application  {
 				
 				SandE.setOnAction(new EventHandler<ActionEvent>(){
 					@Override public void handle(ActionEvent e) {
-						final Room rom = new Room();
-						final String Kappa = Kapasitet1.getText();
-						final int kapasitet = Integer.parseInt(Kappa);
-						rom.createRoom(Romnavn1.getText(), kapasitet, Sted1.getText(), beskrivelse1.getText());
-						stage1.close();
+							try {
+								final Room rom = new Room();
+								final String Kappa = Kapasitet1.getText();
+								final int kapasitet = Integer.parseInt(Kappa);
+								rom.createRoom(Romnavn1.getText(), kapasitet, Sted1.getText(), beskrivelse1.getText());
+								stage1.close();
+							}
+							catch (Exception ie){
+								text3.setText("FEIL INPUT!!");
+								text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+								text3.setFill(Color.RED);
+							}
+						
+						
 					}
 				});
 			}
@@ -654,7 +680,7 @@ public class CreateCalendar extends Application  {
 							if(cbs[i].isSelected()){
 								create.execute("INSERT INTO bruker_has_Gruppe (bruker_brukerid, Gruppe_gruppeid) VALUES ('" + getID(names1[i]) +"', "+GID+")");
 								CreateNotification not = new CreateNotification();
-								not.create(getID(names1[i]), "Du ble nå lagt til i gruppen "+ name2.getText());
+								not.create(getID(names1[i]), "Du ble nï¿½ lagt til i gruppen "+ name2.getText());
 							}
 							stage2.close();
 						}
@@ -829,7 +855,9 @@ public class CreateCalendar extends Application  {
 								create.execute("UPDATE mote_has_bruker SET attending ='" + 1 + "' WHERE mote_moteid = '" + Mid + "' AND "+"bruker_brukerid= '"+ BID +"'");
 								stage1.close();
 								}else{
+
 									Text feil = new Text("Ingen ledige rom, vennligst gå tilbake og velg ett nytt tidspunkt!");
+
 									feil.setFill(Color.RED);
 									feil.setFont(Font.font("Tahoma", FontWeight.NORMAL, 13));
 									grid.add(feil, 0, 4);
