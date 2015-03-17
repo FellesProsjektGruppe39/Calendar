@@ -150,10 +150,10 @@ public class CreateCalendar extends Application  {
 		Button createRoom = new Button("Create a new Room");
 		grid.add(createRoom,4,22,1,1);
 		grid.add(cl, 2, 20,1,1);
-		grid.add(newMeeting, 2, 1,1,1);
+		grid.add(newMeeting, 2, 1,3,1);
 		grid.add(update, 0,20,1,1);
-		grid.add(newGroup,2,2,1,1);
-		grid.add(changeMeeting, 2,3,1,1);
+		grid.add(newGroup,2,2,3,1);
+		grid.add(changeMeeting, 2,3,3,1);
 		grid.add(showAttendings, 0,21,1,1);
 		grid.add(showDeclines, 0,22,1,1);
 		grid.add(showAccepted, 0,23,1,1);
@@ -276,11 +276,11 @@ public class CreateCalendar extends Application  {
 			@Override public void handle(ActionEvent e) {
 				
 				
-				GridPane grid2 = new GridPane();
+				final GridPane grid2 = new GridPane();
 				grid2.setAlignment(Pos.CENTER);
 				grid2.setHgap(10);
 				grid2.setVgap(10);
-				grid2.setPadding(new Insets(25, 25, 25, 25));
+				grid2.setPadding( new Insets(25, 25, 25, 25));
 				
 				GridPane grid = new GridPane();
 				
@@ -295,7 +295,7 @@ public class CreateCalendar extends Application  {
 				Button cl = new Button("Close");
 				grid2.add(cl, 1,10);
 				
-				final ArrayList<Integer> moteid = new ArrayList<Integer>();
+				final ArrayList<Integer> moteidarr = new ArrayList<Integer>();
 				final ArrayList<Label> print = new ArrayList<Label>();
 				
 				sqlRetrieve sql = new sqlRetrieve("SELECT moteid, dato, starttidspunkt, sluttidspunkt, beskrivelse, rom_romnavn, sted"
@@ -316,7 +316,7 @@ public class CreateCalendar extends Application  {
 				for( int i=0; i < sql.getQuery().length; i++){
 					
 			
-					moteid.add(Integer.parseInt(sql.getQuery()[i][0]));
+					moteidarr.add(Integer.parseInt(sql.getQuery()[i][0]));
 					String a = String.format("%-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-15s",sql.getQuery()[i][0], sql.getQuery()[i][1], sql.getQuery()[i][2], sql.getQuery()[i][3],sql.getQuery()[i][4], sql.getQuery()[i][5], sql.getQuery()[i][6]);					
 					print.add(new Label(a));
 					print.get(i+1).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
@@ -332,11 +332,20 @@ public class CreateCalendar extends Application  {
 				
 				confirm.setOnAction(new EventHandler<ActionEvent>(){
 					
-
+					
 					@Override public void handle(ActionEvent e) {
 						final int moteid = Integer.parseInt(endremoteid.getText());
-						final sqlRetrieve sql2 = new sqlRetrieve("SELECT * FROM mote WHERE moteid = " + moteid);
+						if(!moteidarr.contains(moteid)){
+							    Text text3 = new Text();
+								text3.setText("Invalid meetingID");
+								text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+								text3.setFill(Color.RED);
+								grid2.add(text3, 0, 9);
+						}
+						else{
 						
+						final sqlRetrieve sql2 = new sqlRetrieve("SELECT * FROM mote WHERE moteid = " + moteid);
+						 
 						
 						final Stage stage1 = new Stage();
 						final GridPane grid = new GridPane();
@@ -359,6 +368,7 @@ public class CreateCalendar extends Application  {
 						final Text slutt = new Text("Slutt-tidspunkt(hh:mm:ss): ");
 						final Text beskrivelse = new Text("Beskrivelse: ");
 						final Text dato = new Text("Dato(yyyy-mm-dd): ");
+						final Text rom = new Text("Rom:");
 						final TextField start1 = new TextField(sql2.getQuery()[0][1]);
 						final TextField slutt1 = new TextField(sql2.getQuery()[0][2]);
 						final TextArea beskrivelse1 = new TextArea(sql2.getQuery()[0][3]);
@@ -403,129 +413,130 @@ public class CreateCalendar extends Application  {
 									text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 									text3.setFill(Color.RED);
 								}else{
-								final Stage stage3 = new Stage();
-								GridPane grid = new GridPane();
-								grid.setAlignment(Pos.TOP_LEFT);
-								grid.setHgap(50);
-								grid.setVgap(10);
-								grid.setPadding(new Insets(10, 10, 10, 10));
-								Scene scene1 = new Scene(grid, 450, 500);
-								stage3.setScene(scene1);
-								stage3.setTitle("Edit Users");
-								stage3.show();
-								Button close = new Button("Save And Exit");
-								Button add = new Button("Add All");
-								grid.add(close, 2, 4);
-								grid.add(add, 2, 2);
-								
-								
-								final String[] names = getNames();
-								final String[] names1 = names;
-								final CheckBox[] cbs = new CheckBox[names.length];
-								
-								final ArrayList<Integer> attendingusers = new ArrayList<Integer>();
-								
-								sqlRetrieve sql3 = new sqlRetrieve("SELECT bruker_brukerid FROM mote_has_bruker WHERE mote_moteid = " + moteid);
-								sqlRetrieve sql4 = new sqlRetrieve("SELECT count(*) FROM mote_has_bruker WHERE mote_moteid = " + moteid);
-								
-								int lengde = Integer.parseInt(sql4.getQuery()[0][0]);
-								
-								for(int i = 0; i < lengde; i++){
-									attendingusers.add(Integer.parseInt(sql3.getQuery()[i][0]));
-								}
-								
-								
-								for (int i = 0; i < names.length; i++) {
-									final CheckBox cb = cbs[i] = new CheckBox(names[i]);
-									if (attendingusers.contains(getID(names[i]))){
-										cbs[i].setSelected(true);
-										
-									}
-							
-									if(!cbs[i].getText().equals(names1[BID-1])){
-										grid.add(cb, 1, i+2);
+									final Stage stage3 = new Stage();
+									GridPane grid = new GridPane();
+									grid.setAlignment(Pos.TOP_LEFT);
+									grid.setHgap(50);
+									grid.setVgap(10);
+									grid.setPadding(new Insets(10, 10, 10, 10));
+									Scene scene1 = new Scene(grid, 450, 500);
+									stage3.setScene(scene1);
+									stage3.setTitle("Edit Users");
+									stage3.show();
+									Button close = new Button("Save And Exit");
+									Button add = new Button("Add All");
+									grid.add(close, 2, 4);
+									grid.add(add, 2, 2);
+									
+									
+									final String[] names = getNames();
+									final String[] names1 = names;
+									final CheckBox[] cbs = new CheckBox[names.length];
+									
+									final ArrayList<Integer> attendingusers = new ArrayList<Integer>();
+									
+									sqlRetrieve sql3 = new sqlRetrieve("SELECT bruker_brukerid FROM mote_has_bruker WHERE mote_moteid = " + moteid);
+									sqlRetrieve sql4 = new sqlRetrieve("SELECT count(*) FROM mote_has_bruker WHERE mote_moteid = " + moteid);
+									
+									int lengde = Integer.parseInt(sql4.getQuery()[0][0]);
+									
+									for(int i = 0; i < lengde; i++){
+										attendingusers.add(Integer.parseInt(sql3.getQuery()[i][0]));
 									}
 									
-								}
-								
-								add.setOnAction(new EventHandler<ActionEvent>() {
-									@Override public void handle(ActionEvent e) {
-										for (int i = 0; i < cbs.length; i++) {
-											cbs[i].setSelected(true);		
+									
+									for (int i = 0; i < names.length; i++) {
+										final CheckBox cb = cbs[i] = new CheckBox(names[i]);
+										if (attendingusers.contains(getID(names[i]))){
+											cbs[i].setSelected(true);
+											
 										}
+								
+										if(!cbs[i].getText().equals(names1[BID-1])){
+											grid.add(cb, 1, i+2);
+										}
+										
 									}
-								});
-								
-								
-								close.setOnAction(new EventHandler<ActionEvent>() {
-									@Override public void handle(ActionEvent e) {
-										for (int j = 0; j < cbs.length-1; j++) {
-											if (cbs[j].isSelected()){
-												antall += 1;
-											} 
-												
-										}
-										
-										final EditMeeting emote = new EditMeeting(moteid);
-										
-//										stage3.close();
-										
-										if(!sql2.getQuery()[0][1].equalsIgnoreCase(start1.getText())){
-											emote.endreStarttid(start1.getText());
-										}
-										
-										if(!sql2.getQuery()[0][2].equalsIgnoreCase(slutt1.getText())){
-											emote.endreSluttid(slutt1.getText());
-										}
-										
-										if(!sql2.getQuery()[0][3].equalsIgnoreCase(beskrivelse1.getText())){
-											emote.endreBeskrivelse(beskrivelse1.getText());
-										}
-										
-										sqlRetrieve info = new sqlRetrieve("SELECT bruker_brukerid, mote_moteid, beskrivelse, starttidspunkt, sluttidspunkt, dato"
-												+ " FROM mote_has_bruker, mote"
-												+ " WHERE mote_moteid = moteid"
-												+ " AND mote_moteid = " + moteid);
-										if(!info.getQuery()[0][5].equalsIgnoreCase(myDate.toString())){
-											CreateNotification cn = new CreateNotification();
-										
-										sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(*)FROM mote_has_bruker WHERE mote_moteid = " + moteid);
-											
-											
-											for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
-											cn.create(Integer.parseInt(info.getQuery()[i][0]),  info.getQuery()[0][2] + " har endret dato til " + info.getQuery()[0][5] + " fra " + myDate.toString());
+									
+									add.setOnAction(new EventHandler<ActionEvent>() {
+										@Override public void handle(ActionEvent e) {
+											for (int i = 0; i < cbs.length; i++) {
+												cbs[i].setSelected(true);		
 											}
 										}
-										
-										for(int i = 0; i < cbs.length;i++){
-											if(cbs[i].isSelected()== true){
-												if(BID != getID(cbs[i].getText())){
-													if (!attendingusers.contains(getID(names[i]))){
-														emote.leggtilbruker(getID(cbs[i].getText()));
-													}
+									});
+									
+									
+									close.setOnAction(new EventHandler<ActionEvent>() {
+										@Override public void handle(ActionEvent e) {
+											for (int j = 0; j < cbs.length-1; j++) {
+												if (cbs[j].isSelected()){
+													antall += 1;
+												} 
+													
+											}
+											
+											final EditMeeting emote = new EditMeeting(moteid);
+											
+	//										stage3.close();
+											
+											if(!sql2.getQuery()[0][1].equalsIgnoreCase(start1.getText())){
+												emote.endreStarttid(start1.getText());
+											}
+											
+											if(!sql2.getQuery()[0][2].equalsIgnoreCase(slutt1.getText())){
+												emote.endreSluttid(slutt1.getText());
+											}
+											
+											if(!sql2.getQuery()[0][3].equalsIgnoreCase(beskrivelse1.getText())){
+												emote.endreBeskrivelse(beskrivelse1.getText());
+											}
+											
+											sqlRetrieve info = new sqlRetrieve("SELECT bruker_brukerid, mote_moteid, beskrivelse, starttidspunkt, sluttidspunkt, dato"
+													+ " FROM mote_has_bruker, mote"
+													+ " WHERE mote_moteid = moteid"
+													+ " AND mote_moteid = " + moteid);
+											if(!info.getQuery()[0][5].equalsIgnoreCase(myDate.toString())){
+												CreateNotification cn = new CreateNotification();
+											
+											sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(*)FROM mote_has_bruker WHERE mote_moteid = " + moteid);
+												
+												
+												for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
+												cn.create(Integer.parseInt(info.getQuery()[i][0]),  info.getQuery()[0][2] + " har endret dato til " + info.getQuery()[0][5] + " fra " + myDate.toString());
 												}
 											}
-											if(cbs[i].isSelected() == false){
-												if(BID != getID(cbs[i].getText())){
-													if (attendingusers.contains(getID(names[i]))){
-														emote.fjernbruker(getID(cbs[i].getText()));
-												
+											
+											for(int i = 0; i < cbs.length;i++){
+												if(cbs[i].isSelected()== true){
+													if(BID != getID(cbs[i].getText())){
+														if (!attendingusers.contains(getID(names[i]))){
+															emote.leggtilbruker(getID(cbs[i].getText()));
+														}
 													}
 												}
+												if(cbs[i].isSelected() == false){
+													if(BID != getID(cbs[i].getText())){
+														if (attendingusers.contains(getID(names[i]))){
+															emote.fjernbruker(getID(cbs[i].getText()));
+													
+														}
+													}
+												}
+												
+											
+											
+										
+											
+										
+										stage3.close();
+										stage1.close();
+										stage4.close();
 											}
-										}
-										
-										
+										}});
 									
-										
 									
-									stage3.close();
-									stage1.close();
-									stage4.close();
-									}});
-								
-								
-								}	
+									}	
 							}
 						});
 						cl1.setOnAction(new EventHandler<ActionEvent>() {
@@ -535,18 +546,11 @@ public class CreateCalendar extends Application  {
 							}
 						});
 					}
+				}
 
 					
 				});
 
-					
-						
-					
-		
-				
-				
-				
-				
 				
 		
 				cl.setOnAction(new EventHandler<ActionEvent>() {
@@ -616,7 +620,7 @@ public class CreateCalendar extends Application  {
 							if(cbs[i].isSelected()){
 								create.execute("INSERT INTO bruker_has_Gruppe (bruker_brukerid, Gruppe_gruppeid) VALUES ('" + getID(names1[i]) +"', "+GID+")");
 								CreateNotification not = new CreateNotification();
-								not.create(getID(names1[i]), "Du ble nÃ¥ lagt til i gruppen "+ name2.getText());
+								not.create(getID(names1[i]), "Du ble nå lagt til i gruppen "+ name2.getText());
 							}
 							stage2.close();
 						}
@@ -693,27 +697,61 @@ public class CreateCalendar extends Application  {
 						stage3.setTitle("Add Users");
 						stage3.show();
 						Button close = new Button("Save And Exit");
-						Button add = new Button("Add All");
+						Button add = new Button("Add All Users");
+						Button adda = new Button("Add All Groups");
+						Text us = new Text("Her legger man til enkeltbrukere: ");
+						Text us1 = new Text("Her legger man til grupper: ");
 						grid.add(close, 2, 4);
 						grid.add(add, 2, 2);
+						grid.add(adda, 2, 3);
+						grid.add(us, 0, 0);
+						grid.add(us1, 0, 2);
 						
+						GridPane grid2 = new GridPane();
+						grid2.setAlignment(Pos.TOP_LEFT);
+						grid2.setHgap(10);
+						grid2.setVgap(10);
+						grid2.setPadding(new Insets(10, 10, 10, 10));
+						ScrollPane sp = new ScrollPane(grid2);
+						grid.add(sp, 0, 1);
+						
+						GridPane grid3 = new GridPane();
+						grid3.setAlignment(Pos.TOP_LEFT);
+						grid3.setHgap(10);
+						grid3.setVgap(10);
+						grid3.setPadding(new Insets(10, 10, 10, 10));
+						ScrollPane sp1 = new ScrollPane(grid3);
+						grid.add(sp1, 0, 3);
 						
 						String[] names = getNames();
+						String[] groups = getGroups();
 						final String[] names1 = names;
 						final CheckBox[] cbs = new CheckBox[names.length];
+						final CheckBox[] cbs1 = new CheckBox[groups.length];
 						
 						for (int i = 0; i < names.length; i++) {
 							final CheckBox cb = cbs[i] = new CheckBox(names[i]);
 							if(!cbs[i].getText().equals(names1[BID-1])){
-								grid.add(cb, 1, i+2);
+								grid2.add(cb, 1, i);
 							}
 							
+						}
+						for (int i = 0; i < groups.length; i++) {
+							final CheckBox cb1 = cbs1[i] = new CheckBox(groups[i]);
+							grid3.add(cb1, 1, i);
 						}
 						
 						add.setOnAction(new EventHandler<ActionEvent>() {
 							@Override public void handle(ActionEvent e) {
 								for (int i = 0; i < cbs.length; i++) {
 									cbs[i].setSelected(true);		
+								}
+							}
+						});
+						adda.setOnAction(new EventHandler<ActionEvent>() {
+							@Override public void handle(ActionEvent e) {
+								for (int i = 0; i < cbs1.length; i++) {
+									cbs1[i].setSelected(true);		
 								}
 							}
 						});
@@ -724,9 +762,10 @@ public class CreateCalendar extends Application  {
 								for (int j = 0; j < cbs.length-1; j++) {
 									if (cbs[j].isSelected()){
 										antall += 1;
-									} else
-										cbs[j].setText(null);
+									} 
+//										cbs[j].setText(null);
 								}
+								 
 //								System.out.println(antall);
 								stage3.close();
 								
@@ -740,13 +779,17 @@ public class CreateCalendar extends Application  {
 								final String MID = mid.getQuery()[0][0];
 								final int Mid = Integer.parseInt(MID);
 								final EditMeeting meeting = new EditMeeting(Mid);
-								System.out.println(Mid);
 								
 								for (int i = 0; i < cbs.length; i++) {
-									if(cbs[i].getText() != null){
+									if(cbs[i].isSelected()){
 										if(BID != getID(cbs[i].getText())){
 											meeting.leggtilbruker(getID(cbs[i].getText()));
 										}
+									}
+								}
+								for (int i = 0; i < cbs1.length; i++) {
+									if(cbs1[i].isSelected()){
+										meeting.leggtilgruppe(cbs1[i].getText());
 									}
 								}
 								sqlExecute create = new sqlExecute();
@@ -756,8 +799,7 @@ public class CreateCalendar extends Application  {
 						});
 						
 						
-						}
-						
+						}	
 					}
 				});
 				cl1.setOnAction(new EventHandler<ActionEvent>() {
@@ -767,7 +809,6 @@ public class CreateCalendar extends Application  {
 					}
 				});
 			}
-
 		});
 		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
@@ -826,65 +867,15 @@ public class CreateCalendar extends Application  {
 		return ID;
 	}
 	
-//	@FXML
-//	private Button ExitButton, NewMeeting, SelectButton, NewGroup, Save;
-//	
-//	@FXML
-//	private Label ID, avtaler;
-//	
-//	@FXML
-//	private TextField StartTid, SluttTid;
-//	
-//	
-//	@FXML
-//    void initialize() {
-//        assert ExitButton != null : "fx:id=\"ExitButton\" was not injected: check your FXML file 'Calendar.fxml'.";
-//        assert Save != null : "fx:id=\"Save\" was not injected: check your FXML file 'NewMeeting.fxml'.";
-//        
-//        		sqlRetrieve getName = new sqlRetrieve("SELECT * FROM bruker WHERE brukerid ='" + BID + "';");
-//        		String fornavn = getName.getQuery()[0][1];
-//        		String etterNavn = getName.getQuery()[0][2];
-//        		ID.setText(fornavn + " " + etterNavn + "BrukerId: " + BID);
-//        		avtaler.setText(CheckCalendar.PrintDay(BID));
-//        		
-////		Save.setOnAction(new EventHandler<ActionEvent>() {
-////        	public void handle(ActionEvent event) {
-////        		Platform.exit();
-////        	}
-////        });	
-//        
-//        
-//		SelectButton.setOnAction(new EventHandler<ActionEvent>() {
-//        	public void handle(ActionEvent event) {
-//        		Platform.exit();
-//        	}
-//        });
-//        		
-//        ExitButton.setOnAction(new EventHandler<ActionEvent>() {
-//        	public void handle(ActionEvent event) {
-//        		Platform.exit();
-//        	}
-//        });
-//        
-//        NewMeeting.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//            	Parent root;
-//                try {
-//                    root = FXMLLoader.load(getClass().getResource("NewMeeting.fxml"));
-//                    Stage stage = new Stage();
-//                    stage.setTitle("New Meeting");
-//                    stage.setScene(new Scene(root, 500, 450));
-//                    stage.show();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-////                ((Node)(event.getSource())).getScene().getWindow().hide();
-//            }
-//        });
-//    
-//    }
-	
+	public String[] getGroups(){
+		sqlRetrieve ret = new sqlRetrieve("SELECT gruppenavn FROM gruppe");
+		String str ="";
+		for (int i = 0; i < ret.getQuery().length; i++) {
+			str += " "+ ret.getQuery()[i][0] + ",";
+		}
+		String[] res = str.split(",");
+		return res;
+	}
 	
 	public static void main(String[] args) {
 		launch(CreateCalendar.class, args);
