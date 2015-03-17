@@ -81,6 +81,8 @@ public class CreateCalendar extends Application  {
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		
 		Scene scene = new Scene(grid, 1000, 1000);
+		//scene.getStylesheets().clear();
+		//scene.getStylesheets().add("http://osakasushi.no/hi.css"); Det her er morro
 		stage.setScene(scene);
 		stage.setTitle("Calendar");
 		stage.show();
