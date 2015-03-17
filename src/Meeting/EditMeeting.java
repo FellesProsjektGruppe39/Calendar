@@ -90,15 +90,10 @@ public class EditMeeting {
 			sqlRetrieve info = new sqlRetrieve("SELECT moteid, beskrivelse, starttidspunkt, sluttidspunkt, dato"
 					+ " FROM  mote"
 					+ " WHERE moteid = " + this.moteid);
-				
-			
 			
 				cn.create(brukerid, "Du har blitt invitert til " + info.getQuery()[0][1] + " den " + info.getQuery()[0][4] 
 						+ " fra " + info.getQuery()[0][2] + " til " + info.getQuery()[0][3]);
-						
-			
-		
-			
+				
 			sql.execute("INSERT INTO mote_has_bruker (mote_moteid,bruker_brukerid) VALUES ('" + moteid + "','" + brukerid + "')");
 			
 		}
@@ -196,6 +191,7 @@ public class EditMeeting {
 			
 		}
 		public void leggtilgruppe(String text) {
+			text = text.trim();
 			sqlRetrieve ret = new sqlRetrieve("SELECT gruppeid FROM gruppe WHERE gruppenavn = '" + text + "'");
 			String gid = (ret.getQuery()[0][0]);
 			sqlRetrieve user = new sqlRetrieve("SELECT bruker_brukerid FROM bruker_has_Gruppe WHERE Gruppe_gruppeid = '" + gid +"'");
@@ -204,27 +200,28 @@ public class EditMeeting {
 				str += user.getQuery()[i][0] + ";";
 			}
 			String[] users = str.split(";");
-			System.out.println(users[0]);
-			System.out.println(users[1]);
 			String str1 = "";
 			sqlRetrieve m = new sqlRetrieve("SELECT bruker_brukerid FROM mote_has_bruker WHERE mote_moteid = '" + moteid +"'");
 			for (int i = 0; i < m.getQuery().length; i++) {
 				str1 += m.getQuery()[i][0] + ";";
 			}
 			int l = str.length();
-			System.out.println(str1);
+			String str2 = "";
 			for (int i = 0; i < users.length; i++) {
 					if((str1.contains((users[i])))){
 						
 					}else{
-						
+						str2 += users[i];
 				}
 			}
-			str1 = (str1.replace(";", ""));
-			System.out.println(str1);
-			for (int i = 0; i < str1.length(); i++) {
-//				leggtilbruker((str1.charAt(i)));
+			if(str2.length()>0){
+			for (int i = 0; i < str2.length(); i++) {
+				int x = Character.getNumericValue((str2.charAt(i)));
+				leggtilbruker(x);
 			}
+			}
+//			sqlExecute ex = new sqlExecute();
+//			ex.execute("INSERT INTO gruppe_has_mote (gruppe_gruppeid, mote_moteid) VALUES ('"+gid+"','"+moteid+"'");
 			}
 		
 		
@@ -235,8 +232,8 @@ public class EditMeeting {
 		
 		public static void main(String[] args) {
 
-			EditMeeting meeting = new EditMeeting(123);
-			meeting.leggtilgruppe("THE best");
+			EditMeeting meeting = new EditMeeting(151);
+			meeting.leggtilgruppe("alle sammen");
 			
 		}
 

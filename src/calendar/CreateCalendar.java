@@ -711,14 +711,14 @@ public class CreateCalendar extends Application  {
 								for (int j = 0; j < cbs.length-1; j++) {
 									if (cbs[j].isSelected()){
 										antall += 1;
-									} else
-										cbs[j].setText(null);
+									} 
+//										cbs[j].setText(null);
 								}
 								for (int j = 0; j < cbs1.length-1; j++) {
 									if (cbs1[j].isSelected()){
 										antall2 += 1;
-									} else
-										cbs1[j].setText(null);
+									} 
+//										cbs1[j].setText(null);
 								}
 //								System.out.println(antall);
 								stage3.close();
@@ -735,14 +735,14 @@ public class CreateCalendar extends Application  {
 								final EditMeeting meeting = new EditMeeting(Mid);
 								
 								for (int i = 0; i < cbs.length; i++) {
-									if(cbs[i].getText() != null){
+									if(cbs[i].isSelected()){
 										if(BID != getID(cbs[i].getText())){
 											meeting.leggtilbruker(getID(cbs[i].getText()));
 										}
 									}
 								}
 								for (int i = 0; i < cbs1.length; i++) {
-									if(cbs1[i].getText() != null){
+									if(cbs1[i].isSelected()){
 										meeting.leggtilgruppe(cbs1[i].getText());
 									}
 								}

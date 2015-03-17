@@ -72,8 +72,8 @@ public class User {
 	
 	public static void main(String[] args) {
 		
-		User User_1 = new User("KimH", "b");
-		//User_1.CreateUser();
+		User User_1 = new User("Petter", "Northug", 90909090, "PettN", "Brage", "Insatt", 0);
+		User_1.CreateUser();
 		//User_1.DeleteUser();
 	}
 
