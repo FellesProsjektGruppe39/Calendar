@@ -286,17 +286,14 @@ public class CreateCalendar extends Application  {
 				
 				ScrollPane sp = new ScrollPane(grid);
 				grid2.add(sp, 0, 1);
-				
+				final Stage stage4 = new Stage();
 				Scene scene = new Scene(grid2, 1100, 600);
-				stage.setScene(scene);
-				stage.setTitle("Your Meetings");
-				stage.show();
+				stage4.setScene(scene);
+				stage4.setTitle("Your Meetings");
+				stage4.show();
 				
 				Button cl = new Button("Close");
 				grid2.add(cl, 1,10);
-				
-				Button save = new Button("Save");
-				grid2.add(save, 2,10);
 				
 				final ArrayList<Integer> moteid = new ArrayList<Integer>();
 				final ArrayList<Label> print = new ArrayList<Label>();
@@ -338,7 +335,7 @@ public class CreateCalendar extends Application  {
 
 					@Override public void handle(ActionEvent e) {
 						final int moteid = Integer.parseInt(endremoteid.getText());
-						sqlRetrieve sql2 = new sqlRetrieve("SELECT * FROM mote WHERE moteid = " + moteid);
+						final sqlRetrieve sql2 = new sqlRetrieve("SELECT * FROM mote WHERE moteid = " + moteid);
 						
 						
 						final Stage stage1 = new Stage();
@@ -366,15 +363,22 @@ public class CreateCalendar extends Application  {
 						final TextField slutt1 = new TextField(sql2.getQuery()[0][2]);
 						final TextArea beskrivelse1 = new TextArea(sql2.getQuery()[0][3]);
 						final DatePicker datePicker = new DatePicker(myDate);
-						 datePicker.setOnAction(new EventHandler<ActionEvent>() {
+						
+						
+						
+						datePicker.setOnAction(new EventHandler<ActionEvent>() {
 						     public void handle(ActionEvent t) {
-						         LocalDate date = datePicker.getValue();
+						        final LocalDate dateX = datePicker.getValue();
+						        if(!myDate.equals(dateX)){
+						        	EditMeeting em = new EditMeeting(moteid);
+						        	em.endreDato(dateX.toString());
+						        }
+						        
 						     }
 						 });
-						 
 						final Text text3 = new Text();
 						
-						Button cl = new Button("Edit users");
+						Button cl = new Button("Continue");
 						Button cl1 = new Button("Cancel");
 						
 						grid.add(text3, 2, 15);
@@ -415,11 +419,11 @@ public class CreateCalendar extends Application  {
 								grid.add(add, 2, 2);
 								
 								
-								String[] names = getNames();
+								final String[] names = getNames();
 								final String[] names1 = names;
 								final CheckBox[] cbs = new CheckBox[names.length];
 								
-								ArrayList<Integer> attendingusers = new ArrayList<Integer>();
+								final ArrayList<Integer> attendingusers = new ArrayList<Integer>();
 								
 								sqlRetrieve sql3 = new sqlRetrieve("SELECT bruker_brukerid FROM mote_has_bruker WHERE mote_moteid = " + moteid);
 								sqlRetrieve sql4 = new sqlRetrieve("SELECT count(*) FROM mote_has_bruker WHERE mote_moteid = " + moteid);
@@ -458,36 +462,67 @@ public class CreateCalendar extends Application  {
 										for (int j = 0; j < cbs.length-1; j++) {
 											if (cbs[j].isSelected()){
 												antall += 1;
-											} else
-												cbs[j].setText(null);
+											} 
+												
 										}
-//										System.out.println(antall);
-										stage3.close();
 										
-										final CreateMeeting mote = new CreateMeeting(BID);
+										final EditMeeting emote = new EditMeeting(moteid);
 										
-										mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), datePicker.getValue().toString(), antall);
-										mote.ChooseRoomGUI();
-										mote.create();
+//										stage3.close();
 										
-										sqlRetrieve mid = new sqlRetrieve("SELECT MAX(moteid) FROM mote");
-										final String MID = mid.getQuery()[0][0];
-										final int Mid = Integer.parseInt(MID);
-										final EditMeeting meeting = new EditMeeting(Mid);
-										System.out.println(Mid);
+										if(!sql2.getQuery()[0][1].equalsIgnoreCase(start1.getText())){
+											emote.endreStarttid(start1.getText());
+										}
 										
-										for (int i = 0; i < cbs.length; i++) {
-											if(cbs[i].getText() != null){
+										if(!sql2.getQuery()[0][2].equalsIgnoreCase(slutt1.getText())){
+											emote.endreSluttid(slutt1.getText());
+										}
+										
+										if(!sql2.getQuery()[0][3].equalsIgnoreCase(beskrivelse1.getText())){
+											emote.endreBeskrivelse(beskrivelse1.getText());
+										}
+										
+										sqlRetrieve info = new sqlRetrieve("SELECT bruker_brukerid, mote_moteid, beskrivelse, starttidspunkt, sluttidspunkt, dato"
+												+ " FROM mote_has_bruker, mote"
+												+ " WHERE mote_moteid = moteid"
+												+ " AND mote_moteid = " + moteid);
+										if(!info.getQuery()[0][5].equalsIgnoreCase(myDate.toString())){
+											CreateNotification cn = new CreateNotification();
+										
+										sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(*)FROM mote_has_bruker WHERE mote_moteid = " + moteid);
+											
+											
+											for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
+											cn.create(Integer.parseInt(info.getQuery()[i][0]),  info.getQuery()[0][2] + " har endret dato til " + info.getQuery()[0][5] + " fra " + myDate.toString());
+											}
+										}
+										
+										for(int i = 0; i < cbs.length;i++){
+											if(cbs[i].isSelected()== true){
 												if(BID != getID(cbs[i].getText())){
-													meeting.leggtilbruker(getID(cbs[i].getText()));
+													if (!attendingusers.contains(getID(names[i]))){
+														emote.leggtilbruker(getID(cbs[i].getText()));
+													}
+												}
+											}
+											if(cbs[i].isSelected() == false){
+												if(BID != getID(cbs[i].getText())){
+													if (attendingusers.contains(getID(names[i]))){
+														emote.fjernbruker(getID(cbs[i].getText()));
+												
+													}
 												}
 											}
 										}
-										sqlExecute create = new sqlExecute();
-										create.execute("UPDATE mote_has_bruker SET attending ='" + 1 + "' WHERE mote_moteid = '" + Mid + "' AND "+"bruker_brukerid= '"+ BID +"'");
-										stage1.close();
-									}
-								});
+										
+										
+									
+										
+									
+									stage3.close();
+									stage1.close();
+									stage4.close();
+									}});
 								
 								
 								}	
@@ -504,6 +539,16 @@ public class CreateCalendar extends Application  {
 					
 				});
 
+					
+						
+					
+		
+				
+				
+				
+				
+				
+		
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
 						stage.close();
