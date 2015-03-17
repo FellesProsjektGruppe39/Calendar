@@ -151,10 +151,10 @@ public class showAccepted extends Application {
 							Notif.create(Integer.parseInt(info.getQuery()[i][8]), CreateCalendar.getName(BID) + " har endret til ikke svart paa mote id " + moteid.get(i));
 						}
 						if (a == 1) {
-							Notif.create(Integer.parseInt(info.getQuery()[i][8]), CreateCalendar.getName(BID) + " har endret til attending mote id " + moteid.get(i));
+							Notif.create(Integer.parseInt(info.getQuery()[i][8]), CreateCalendar.getName(BID) + " har endret til attending paa mote id " + moteid.get(i));
 						}
 						if (a == 2) {
-							Notif.create(Integer.parseInt(info.getQuery()[i][8]), CreateCalendar.getName(BID) + " har endret til not attending mote id " + moteid.get(i));
+							Notif.create(Integer.parseInt(info.getQuery()[i][8]), CreateCalendar.getName(BID) + " har endret til not attending paa mote id " + moteid.get(i));
 						}
 						
 					}

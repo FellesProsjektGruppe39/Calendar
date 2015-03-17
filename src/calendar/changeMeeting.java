@@ -1,4 +1,3 @@
-
 package calendar;
 
 import java.io.IOException;
@@ -45,9 +44,7 @@ public class changeMeeting extends Application {
 	
 	private static int BID = 3;
 	private int brukerid;
-	
-	sqlExecute sql = new sqlExecute();
-	
+		
 	public void setBrukerid(int id){
 		this.brukerid = id;
 		BID = this.brukerid;
@@ -108,6 +105,10 @@ public class changeMeeting extends Application {
 		grid2.add(endremoteid, 0,7);
 		Button confirm = new Button("  Edit  ");
 		grid2.add(confirm, 0, 8);
+		Button confirm2 = new Button("Edit attendance");
+		grid2.add(confirm2, 0, 9);
+		
+		
 		
 		confirm.setOnAction(new EventHandler<ActionEvent>(){
 			
@@ -118,8 +119,8 @@ public class changeMeeting extends Application {
 					    Text text3 = new Text();
 						text3.setText("Invalid meetingID");
 						text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
-						//text3.setFill(Color.RED);
-						grid2.add(text3, 0, 9);
+						text3.setFill(javafx.scene.paint.Color.RED);
+						grid2.add(text3, 0, 10);
 				}
 				else{
 				
@@ -182,18 +183,18 @@ public class changeMeeting extends Application {
 				grid.add(beskrivelse1, 2,7);
 				grid.add(dato, 1, 13);
 				grid.add(datePicker, 2, 13);
-				grid.add(antall, 1, 11);
-				grid.add(antall1, 2, 11);
+				//grid.add(antall, 1, 11);
+				//grid.add(antall1, 2, 11);
 				
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@SuppressWarnings("null")
 					@Override public void handle(ActionEvent e) {
 						CheckCalendar c = new CheckCalendar();
 						
-						if (!c.checkinput(start1.getText(), slutt1.getText(), datePicker.getValue().toString(), antall1.getText())){
+						if (!c.checkinput(start1.getText(), slutt1.getText(), datePicker.getValue().toString(), "1")){
 							text3.setText("FEIL INPUT!!");
 							text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
-							//text3.setFill(Color.RED);
+							text3.setFill(javafx.scene.paint.Color.RED);
 						}else{
 							
 							final ArrayList<Integer> attendingusers = new ArrayList<Integer>();
@@ -371,6 +372,105 @@ public class changeMeeting extends Application {
 				stage4.close();
 			}
 		});
+		
+		confirm2.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				
+				final int moteid = Integer.parseInt(endremoteid.getText());
+				if(!moteidarr.contains(moteid)){
+					    Text text3 = new Text();
+						text3.setText("Invalid meetingID");
+						text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+						text3.setFill(javafx.scene.paint.Color.RED);
+						grid2.add(text3, 0, 10);
+				}
+				else{ 
+				
+				
+					final GridPane grid2 = new GridPane();
+					grid2.setAlignment(Pos.CENTER);
+					grid2.setHgap(10);
+					grid2.setVgap(10);
+					grid2.setPadding( new Insets(25, 25, 25, 25));
+					
+					final Stage stage6 = new Stage();
+					Scene scene = new Scene(grid2, 500, 500);
+					stage6.setScene(scene);
+					stage6.setTitle("Attendance list");
+					stage6.show();
+					
+					final sqlRetrieve info = new sqlRetrieve("SELECT bruker_brukerid, attending FROM mote_has_bruker "
+							+ "WHERE mote_moteid = '" + moteid + "'");
+					
+					final ArrayList<ChoiceBox> cb = new ArrayList<ChoiceBox>();	
+					final ArrayList<Integer> brukerid = new ArrayList<Integer>();
+					final ArrayList<Label> print = new ArrayList<Label>();
+					
+					for( int i=0; i < info.getQuery().length; i++){
+						
+						cb.add(new ChoiceBox(FXCollections.observableArrayList(0, 1, 2)));
+						cb.get(i).setValue(Integer.parseInt(info.getQuery()[i][1]));
+						brukerid.add(Integer.parseInt(info.getQuery()[i][0]));
+						String a = CreateCalendar.getName(Integer.parseInt(info.getQuery()[i][0]));
+						print.add(new Label(a));
+						print.get(i).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
+						grid2.add(print.get(i), 0, i+1, 1, 1);
+						grid2.add(cb.get(i), 1, i+1, 1, 1);
+						
+					}
+					
+					Text t = new Text();
+					t.setText("0 - Not replied yet \n1 - Attending \n2 - Not attending");
+					grid2.add(t,0,0);
+					
+					Button save = new Button("Save");
+					grid2.add(save, 1,11);
+					
+					save.setOnAction(new EventHandler<ActionEvent>() {
+						@Override public void handle(ActionEvent e) {
+							
+							CreateNotification Notif = new CreateNotification();
+							sqlExecute sql = new sqlExecute();
+							
+							for (int i = 0; i < cb.size(); i++) {
+									
+								sql.execute("UPDATE mote_has_bruker SET attending = " + cb.get(i).getValue() +
+										" WHERE mote_moteid = " + moteid + " AND bruker_brukerid = " + brukerid.get(i));
+								
+								int a = (int) cb.get(i).getValue();
+								
+								if (Integer.parseInt(info.getQuery()[i][1]) != a) {
+									if (a == 0) {
+										Notif.create(brukerid.get(i), CreateCalendar.getName(BID) + " har endret din tilstand til ikke svart paa mote id " + moteid);
+									}
+									if (a == 1) {
+										Notif.create(brukerid.get(i), CreateCalendar.getName(BID) + " har endret din tilstand til attending paa mote id " + moteid);
+									}
+									if (a == 2) {
+										Notif.create(brukerid.get(i), CreateCalendar.getName(BID) + " har endret din tilstand til not attending paa mote id " + moteid);
+									}
+									
+								}
+								
+							}
+							stage6.close();
+						}
+					});
+					
+					Button cl = new Button("Close");
+					grid2.add(cl, 1,10);
+					
+					cl.setOnAction(new EventHandler<ActionEvent>() {
+						@Override public void handle(ActionEvent e) {
+							stage6.close();
+						}
+					});
+					
+				    }
+			}
+			
+		});
+		
 	}
 	
 	
