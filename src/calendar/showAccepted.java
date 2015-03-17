@@ -61,7 +61,7 @@ public class showAccepted extends Application {
 		ScrollPane sp = new ScrollPane(grid);
 		grid2.add(sp, 0, 1);
 		
-		Scene scene = new Scene(grid2, 1100, 600);
+		Scene scene = new Scene(grid2, 1200, 600);
 		stage.setScene(scene);
 		stage.setTitle("Accepted meetings");
 		stage.show();
@@ -104,7 +104,7 @@ public class showAccepted extends Application {
 		final ArrayList<Label> print = new ArrayList<Label>();
 		
 		String str;
-		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-30s %-4s","MoteId", "Date", "Start","End","Description","Room","Location","Attending");
+		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s   %-10s","MoteId", "Date", "Start","End","Description","Room","Location");
 		
 		print.add(new Label(str));
 		print.get(0).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
@@ -118,7 +118,7 @@ public class showAccepted extends Application {
 			cb.add(new ChoiceBox(FXCollections.observableArrayList(0, 1, 2)));
 			cb.get(i).setValue(1);
 			moteid.add(Integer.parseInt(info.getQuery()[i][0]));
-			String a = String.format("%-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-30s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6]);					
+			String a = String.format("%-5s %-10s - %-8s   %-8s   %-30s   %-20s - %-10s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3],info.getQuery()[i][5], info.getQuery()[i][4], info.getQuery()[i][6]);					
 			print.add(new Label(a));
 			print.get(i+1).setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 			grid.add(print.get(i+1), 0, i+1, 1, 1);
