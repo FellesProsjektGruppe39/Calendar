@@ -8,18 +8,18 @@ public class User {
 	
 	private String fornavn;
 	private String etternavn;
-	private int TlfNr;
+	private String TlfNr;
 	private String stilling;
 	private String passord;
 	private int admin;
 	private String brukernavn;
 	sqlExecute create = new sqlExecute();
 	
-	User(String fornavn, String etternavn, int TlfNr,
+	public User(String fornavn, String etternavn, String string,
 			String brukernavn, String passord, String stilling, int admin) {
 		this.fornavn=fornavn;
 		this.etternavn=etternavn;
-		this.TlfNr=TlfNr;
+		this.TlfNr=string;
 		this.brukernavn=brukernavn;
 		this.passord=passord;
 		this.stilling=stilling;

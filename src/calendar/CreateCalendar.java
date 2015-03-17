@@ -148,6 +148,7 @@ public class CreateCalendar extends Application  {
 		Button showAccepted = new Button("Show accepted meetings");
 		Button showCalendar = new Button("Show calendar for another user");
 		Button createRoom = new Button("Create a new Room");
+		Button addUser = new Button("Create a new user");
 		grid.add(createRoom,4,22,1,1);
 		grid.add(cl, 2, 20,1,1);
 		grid.add(newMeeting, 2, 1,1,1);
@@ -158,6 +159,21 @@ public class CreateCalendar extends Application  {
 		grid.add(showDeclines, 0,22,1,1);
 		grid.add(showAccepted, 0,23,1,1);
 		grid.add(showCalendar, 1,20, 1,1);
+		grid.add(addUser, 1,21, 1,1);
+		
+		addUser.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+
+		        	addUser add = new addUser();
+	                Stage stage = new Stage();
+	                try {
+						add.start(stage);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			}
+		});
 		
 		showCalendar.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
