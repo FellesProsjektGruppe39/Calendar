@@ -6,9 +6,9 @@ import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 
 public class CheckRoom {
-	public String [][]allRoom;
+	public static String [][]allRoom;
 	
-	public boolean check(String dato, String starttid, String slutttid, int kapasitet) {
+	public static boolean check(String dato, String starttid, String slutttid, int kapasitet) {
 
 		
 		sqlRetrieve sqlret = new sqlRetrieve("SELECT romnavn, beskrivelse, kapasitet, sted FROM rom WHERE romnavn NOT IN (SELECT r.romnavn"

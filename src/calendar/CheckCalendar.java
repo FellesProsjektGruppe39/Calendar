@@ -112,10 +112,11 @@ public class CheckCalendar {
 		return str;
 	}
 
-public boolean checkinput(String string, String string2, String string3){
+public boolean checkinput(String string, String string2, String string3, String string4){
 	String[] start = string.split(":");
 	String[] slutt = string2.split(":");
 	String[] dag = string3.split("-");
+	
 	if(start.length == 3 && slutt.length == 3 && dag.length == 3){
 		
 		try {
@@ -128,8 +129,11 @@ public boolean checkinput(String string, String string2, String string3){
 			int d1 = Integer.parseInt(dag[0]);
 			int d2 = Integer.parseInt(dag[1]);
 			int d3 = Integer.parseInt(dag[2]);
-		
-
+			int an = Integer.parseInt(string4);
+				
+		if(an<=0){
+			return false;
+		}else{
 		if((s1>=0 && s1<25)&&(s2>=0 && s2<61)&&(s3>=0 && s3<61)&&(sl1>=0 && sl1<25)&&(sl2>=0 && sl2<61)&&(sl3>=0 && sl3<61)){
 			if(sl1<s1){
 				System.out.println("False");
@@ -203,6 +207,7 @@ public boolean checkinput(String string, String string2, String string3){
 
 		default:
 			return false;
+		}
 		}
 	}catch (Exception e) {
 		return false;
