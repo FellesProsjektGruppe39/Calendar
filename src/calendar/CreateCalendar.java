@@ -208,11 +208,12 @@ public class CreateCalendar extends Application  {
 				final TextField Sted1 = new TextField();
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField Kapasitet1 = new TextField();
-				//final Text text3 = new Text();
+				final Text text3 = new Text();
 				
 				Button SandE = new Button("Save and Exit");
 				Button cl = new Button("Cancel");
-
+				
+				grid.add(text3, 2, 15);
 				grid.add(cl, 2, 20);
 				grid.add(SandE,1,20);
 				grid.add(Romnavn, 1, 3);
@@ -233,11 +234,20 @@ public class CreateCalendar extends Application  {
 				
 				SandE.setOnAction(new EventHandler<ActionEvent>(){
 					@Override public void handle(ActionEvent e) {
-						final Room rom = new Room();
-						final String Kappa = Kapasitet1.getText();
-						final int kapasitet = Integer.parseInt(Kappa);
-						rom.createRoom(Romnavn1.getText(), kapasitet, Sted1.getText(), beskrivelse1.getText());
-						stage1.close();
+							try {
+								final Room rom = new Room();
+								final String Kappa = Kapasitet1.getText();
+								final int kapasitet = Integer.parseInt(Kappa);
+								rom.createRoom(Romnavn1.getText(), kapasitet, Sted1.getText(), beskrivelse1.getText());
+								stage1.close();
+							}
+							catch (Exception ie){
+								text3.setText("FEIL INPUT!!");
+								text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+								text3.setFill(Color.RED);
+							}
+						
+						
 					}
 				});
 			}
