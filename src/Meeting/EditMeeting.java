@@ -152,11 +152,12 @@ public class EditMeeting {
 			sqlRetrieve info = new sqlRetrieve("SELECT bruker_brukerid, mote_moteid, beskrivelse, starttidspunkt, sluttidspunkt, dato"
 					+ " FROM mote_has_bruker, mote"
 					+ " WHERE mote_moteid = moteid"
-					+ " AND mote_moteid = " + this.moteid);
-			sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(*)FROM mote_has_bruker WHERE mote_moteid = " + this.moteid);
-			for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
-				cn.create(Integer.parseInt(info.getQuery()[i][0]), "Du har blitt slettet fra " + info.getQuery()[0][2] + " den " + info.getQuery()[0][5]);
-		}
+					+ " AND mote_moteid = " + this.moteid
+					+ " AND bruker_brukerid = " + brukerid);
+			
+			
+			cn.create(brukerid, "Du har blitt slettet fra " + info.getQuery()[0][2] + " den " + info.getQuery()[0][5]);
+		
 			sql.execute("DELETE FROM mote_has_bruker WHERE mote_moteid =" + "'" + moteid +  "'" + " AND bruker_brukerid =" + "'" + brukerid + "'");
 		}
 		public void endreDato(String dato){

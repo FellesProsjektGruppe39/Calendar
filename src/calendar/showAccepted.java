@@ -76,7 +76,7 @@ public class showAccepted extends Application {
 		t.setText("0 - Not replied yet \n1 - Attending \n2 - Not attending");
 		grid2.add(t,0,0);
 		
-		final sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending "
+		final sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted, attending, opprettet_av "
 		+ "FROM mote m1, mote_has_bruker mb1 "
 		+ "WHERE moteid "
 		+ "NOT IN "
@@ -90,7 +90,7 @@ public class showAccepted extends Application {
 		+ " AND mb1.attending = 1) "
 		+ "AS temp1) "
 		+ "UNION "
-		+ "(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending "
+		+ "(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending, m3.opprettet_av "
 		+ "FROM mote m3, mote_has_bruker mb3,mote_has_rom mr3  "
 		+ "WHERE mb3.bruker_brukerid= " + BID
 		+ " AND mr3.mote_moteid = m3.moteid "

@@ -399,7 +399,8 @@ public class CreateCalendar extends Application  {
 						final TextField slutt1 = new TextField(sql2.getQuery()[0][2]);
 						final TextArea beskrivelse1 = new TextArea(sql2.getQuery()[0][3]);
 						final DatePicker datePicker = new DatePicker(myDate);
-						
+						final Text antall = new Text("Antall brukere i møtet: ");
+						final TextField antall1 = new TextField();
 						
 						
 						datePicker.setOnAction(new EventHandler<ActionEvent>() {
@@ -428,36 +429,19 @@ public class CreateCalendar extends Application  {
 						grid.add(beskrivelse1, 2,7);
 						grid.add(dato, 1, 13);
 						grid.add(datePicker, 2, 13);
+						grid.add(antall, 1, 11);
+						grid.add(antall1, 2, 11);
 						
 						cl.setOnAction(new EventHandler<ActionEvent>() {
 							@SuppressWarnings("null")
 							@Override public void handle(ActionEvent e) {
 								CheckCalendar c = new CheckCalendar();
 								
-								if (!c.checkinput(start1.getText(), slutt1.getText(), datePicker.getValue().toString())){
+								if (!c.checkinput(start1.getText(), slutt1.getText(), datePicker.getValue().toString(), antall1.getText())){
 									text3.setText("FEIL INPUT!!");
 									text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 									text3.setFill(Color.RED);
 								}else{
-									final Stage stage3 = new Stage();
-									GridPane grid = new GridPane();
-									grid.setAlignment(Pos.TOP_LEFT);
-									grid.setHgap(50);
-									grid.setVgap(10);
-									grid.setPadding(new Insets(10, 10, 10, 10));
-									Scene scene1 = new Scene(grid, 450, 500);
-									stage3.setScene(scene1);
-									stage3.setTitle("Edit Users");
-									stage3.show();
-									Button close = new Button("Save And Exit");
-									Button add = new Button("Add All");
-									grid.add(close, 2, 4);
-									grid.add(add, 2, 2);
-									
-									
-									final String[] names = getNames();
-									final String[] names1 = names;
-									final CheckBox[] cbs = new CheckBox[names.length];
 									
 									final ArrayList<Integer> attendingusers = new ArrayList<Integer>();
 									
@@ -470,18 +454,62 @@ public class CreateCalendar extends Application  {
 										attendingusers.add(Integer.parseInt(sql3.getQuery()[i][0]));
 									}
 									
+									final Stage stage3 = new Stage();
+									GridPane grid = new GridPane();
+									grid.setAlignment(Pos.TOP_LEFT);
+									grid.setHgap(50);
+									grid.setVgap(10);
+									grid.setPadding(new Insets(10, 10, 10, 10));
+									Scene scene1 = new Scene(grid, 450, 500);
+									stage3.setScene(scene1);
+									stage3.setTitle("Add Users");
+									stage3.show();
+									Button close = new Button("Save And Exit");
+									Button add = new Button("Add All Users");
+									Button adda = new Button("Add All Groups");
+									Text us = new Text("Her legger man til enkeltbrukere: ");
+									Text us1 = new Text("Her legger man til grupper: ");
+									grid.add(close, 2, 4);
+									grid.add(add, 2, 2);
+									grid.add(adda, 2, 3);
+									grid.add(us, 0, 0);
+									grid.add(us1, 0, 2);
+									
+									GridPane grid2 = new GridPane();
+									grid2.setAlignment(Pos.TOP_LEFT);
+									grid2.setHgap(10);
+									grid2.setVgap(10);
+									grid2.setPadding(new Insets(10, 10, 10, 10));
+									ScrollPane sp = new ScrollPane(grid2);
+									grid.add(sp, 0, 1);
+									
+									GridPane grid3 = new GridPane();
+									grid3.setAlignment(Pos.TOP_LEFT);
+									grid3.setHgap(10);
+									grid3.setVgap(10);
+									grid3.setPadding(new Insets(10, 10, 10, 10));
+									ScrollPane sp1 = new ScrollPane(grid3);
+									grid.add(sp1, 0, 3);
+									
+									final String[] names = getNames();
+									String[] groups = getGroups();
+									final String[] names1 = names;
+									final CheckBox[] cbs = new CheckBox[names.length];
+									final CheckBox[] cbs1 = new CheckBox[groups.length];
 									
 									for (int i = 0; i < names.length; i++) {
 										final CheckBox cb = cbs[i] = new CheckBox(names[i]);
-										if (attendingusers.contains(getID(names[i]))){
-											cbs[i].setSelected(true);
-											
-										}
-								
 										if(!cbs[i].getText().equals(names1[BID-1])){
-											grid.add(cb, 1, i+2);
+											if(attendingusers.contains(getID(names[i]))){
+												cbs[i].setSelected(true);
+											}
+											grid2.add(cb, 1, i);
 										}
 										
+									}
+									for (int i = 0; i < groups.length; i++) {
+										final CheckBox cb1 = cbs1[i] = new CheckBox(groups[i]);
+										grid3.add(cb1, 1, i);
 									}
 									
 									add.setOnAction(new EventHandler<ActionEvent>() {
@@ -491,16 +519,18 @@ public class CreateCalendar extends Application  {
 											}
 										}
 									});
+									adda.setOnAction(new EventHandler<ActionEvent>() {
+										@Override public void handle(ActionEvent e) {
+											for (int i = 0; i < cbs1.length; i++) {
+												cbs1[i].setSelected(true);		
+											}
+										}
+									});
 									
 									
 									close.setOnAction(new EventHandler<ActionEvent>() {
 										@Override public void handle(ActionEvent e) {
-											for (int j = 0; j < cbs.length-1; j++) {
-												if (cbs[j].isSelected()){
-													antall += 1;
-												} 
-													
-											}
+											
 											
 											final EditMeeting emote = new EditMeeting(moteid);
 											
@@ -528,7 +558,7 @@ public class CreateCalendar extends Application  {
 											sqlRetrieve moter = new sqlRetrieve ("SELECT COUNT(*)FROM mote_has_bruker WHERE mote_moteid = " + moteid);
 												
 												
-												for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
+											for (int i = 0;i < Integer.parseInt(moter.getQuery()[0][0]); i++){
 												cn.create(Integer.parseInt(info.getQuery()[i][0]),  info.getQuery()[0][2] + " har endret dato til " + info.getQuery()[0][5] + " fra " + myDate.toString());
 												}
 											}
@@ -549,20 +579,24 @@ public class CreateCalendar extends Application  {
 														}
 													}
 												}
-												
-											
-											
 										
+											}
+											for (int i = 0; i < cbs1.length; i++) {
+												if(cbs1[i].isSelected()){
+													emote.leggtilgruppe(cbs1[i].getText());
+												}
+											}
 											
-										
+											
 										stage3.close();
 										stage1.close();
 										stage4.close();
-											}
+											
 										}});
 									
 									
 									}	
+							
 							}
 						});
 						cl1.setOnAction(new EventHandler<ActionEvent>() {
@@ -581,7 +615,7 @@ public class CreateCalendar extends Application  {
 		
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@Override public void handle(ActionEvent e) {
-						stage.close();
+						stage4.close();
 					}
 				});
 			}
@@ -678,7 +712,7 @@ public class CreateCalendar extends Application  {
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField dato1 = new TextField();
 				final DatePicker datePicker = new DatePicker();
-				final Text antall = new Text("Antall brukere i mÃ¸tet: ");
+				final Text antall = new Text("Antall brukere i møtet: ");
 				final TextField antall1 = new TextField();
 				
 				 datePicker.setOnAction(new EventHandler<ActionEvent>() {
@@ -821,7 +855,9 @@ public class CreateCalendar extends Application  {
 								create.execute("UPDATE mote_has_bruker SET attending ='" + 1 + "' WHERE mote_moteid = '" + Mid + "' AND "+"bruker_brukerid= '"+ BID +"'");
 								stage1.close();
 								}else{
-									Text feil = new Text("Ingen ledige rom, vennligst gÃ¥ tilbake og velg ett nytt tidspunkt!");
+
+									Text feil = new Text("Ingen ledige rom, vennligst gå tilbake og velg ett nytt tidspunkt!");
+
 									feil.setFill(Color.RED);
 									feil.setFont(Font.font("Tahoma", FontWeight.NORMAL, 13));
 									grid.add(feil, 0, 4);
@@ -842,6 +878,8 @@ public class CreateCalendar extends Application  {
 			}
 
 		});
+				
+		
 		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
