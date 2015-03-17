@@ -14,6 +14,7 @@ import notification.CreateNotification;
 import notification.GetNotification;
 import Meeting.CreateMeeting;
 import Meeting.EditMeeting;
+import Room.CheckRoom;
 import Room.Room;
 
 import com.sun.glass.events.MouseEvent;
@@ -619,7 +620,7 @@ public class CreateCalendar extends Application  {
 							if(cbs[i].isSelected()){
 								create.execute("INSERT INTO bruker_has_Gruppe (bruker_brukerid, Gruppe_gruppeid) VALUES ('" + getID(names1[i]) +"', "+GID+")");
 								CreateNotification not = new CreateNotification();
-								not.create(getID(names1[i]), "Du ble n� lagt til i gruppen "+ name2.getText());
+								not.create(getID(names1[i]), "Du ble n� lagt til i gruppen "+ name2.getText());
 							}
 							stage2.close();
 						}
@@ -651,6 +652,9 @@ public class CreateCalendar extends Application  {
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField dato1 = new TextField();
 				final DatePicker datePicker = new DatePicker();
+				final Text antall = new Text("Antall brukere i møtet: ");
+				final TextField antall1 = new TextField();
+				
 				 datePicker.setOnAction(new EventHandler<ActionEvent>() {
 				     public void handle(ActionEvent t) {
 				         LocalDate date = datePicker.getValue();
@@ -674,19 +678,21 @@ public class CreateCalendar extends Application  {
 				grid.add(beskrivelse1, 2,7);
 				grid.add(dato, 1, 13);
 				grid.add(datePicker, 2, 13);
+				grid.add(antall, 1, 11);
+				grid.add(antall1, 2, 11);
 				
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@SuppressWarnings("null")
 					@Override public void handle(ActionEvent e) {
 						CheckCalendar c = new CheckCalendar();
 						
-						if (!c.checkinput(start1.getText(), slutt1.getText(), datePicker.getValue().toString())){
+						if (!c.checkinput(start1.getText(), slutt1.getText(), datePicker.getValue().toString(), antall1.getText())){
 							text3.setText("FEIL INPUT!!");
 							text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 							text3.setFill(Color.RED);
 						}else{
 						final Stage stage3 = new Stage();
-						GridPane grid = new GridPane();
+						final GridPane grid = new GridPane();
 						grid.setAlignment(Pos.TOP_LEFT);
 						grid.setHgap(50);
 						grid.setVgap(10);
@@ -758,24 +764,13 @@ public class CreateCalendar extends Application  {
 						
 						close.setOnAction(new EventHandler<ActionEvent>() {
 							@Override public void handle(ActionEvent e) {
-								for (int j = 0; j < cbs.length-1; j++) {
-									if (cbs[j].isSelected()){
-										antall += 1;
-									} 
-//										cbs[j].setText(null);
-								}
-								for (int j = 0; j < cbs1.length-1; j++) {
-									if (cbs1[j].isSelected()){
-										antall2 += 1;
-									} 
-//										cbs1[j].setText(null);
-								}
-//								System.out.println(antall);
-								stage3.close();
+								
 								
 								final CreateMeeting mote = new CreateMeeting(BID);
-								
-								mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), datePicker.getValue().toString(), antall);
+								if(CheckRoom.check(datePicker.getValue().toString(), start1.getText(), slutt1.getText(), Integer.parseInt(antall1.getText()))){
+									stage3.close();
+									
+								mote.setMeeting(start1.getText(), slutt1.getText(), beskrivelse1.getText(), datePicker.getValue().toString(), antall1.getText());
 								mote.ChooseRoomGUI();
 								mote.create();
 								
@@ -799,6 +794,12 @@ public class CreateCalendar extends Application  {
 								sqlExecute create = new sqlExecute();
 								create.execute("UPDATE mote_has_bruker SET attending ='" + 1 + "' WHERE mote_moteid = '" + Mid + "' AND "+"bruker_brukerid= '"+ BID +"'");
 								stage1.close();
+								}else{
+									Text feil = new Text("Ingen ledige rom, vennligst gå tilbake og velg ett nytt tidspunkt!");
+									feil.setFill(Color.RED);
+									feil.setFont(Font.font("Tahoma", FontWeight.NORMAL, 13));
+									grid.add(feil, 0, 4);
+								}
 							}
 						});
 						
