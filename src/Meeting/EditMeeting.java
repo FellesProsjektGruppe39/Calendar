@@ -215,9 +215,9 @@ public class EditMeeting {
 			System.out.println(str1);
 			for (int i = 0; i < users.length; i++) {
 					if((str1.contains((users[i])))){
-						System.out.println("k");
+						
 					}else{
-					str1 = str1.replace(users[i], "");
+						
 				}
 			}
 			str1 = (str1.replace(";", ""));

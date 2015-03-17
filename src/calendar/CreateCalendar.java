@@ -148,10 +148,10 @@ public class CreateCalendar extends Application  {
 		Button createRoom = new Button("Create a new Room");
 		grid.add(createRoom,4,22,1,1);
 		grid.add(cl, 2, 20,1,1);
-		grid.add(newMeeting, 2, 1,1,1);
+		grid.add(newMeeting, 2, 1,3,1);
 		grid.add(update, 0,20,1,1);
-		grid.add(newGroup,2,2,1,1);
-		grid.add(changeMeeting, 2,3,1,1);
+		grid.add(newGroup,2,2,3,1);
+		grid.add(changeMeeting, 2,3,3,1);
 		grid.add(showAttendings, 0,21,1,1);
 		grid.add(showDeclines, 0,22,1,1);
 		grid.add(showAccepted, 0,23,1,1);
