@@ -16,6 +16,7 @@ import Meeting.CreateMeeting;
 import Meeting.EditMeeting;
 import Room.CheckRoom;
 import Room.Room;
+import notification.ClearNotification;
 
 import com.sun.glass.events.MouseEvent;
 import com.sun.xml.internal.ws.Closeable;
@@ -140,6 +141,8 @@ public class CreateCalendar extends Application  {
 		Button showCalendar = new Button("Show calendar for another user");
 		Button createRoom = new Button("New Room");
 		Button addUser = new Button("New user");
+		Button ClearNotification = new Button("Clear Notifications");
+		grid.add(ClearNotification, 0,21,1,1);
 		grid.add(createRoom,5,1,3,1);
 		grid.add(cl, 2, 25,1,1);
 		grid.add(newMeeting, 2, 1,3,1);
@@ -880,6 +883,20 @@ public class CreateCalendar extends Application  {
 		
 		update.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
+				CreateCalendar c = new CreateCalendar();
+				try {
+					c.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		ClearNotification.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				final ClearNotification clear = new ClearNotification(BID);
+				clear.clearAll();
 				CreateCalendar c = new CreateCalendar();
 				try {
 					c.start(stage);
