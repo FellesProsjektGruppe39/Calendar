@@ -83,15 +83,6 @@ public class CreateCalendar extends Application  {
 		// Notifications
 		GetNotification getNot = new GetNotification(BID);
 		String insertionstring = getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
 		
 		BorderPane borderPane = new BorderPane();
         VBox myView = new VBox();
@@ -147,19 +138,19 @@ public class CreateCalendar extends Application  {
 		Button showDeclines = new Button("Show declined meetings");
 		Button showAccepted = new Button("Show accepted meetings");
 		Button showCalendar = new Button("Show calendar for another user");
-		Button createRoom = new Button("Create a new Room");
-		Button addUser = new Button("Create a new user");
-		grid.add(createRoom,4,22,1,1);
-		grid.add(cl, 2, 20,1,1);
-		grid.add(newMeeting, 2, 1,1,1);
+		Button createRoom = new Button("New Room");
+		Button addUser = new Button("New user");
+		grid.add(createRoom,5,1,3,1);
+		grid.add(cl, 2, 25,1,1);
+		grid.add(newMeeting, 2, 1,3,1);
 		grid.add(update, 0,20,1,1);
-		grid.add(newGroup,2,2,1,1);
-		grid.add(changeMeeting, 2,3,1,1);
-		grid.add(showAttendings, 0,21,1,1);
-		grid.add(showDeclines, 0,22,1,1);
-		grid.add(showAccepted, 0,23,1,1);
+		grid.add(newGroup,3,2,3,1);
+		grid.add(changeMeeting, 2,2,3,1);
+		grid.add(showAttendings, 1,21,1,1);
+		grid.add(showDeclines, 1,22,1,1);
+		grid.add(showAccepted, 1,23,1,1);
 		grid.add(showCalendar, 1,20, 1,1);
-		grid.add(addUser, 1,21, 1,1);
+		grid.add(addUser, 3,1, 3,1);
 		
 		addUser.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -399,7 +390,7 @@ public class CreateCalendar extends Application  {
 						final TextField slutt1 = new TextField(sql2.getQuery()[0][2]);
 						final TextArea beskrivelse1 = new TextArea(sql2.getQuery()[0][3]);
 						final DatePicker datePicker = new DatePicker(myDate);
-						final Text antall = new Text("Antall brukere i møtet: ");
+						final Text antall = new Text("Antall brukere i mï¿½tet: ");
 						final TextField antall1 = new TextField();
 						
 						
@@ -712,7 +703,7 @@ public class CreateCalendar extends Application  {
 				final TextArea beskrivelse1 = new TextArea();
 				final TextField dato1 = new TextField();
 				final DatePicker datePicker = new DatePicker();
-				final Text antall = new Text("Antall brukere i møtet: ");
+				final Text antall = new Text("Antall brukere i mï¿½tet: ");
 				final TextField antall1 = new TextField();
 				
 				 datePicker.setOnAction(new EventHandler<ActionEvent>() {
@@ -856,7 +847,7 @@ public class CreateCalendar extends Application  {
 								stage1.close();
 								}else{
 
-									Text feil = new Text("Ingen ledige rom, vennligst gå tilbake og velg ett nytt tidspunkt!");
+									Text feil = new Text("Ingen ledige rom, vennligst gï¿½ tilbake og velg ett nytt tidspunkt!");
 
 									feil.setFill(Color.RED);
 									feil.setFont(Font.font("Tahoma", FontWeight.NORMAL, 13));
