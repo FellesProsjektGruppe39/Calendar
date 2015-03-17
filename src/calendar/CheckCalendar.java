@@ -62,6 +62,52 @@ public class CheckCalendar {
 
 		return str;
 	}
+	
+	public static String PrintDay1(int gruppeid){
+		String str;
+		sqlRetrieve info = new sqlRetrieve("(SELECT * FROM(SELECT moteid,dato, starttidspunkt,sluttidspunkt,null as romnavn, beskrivelse, sted"
+				+" FROM mote m1, gruppe_has_mote gm1"
+				+" WHERE moteid"
+				+" NOT IN"
+					+" (SELECT m2.moteid"
+					+" FROM mote m2, gruppe_has_mote gm2 ,mote_has_rom mr2"
+					+" WHERE gm2.gruppe_gruppeid ="+gruppeid
+					+" AND mr2.mote_moteid = m2.moteid"
+					+" AND gm2.mote_moteid = m2.moteid)"
+				+" AND m1.moteid = gm1.mote_moteid"
+				+" AND gm1.gruppe_gruppeid =" +gruppeid +")"
+				+" AS temp1)"
+				+" UNION"
+				+" (SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted"
+				+" FROM mote m3,gruppe_has_mote gm3 ,mote_has_rom mr3" 
+				+" WHERE gm3.gruppe_gruppeid ="+ gruppeid
+				+" AND mr3.mote_moteid = m3.moteid"
+				+" AND gm3.mote_moteid = m3.moteid"
+				+" ORDER BY dato, starttidspunkt ASC)"
+				+" AS temp2)"
+				+" ORDER BY dato, starttidspunkt ASC");
+		
+		
+		str = String.format("%-5s    %-10s   %-8s   %-8s   %-45s   %-20s","MoteId", "Date", "Start","End","Description","Room");
+		
+		sqlRetrieve moter = new sqlRetrieve (
+				"SELECT COUNT(moteid)"
+						+ " FROM mote m"
+						+ " INNER JOIN gruppe_has_mote mb "
+						+ " ON m.moteid = mb.mote_moteid"
+						+ " WHERE mb.gruppe_gruppeid = " + gruppeid
+						);
+		
+		
+		for( int i=0; i < Integer.parseInt(moter.getQuery()[0][0]); i++){
+			str += String.format("\n %-5s %-10s - %-8s   %-8s   %-45s   %-20s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3], info.getQuery()[i][5], info.getQuery()[i][4]);
+			
+		}
+		
+		System.out.println(str);
+		
+		return str;
+	}
 	public static String PrintWeek(int brukerid, int ukenr, int aar){
 		String str;
 		
@@ -238,7 +284,7 @@ public static void main(String[] args) {
 	
 	//CheckCalendar test=new CheckCalendar();
 	
-	System.out.println(test.PrintWeek(1,12,2015));
+//	System.out.println(test.PrintDay1(15));
 
 	}
 }

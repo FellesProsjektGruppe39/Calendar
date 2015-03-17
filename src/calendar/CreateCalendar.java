@@ -418,9 +418,6 @@ public class CreateCalendar extends Application  {
 				}
 		}
 	});
-				
-		
-		
 		cl.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				stage.close();
@@ -461,6 +458,12 @@ public class CreateCalendar extends Application  {
 		String fornavn = getName.getQuery()[0][1];
 		String etterNavn = getName.getQuery()[0][2];
 		return fornavn + " " + etterNavn;
+		
+	}
+	public static String getName1(int gid){
+		sqlRetrieve getName = new sqlRetrieve("SELECT gruppenavn FROM gruppe WHERE gruppeid ='" + gid + "';");
+		String fornavn = getName.getQuery()[0][0];
+		return fornavn;
 		
 	}
 	
