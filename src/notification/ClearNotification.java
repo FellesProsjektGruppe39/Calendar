@@ -7,7 +7,7 @@ public class ClearNotification {
 	sqlExecute sql = new sqlExecute();
 	private int brukerid;
 	
-	ClearNotification(int brukerid){
+	public ClearNotification(int brukerid){
 		this.brukerid = brukerid;
 	}
 	
