@@ -41,7 +41,7 @@ public class CheckCalendar {
 				+ " ORDER BY dato, starttidspunkt ASC");
 
 		
-		str = String.format("%-5s    %-10s   %-8s   %-8s   %-30s   %-20s","MoteId", "Date", "Start","End","Description","Room");
+		str = String.format("%-5s    %-10s   %-8s   %-8s   %-45s   %-20s","MoteId", "Date", "Start","End","Description","Room");
 
 		sqlRetrieve moter = new sqlRetrieve (
 				"SELECT COUNT(moteid)"
@@ -54,7 +54,7 @@ public class CheckCalendar {
 		
 		
 		for( int i=0; i < Integer.parseInt(moter.getQuery()[0][0]); i++){
-			str += String.format("\n %-5s %-10s - %-8s   %-8s   %-30s   %-20s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3], info.getQuery()[i][5], info.getQuery()[i][4]);
+			str += String.format("\n %-5s %-10s - %-8s   %-8s   %-45s   %-20s",info.getQuery()[i][0], info.getQuery()[i][1], info.getQuery()[i][2], info.getQuery()[i][3], info.getQuery()[i][5], info.getQuery()[i][4]);
 					
 		}
 		
@@ -234,7 +234,7 @@ public static boolean isLeapYear(int year) {
 
 public static void main(String[] args) {
 	CheckCalendar test = new CheckCalendar();
-//	System.out.println(test.PrintDay(5));
+
 	
 	//CheckCalendar test=new CheckCalendar();
 	

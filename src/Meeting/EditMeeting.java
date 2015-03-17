@@ -221,8 +221,8 @@ public class EditMeeting {
 				leggtilbruker(x);
 			}
 			}
-//			sqlExecute ex = new sqlExecute();
-//			ex.execute("INSERT INTO gruppe_has_mote (gruppe_gruppeid, mote_moteid) VALUES ('"+gid+"','"+moteid+"'");
+			sqlExecute ex = new sqlExecute();
+			ex.execute("INSERT INTO gruppe_has_mote (gruppe_gruppeid, mote_moteid) VALUES ("+gid+","+moteid+")");
 			}
 		
 		

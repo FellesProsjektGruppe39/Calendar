@@ -16,6 +16,7 @@ import Meeting.CreateMeeting;
 import Meeting.EditMeeting;
 import Room.CheckRoom;
 import Room.Room;
+import notification.ClearNotification;
 
 import com.sun.glass.events.MouseEvent;
 import com.sun.xml.internal.ws.Closeable;
@@ -83,15 +84,6 @@ public class CreateCalendar extends Application  {
 		// Notifications
 		GetNotification getNot = new GetNotification(BID);
 		String insertionstring = getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
-		//insertionstring += getNot.get();
 		
 		BorderPane borderPane = new BorderPane();
         VBox myView = new VBox();
@@ -147,19 +139,21 @@ public class CreateCalendar extends Application  {
 		Button showDeclines = new Button("Show declined meetings");
 		Button showAccepted = new Button("Show accepted meetings");
 		Button showCalendar = new Button("Show calendar for another user");
-		Button createRoom = new Button("Create a new Room");
-		Button addUser = new Button("Create a new user");
-		grid.add(createRoom,4,22,1,1);
-		grid.add(cl, 2, 20,1,1);
-		grid.add(newMeeting, 2, 1,1,1);
+		Button createRoom = new Button("New Room");
+		Button addUser = new Button("New user");
+		Button ClearNotification = new Button("Clear Notifications");
+		grid.add(ClearNotification, 0,21,1,1);
+		grid.add(createRoom,5,1,3,1);
+		grid.add(cl, 2, 25,1,1);
+		grid.add(newMeeting, 2, 1,3,1);
 		grid.add(update, 0,20,1,1);
-		grid.add(newGroup,2,2,1,1);
-		grid.add(changeMeeting, 2,3,1,1);
-		grid.add(showAttendings, 0,21,1,1);
-		grid.add(showDeclines, 0,22,1,1);
-		grid.add(showAccepted, 0,23,1,1);
+		grid.add(newGroup,3,2,3,1);
+		grid.add(changeMeeting, 2,2,3,1);
+		grid.add(showAttendings, 1,21,1,1);
+		grid.add(showDeclines, 1,22,1,1);
+		grid.add(showAccepted, 1,23,1,1);
 		grid.add(showCalendar, 1,20, 1,1);
-		grid.add(addUser, 1,21, 1,1);
+		grid.add(addUser, 3,1, 3,1);
 		
 		addUser.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -300,6 +294,7 @@ public class CreateCalendar extends Application  {
 		
 		changeMeeting.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
+<<<<<<< HEAD
 				
 				
 				final GridPane grid2 = new GridPane();
@@ -610,16 +605,20 @@ public class CreateCalendar extends Application  {
 
 					
 				});
+=======
+>>>>>>> 565f980872ac13fbc69aad95a48488aca08e292a
 
-				
-		
-				cl.setOnAction(new EventHandler<ActionEvent>() {
-					@Override public void handle(ActionEvent e) {
-						stage4.close();
-					}
-				});
-			}
-		});
+	        	changeMeeting change = new changeMeeting();
+	        	change.setBrukerid(BID);
+                Stage stage = new Stage();
+                try {
+					change.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		}
+	});
 		
 		newGroup.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
@@ -691,6 +690,7 @@ public class CreateCalendar extends Application  {
 		
 		newMeeting.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
+<<<<<<< HEAD
 				
 				final Stage stage1 = new Stage();
 				final GridPane grid = new GridPane();
@@ -874,8 +874,20 @@ public class CreateCalendar extends Application  {
 					}
 				});
 			}
+=======
+>>>>>>> 565f980872ac13fbc69aad95a48488aca08e292a
 
-		});
+	        	NewMeeting newm = new NewMeeting();
+	        	newm.setBrukerid(BID);
+                Stage stage = new Stage();
+                try {
+					newm.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		}
+	});
 				
 		
 		
@@ -896,6 +908,20 @@ public class CreateCalendar extends Application  {
 				}
 			}
 		});
+		
+		ClearNotification.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				final ClearNotification clear = new ClearNotification(BID);
+				clear.clearAll();
+				CreateCalendar c = new CreateCalendar();
+				try {
+					c.start(stage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 	} 
 	
 	
@@ -907,7 +933,7 @@ public class CreateCalendar extends Application  {
 		
 	}
 	
-	public String[] getNames(){
+	public static String[] getNames(){
 		String str = "";
 		sqlRetrieve getName = new sqlRetrieve("SELECT fornavn, etternavn FROM bruker");
 		int l = getName.getQuery().length;
@@ -923,7 +949,7 @@ public class CreateCalendar extends Application  {
 		return names1;
 	}
 	
-	public String[] getGroups(){
+	public static String[] getGroups(){
 		sqlRetrieve ret = new sqlRetrieve("SELECT gruppenavn FROM gruppe");
 		String str ="";
 		for (int i = 0; i < ret.getQuery().length; i++) {
@@ -933,7 +959,7 @@ public class CreateCalendar extends Application  {
 		return res;
 	}
 	
-	public int getID(String navn){
+	public static int getID(String navn){
 		int ID;
 		String[] na = navn.split(" ");
 		if(na.length > 3){
