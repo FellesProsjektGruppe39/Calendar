@@ -61,14 +61,16 @@ public class CreateCalendar extends Application  {
 	private String StartT, SlutT, Beskrivelse;
 	private int antall = 1, antall2;
 	private int week;
+	private int year;
 	
 	public void setBrukerid(int id){
 		this.brukerid = id;
 		BID = this.brukerid;
 	}
 	
-	public void setWeek(int week){
+	public void setWeek(int week, int year){
 		this.week = week;
+		this.year = year;
 	}
 
 	public void start(final Stage stage) throws Exception {
@@ -127,7 +129,7 @@ public class CreateCalendar extends Application  {
 		name2.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 		grid.add(name2, 0, 0, 1, 5);
 		
-		setWeek(getWeek());
+		setWeek(getWeek(), getYear());
 		
 		Label meeting = new Label(CheckCalendar.PrintWeek(BID, this.week));
 //		System.out.println(meeting.getText());
@@ -507,6 +509,11 @@ public class CreateCalendar extends Application  {
 	}
 	public int getWeek(){
 		sqlRetrieve week = new sqlRetrieve("SELECT WEEKOFYEAR(CURDATE())");
+		int wee = Integer.parseInt(week.getQuery()[0][0]);
+		return wee;
+	}
+	public int getYear(){
+		sqlRetrieve week = new sqlRetrieve("SELECT YEAR(CURDATE())");
 		int wee = Integer.parseInt(week.getQuery()[0][0]);
 		return wee;
 	}
