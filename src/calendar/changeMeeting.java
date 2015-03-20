@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import notification.CreateNotification;
 import mysql.sqlExecute;
 import mysql.sqlRetrieve;
+import Meeting.CreateMeeting;
 import Meeting.EditMeeting;
+import Room.CheckRoom;
 
 import com.sun.prism.paint.Color;
 
@@ -153,9 +155,8 @@ public class changeMeeting extends Application {
 				final TextField slutt1 = new TextField(sql2.getQuery()[0][2]);
 				final TextArea beskrivelse1 = new TextArea(sql2.getQuery()[0][3]);
 				final DatePicker datePicker = new DatePicker(myDate);
-				final Text antall = new Text("Antall brukere i m�tet: ");
+				final Text antall = new Text("Antall brukere i møtet: ");
 				final TextField antall1 = new TextField();
-				
 				
 				datePicker.setOnAction(new EventHandler<ActionEvent>() {
 				     public void handle(ActionEvent t) {
@@ -183,8 +184,8 @@ public class changeMeeting extends Application {
 				grid.add(beskrivelse1, 2,7);
 				grid.add(dato, 1, 13);
 				grid.add(datePicker, 2, 13);
-				//grid.add(antall, 1, 11);
-				//grid.add(antall1, 2, 11);
+				grid.add(antall, 1, 11);
+				grid.add(antall1, 2, 11);
 				
 				cl.setOnAction(new EventHandler<ActionEvent>() {
 					@SuppressWarnings("null")
@@ -209,7 +210,7 @@ public class changeMeeting extends Application {
 							}
 							
 							final Stage stage3 = new Stage();
-							GridPane grid = new GridPane();
+							final GridPane grid = new GridPane();
 							grid.setAlignment(Pos.TOP_LEFT);
 							grid.setHgap(50);
 							grid.setVgap(10);
@@ -285,11 +286,12 @@ public class changeMeeting extends Application {
 							close.setOnAction(new EventHandler<ActionEvent>() {
 								@Override public void handle(ActionEvent e) {
 									
-									
+									sqlRetrieve endredato = new sqlRetrieve("SELECT dato FROM mote WHERE moteid = " + moteid); 
 									final EditMeeting emote = new EditMeeting(moteid);
 									
 //										stage3.close();
-									
+									if(CheckRoom.checkChange(endredato.getQuery()[0][0], start1.getText(), slutt1.getText(), Integer.parseInt(antall1.getText()), moteid)){
+										stage3.close();
 									if(!sql2.getQuery()[0][1].equalsIgnoreCase(start1.getText())){
 										emote.endreStarttid(start1.getText());
 									}
@@ -345,6 +347,14 @@ public class changeMeeting extends Application {
 								stage3.close();
 								stage1.close();
 								stage4.close();
+									}
+									else{
+										Text feil = new Text("Ingen ledige rom, vennligst gå tilbake og velg ett nytt tidspunkt!");
+
+										feil.setFill(javafx.scene.paint.Color.RED);
+										feil.setFont(Font.font("Tahoma", FontWeight.NORMAL, 13));
+										grid.add(feil, 0, 4);
+									}
 									
 								}});
 							
