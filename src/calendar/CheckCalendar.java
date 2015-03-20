@@ -122,7 +122,6 @@ public class CheckCalendar {
 				+ " AND m1.moteid = mb1.mote_moteid"
 				+ " AND mb1.bruker_brukerid = " + brukerid 
 				+ " AND WEEKOFYEAR(m1.dato) = " + ukenr
-				+ " AND m1.dato >= CURDATE()"
 				+ " AND YEAR(m1.dato) = YEAR(CURDATE())"
 				+ " AND mb1.attending = 1)"
 				+ " AS temp1)"
@@ -133,7 +132,6 @@ public class CheckCalendar {
 				+ " AND mr3.mote_moteid = m3.moteid"
 				+ "	AND mb3.mote_moteid = m3.moteid"
 				+ " AND WEEKOFYEAR(m3.dato) = " + ukenr
-				+ " AND m3.dato >= CURDATE()"
 				+ " AND YEAR(m3.dato) = " + aar
 				+ " AND mb3.attending = 1"
 				+ "	ORDER BY dato, starttidspunkt ASC)"
@@ -152,7 +150,6 @@ public class CheckCalendar {
 				+ " WHERE mb.bruker_brukerid = " + brukerid
 				+ " AND WEEKOFYEAR(m.dato) = " + ukenr
 				+ " AND mb.attending = 1"
-				+ " AND m.dato >= CURDATE()"
 				+ " AND YEAR(m.dato) = YEAR(CURDATE())");
 
 		
@@ -281,7 +278,7 @@ public static boolean isLeapYear(int year) {
 public static void main(String[] args) {
 	CheckCalendar test = new CheckCalendar();
 
-	
+	System.out.println(test.PrintWeek(1, 12, 2015));
 	//CheckCalendar test=new CheckCalendar();
 	
 //	System.out.println(test.PrintDay1(15));

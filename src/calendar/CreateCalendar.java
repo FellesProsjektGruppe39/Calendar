@@ -1,49 +1,20 @@
 package calendar;
 
-import java.awt.SecondaryLoop;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-
-import sun.util.resources.LocaleData;
 import notification.CreateNotification;
 import notification.GetNotification;
-import Meeting.CreateMeeting;
-import Meeting.EditMeeting;
-import Room.CheckRoom;
 import Room.Room;
 import notification.ClearNotification;
-
-import com.sun.glass.events.MouseEvent;
-import com.sun.xml.internal.ws.Closeable;
-
-import logIn.LogIn;
 import mysql.sqlExecute;
 import mysql.sqlRetrieve;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -84,8 +55,8 @@ public class CreateCalendar extends Application  {
 		grid.setPadding(new Insets(10, 10, 10, 10));
 		
 		Scene scene = new Scene(grid, 1000, 1000);
-		//scene.getStylesheets().clear();
-		//scene.getStylesheets().add("http://osakasushi.no/hi.css"); Det her er morro
+		scene.getStylesheets().clear();
+		scene.getStylesheets().add("http://osakasushi.no/hi.css"); 
 		stage.setScene(scene);
 		stage.setTitle("Calendar");
 		stage.show();
@@ -552,8 +523,6 @@ public class CreateCalendar extends Application  {
 	
 	public static void main(String[] args) {
 		launch(CreateCalendar.class, args);
-//		CreateCalendar a = new CreateCalendar();
-//		a.getID(" Martin Raknes Holth");
 		
 	}
 }

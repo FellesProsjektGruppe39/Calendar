@@ -35,7 +35,7 @@ import javafx.application.Application;
 
 public class showAttendings extends Application {
 	
-	private static int BID = 3;
+	private static int BID = 1;
 	private int brukerid;
 	
 	sqlExecute sql = new sqlExecute();
@@ -86,18 +86,20 @@ public class showAttendings extends Application {
 		+ "AND mb2.mote_moteid = m2.moteid) "
 		+ "AND m1.moteid = mb1.mote_moteid "
 		+ "AND mb1.bruker_brukerid = " + BID
-		+ " AND mb1.attending = 0) "
+		+ " AND mb1.attending = 0"
+		+ " AND m1.dato >= CURDATE()) "
 		+ "AS temp1) "
 		+ "UNION "
 		+ "(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending, m3.opprettet_av "
 		+ "FROM mote m3, mote_has_bruker mb3,mote_has_rom mr3  "
 		+ "WHERE mb3.bruker_brukerid= " + BID
 		+ " AND mr3.mote_moteid = m3.moteid "
-		+ "AND mb3.mote_moteid = m3.moteid  "
-		+ "AND mb3.attending = 0 "
-		+ "ORDER BY dato, starttidspunkt ASC) "
-		+ "AS temp2) "
-		+ "ORDER BY dato, starttidspunkt ASC");
+		+ " AND mb3.mote_moteid = m3.moteid  "
+		+ " AND mb3.attending = 0 "
+		+ " AND m3.dato >= CURDATE()"
+		+ " ORDER BY dato, starttidspunkt ASC) "
+		+ " AS temp2) "
+		+ " ORDER BY dato, starttidspunkt ASC");
 		
 		final ArrayList<Integer> moteid = new ArrayList<Integer>();
 		final ArrayList<Label> print = new ArrayList<Label>();
