@@ -44,7 +44,7 @@ import javafx.application.Application;
 
 public class changeMeeting extends Application {
 	
-	private static int BID = 3;
+	private static int BID = 5;
 	private int brukerid;
 		
 	public void setBrukerid(int id){
@@ -60,9 +60,9 @@ public class changeMeeting extends Application {
 		grid2.setVgap(10);
 		grid2.setPadding( new Insets(25, 25, 25, 25));
 		
-		GridPane grid = new GridPane();
+		final GridPane grid = new GridPane();
 		
-		ScrollPane sp = new ScrollPane(grid);
+		final ScrollPane sp = new ScrollPane(grid);
 		grid2.add(sp, 0, 1);
 		final Stage stage4 = new Stage();
 		Scene scene = new Scene(grid2, 1100, 600);
@@ -108,9 +108,32 @@ public class changeMeeting extends Application {
 		Button confirm = new Button("  Edit  ");
 		grid2.add(confirm, 0, 8);
 		Button confirm2 = new Button("Edit attendance");
+		Button delete = new Button("Delete meeting");
+		grid2.add(delete, 0, 10);
 		grid2.add(confirm2, 0, 9);
 		
-		
+		delete.setOnAction(new EventHandler<ActionEvent>(){
+			
+
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				
+				EditMeeting endremote = new EditMeeting(Integer.parseInt(endremoteid.getText()));
+				sqlRetrieve beskrivelse = new sqlRetrieve("SELECT beskrivelse FROM mote WHERE moteid = " + Integer.parseInt(endremoteid.getText()));
+				
+				endremote.DeleteMeeting();
+				Text slettet = new Text(beskrivelse.getQuery()[0][0] + " har nå blitt slettet");
+				
+				slettet.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+				slettet.setFill(javafx.scene.paint.Color.RED);
+				grid2.add(slettet, 2, 8);
+
+				
+				
+			}
+			
+		});
 		
 		confirm.setOnAction(new EventHandler<ActionEvent>(){
 			
@@ -191,12 +214,18 @@ public class changeMeeting extends Application {
 					@SuppressWarnings("null")
 					@Override public void handle(ActionEvent e) {
 						CheckCalendar c = new CheckCalendar();
-						
+
 						if (!c.checkinput(start1.getText(), slutt1.getText(), datePicker.getValue().toString(), "1")){
 							text3.setText("FEIL INPUT!!");
 							text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
 							text3.setFill(javafx.scene.paint.Color.RED);
-						}else{
+						}
+						if(antall1.getText().isEmpty()){
+							text3.setText("Må ha antall brukere");
+							text3.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+							text3.setFill(javafx.scene.paint.Color.RED);
+						}
+						else{
 							
 							final ArrayList<Integer> attendingusers = new ArrayList<Integer>();
 							
@@ -287,11 +316,28 @@ public class changeMeeting extends Application {
 								@Override public void handle(ActionEvent e) {
 									
 									sqlRetrieve endredato = new sqlRetrieve("SELECT dato FROM mote WHERE moteid = " + moteid); 
+	
 									final EditMeeting emote = new EditMeeting(moteid);
 									
 //										stage3.close();
 									if(CheckRoom.checkChange(endredato.getQuery()[0][0], start1.getText(), slutt1.getText(), Integer.parseInt(antall1.getText()), moteid)){
 										stage3.close();
+										sqlRetrieve ledigrom = new sqlRetrieve("SELECT romnavn, beskrivelse, kapasitet, sted"
+											+" FROM rom"
+											+" WHERE romnavn" 
+											+" NOT IN (SELECT r.romnavn"
+											+		" FROM mote m, mote_has_rom mr, rom r"
+											+		" WHERE mr.mote_moteid = m.moteid" 
+											+		" AND m.sluttidspunkt > '" + start1.getText()
+											+		"' AND m.starttidspunkt <  '" +  slutt1.getText()
+											+		"' AND m.dato = '" + endredato.getQuery()[0][0]
+											+		"' AND mr.rom_romnavn = r.romnavn"
+											+		" AND m.moteid != " + moteid + ")"
+											+		" AND kapasitet >= " + Integer.parseInt(antall1.getText()));
+										
+										emote.endreRom(ledigrom.getQuery()[0][0]);
+										
+										
 									if(!sql2.getQuery()[0][1].equalsIgnoreCase(start1.getText())){
 										emote.endreStarttid(start1.getText());
 									}
@@ -318,6 +364,7 @@ public class changeMeeting extends Application {
 										cn.create(Integer.parseInt(info.getQuery()[i][0]),  info.getQuery()[0][2] + " har endret dato til " + info.getQuery()[0][5] + " fra " + myDate.toString());
 										}
 									}
+						
 									
 									for(int i = 0; i < cbs.length;i++){
 										if(cbs[i].isSelected()== true){
