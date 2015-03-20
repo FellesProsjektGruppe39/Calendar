@@ -122,9 +122,9 @@ public class Test extends Application{
 			        	System.out.println(brukerid);
 			        	CreateCalendar cal = new CreateCalendar();
 			        	cal.setBrukerid(brukerid);
-		                Stage stage = new Stage();
+		                Stage stage1 = new Stage();
 		                try {
-							cal.start(stage);
+							cal.start(stage1);
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -156,7 +156,6 @@ public class Test extends Application{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-                
 	        }else 
 	        	System.out.println("Du feilet!");
 	        	label.setText("Feil brukernavn eller passord!");
@@ -165,8 +164,6 @@ public class Test extends Application{
 	}
 	public static void main(String[] args) {
 		launch(Test.class,args);
-//		System.out.println(username);
-//		System.out.println(password);
 	}
 	
 }
