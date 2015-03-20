@@ -35,7 +35,7 @@ import javafx.application.Application;
 
 public class showAttendings extends Application {
 	
-	private static int BID = 3;
+	private static int BID = 1;
 	private int brukerid;
 	
 	sqlExecute sql = new sqlExecute();
