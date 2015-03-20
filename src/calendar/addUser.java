@@ -49,7 +49,7 @@ public class addUser extends Application {
 	
 	public void start(final Stage stage) throws IOException {
 		
-		GridPane grid = new GridPane();
+		final GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);
 		grid.setVgap(10);
@@ -115,27 +115,28 @@ public class addUser extends Application {
 					a = 1;
 				}
 				
-				if (fnameIn.getText().length() > 0 && lnameIn.getText().length() > 0 && usernameIn.getText().length() > 0 && pwIn.getText().length() > 0 && positionIn.getText().length() > 0) {
+				if (fnameIn.getText().length() > 2 && lnameIn.getText().length() > 2 && usernameIn.getText().length() > 0 && pwIn.getText().length() > 0 && positionIn.getText().length() > 0 && numberIn.getText().length() > 7) {
 					int b = 1;
 					try {
 						Integer.parseInt(numberIn.getText());
 					}
 					catch (Exception e1) {
-						System.out.println("Phone number needs to be numeric!");
 						b = 0;
-					
+						grid.add(new Label("Phone number needs to be numeric!"),0,13);
+						
 					}
 					if (b == 1) {
 						User user = new User(fnameIn.getText(), lnameIn.getText(), numberIn.getText(), usernameIn.getText(), pwIn.getText(), positionIn.getText(), a);
 						user.CreateUser();
+						stage.close();
 					}
 					
 				}
 				else {
-					System.out.println("Remember to fill in all the fields!");
+					grid.add(new Label("Remember to fill in all the fields correctly!"),0,14);
 				}
 			
-				stage.close();
+				
 			}
 		});
 		
