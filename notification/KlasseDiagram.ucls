@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="calendar.addUser" project="Calendar" file="/Calendar/src/calendar/addUser.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="461" y="527"/>    
+    <position height="-1" width="-1" x="549" y="561"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="calendar.changeMeeting" project="Calendar" 
     file="/Calendar/src/calendar/changeMeeting.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1017" y="-61"/>    
+    <position height="-1" width="-1" x="997" y="-13"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="calendar.CheckCalendar" project="Calendar" 
     file="/Calendar/src/calendar/CheckCalendar.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1325" y="770"/>    
+    <position height="-1" width="-1" x="1263" y="622"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="calendar.NewMeeting" project="Calendar" 
     file="/Calendar/src/calendar/NewMeeting.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1690" y="282"/>    
+    <position height="-1" width="-1" x="1690" y="358"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="calendar.showAccepted" project="Calendar" 
     file="/Calendar/src/calendar/showAccepted.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="251" y="132"/>    
+    <position height="-1" width="-1" x="419" y="160"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="calendar.showAttendings" project="Calendar" 
     file="/Calendar/src/calendar/showAttendings.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="423" y="-65"/>    
+    <position height="-1" width="-1" x="561" y="-33"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="calendar.showDeclines" project="Calendar" 
     file="/Calendar/src/calendar/showDeclines.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="247" y="341"/>    
+    <position height="-1" width="-1" x="373" y="373"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -84,7 +84,7 @@
   </class>  
   <class id="10" language="java" name="Meeting.CreateMeeting" project="Calendar" 
     file="/Calendar/src/Meeting/CreateMeeting.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="324" width="212" x="1572" y="554"/>    
+    <position height="324" width="212" x="1454" y="564"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -93,7 +93,7 @@
   </class>  
   <class id="11" language="java" name="Meeting.EditMeeting" project="Calendar" 
     file="/Calendar/src/Meeting/EditMeeting.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1410" y="72"/>    
+    <position height="-1" width="-1" x="1358" y="72"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -102,7 +102,7 @@
   </class>  
   <class id="12" language="java" name="notification.ClearNotification" project="Calendar" 
     file="/Calendar/src/notification/ClearNotification.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1056" y="948"/>    
+    <position height="-1" width="-1" x="1036" y="860"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -111,7 +111,7 @@
   </class>  
   <class id="13" language="java" name="notification.GetNotification" project="Calendar" 
     file="/Calendar/src/notification/GetNotification.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="656" y="-78"/>    
+    <position height="-1" width="-1" x="728" y="-70"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
