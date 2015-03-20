@@ -86,7 +86,8 @@ public class showDeclines extends Application {
 		+ "AND mb2.mote_moteid = m2.moteid) "
 		+ "AND m1.moteid = mb1.mote_moteid "
 		+ "AND mb1.bruker_brukerid = " + BID
-		+ " AND mb1.attending = 2) "
+		+ " AND mb1.attending = 2"
+		+ " AND m1.dato >= CURDATE()) "
 		+ "AS temp1) "
 		+ "UNION "
 		+ "(SELECT * FROM(SELECT m3.moteid, m3.dato, m3.starttidspunkt, m3.sluttidspunkt, mr3.rom_romnavn,  m3.beskrivelse, m3.sted, mb3.attending, m3.opprettet_av "
@@ -94,7 +95,8 @@ public class showDeclines extends Application {
 		+ "WHERE mb3.bruker_brukerid= " + BID
 		+ " AND mr3.mote_moteid = m3.moteid "
 		+ "AND mb3.mote_moteid = m3.moteid  "
-		+ "AND mb3.attending = 2 "
+		+ "AND mb3.attending = 2"
+		+ " AND m3.dato >= CURDATE() "
 		+ "ORDER BY dato, starttidspunkt ASC) "
 		+ "AS temp2) "
 		+ "ORDER BY dato, starttidspunkt ASC");
