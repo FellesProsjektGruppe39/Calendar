@@ -8,6 +8,7 @@ import java.util.EventObject;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+
 import sun.util.resources.LocaleData;
 import notification.CreateNotification;
 import notification.GetNotification;
@@ -16,8 +17,10 @@ import Meeting.EditMeeting;
 import Room.CheckRoom;
 import Room.Room;
 import notification.ClearNotification;
+
 import com.sun.glass.events.MouseEvent;
 import com.sun.xml.internal.ws.Closeable;
+
 import logIn.LogIn;
 import mysql.sqlExecute;
 import mysql.sqlRetrieve;
@@ -152,6 +155,7 @@ public class CreateCalendar extends Application  {
 		Button ClearNotification = new Button("Clear Notifications");
 		Button nextweek = new Button("Next Week");
 		Button prevweek = new Button("Prev. Week");
+		
 		
 		grid.add(ClearNotification, 0,21,1,1);
 		grid.add(createRoom,5,1,3,1);
@@ -468,7 +472,6 @@ public class CreateCalendar extends Application  {
 		return fornavn;
 		
 	}
-	
 	public static String[] getNames(){
 		String str = "";
 		sqlRetrieve getName = new sqlRetrieve("SELECT fornavn, etternavn FROM bruker");
@@ -484,7 +487,6 @@ public class CreateCalendar extends Application  {
 //		System.out.println(names1.length);
 		return names1;
 	}
-	
 	public static String[] getGroups(){
 		sqlRetrieve ret = new sqlRetrieve("SELECT gruppenavn FROM gruppe");
 		String str ="";
@@ -494,7 +496,6 @@ public class CreateCalendar extends Application  {
 		String[] res = str.split(",");
 		return res;
 	}
-	
 	public static int getID(String navn){
 		int ID;
 		String[] na = navn.split(" ");
