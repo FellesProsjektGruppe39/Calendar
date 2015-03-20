@@ -339,7 +339,7 @@ public class CreateCalendar extends Application  {
 				grid.add(name1, 1, 3);
 				grid.add(name2, 2, 2, 3,1);
 				grid.add(cl, 3, 19);
-				
+			
 				String[] names = getNames();
 				final String[] names1 = names;
 				final CheckBox[] cbs = new CheckBox[names.length];
