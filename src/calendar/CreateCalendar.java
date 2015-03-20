@@ -113,7 +113,7 @@ public class CreateCalendar extends Application  {
 		meeting.setFont(Font.font("Consolas", FontWeight.NORMAL, 13));
 
 		Button newMeeting = new Button("New Meeting");
-		Button cl = new Button("Close");
+		Button cl = new Button("Log out");
 		Button update = new Button("Update");
 		Button newGroup = new Button("New Group");
 		Button changeMeeting = new Button("Edit Meeting");
